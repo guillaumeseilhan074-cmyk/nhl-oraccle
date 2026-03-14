@@ -1,10 +1,6 @@
 <!DOCTYPE html>
-<html lang="fr">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>NHL Oracle – 14 Mars 2026</title>
-<style>
+<html lang="fr"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>NHL Oracle – 14 Mars 2026</title><style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f5f5f0;color:#1a1a1a;font-size:14px}
 .topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:#fff;border-bottom:1px solid #e0e0e0;position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:8px}
@@ -19,6 +15,14 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .chip{padding:5px 13px;border-radius:20px;border:1.5px solid #ddd;background:#fff;font-size:12px;font-weight:500;color:#555;cursor:pointer;white-space:nowrap}
 .chip.on{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
 .content{padding:12px 16px;max-width:1000px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.legend-bar{display:flex;align-items:center;flex-wrap:wrap;gap:10px 20px;background:#fff;border:1.5px solid #e0e0e0;border-radius:12px;padding:10px 16px;max-width:1000px;margin:0 auto}
+.lb-group{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.lb-title{font-size:11px;font-weight:700;color:#444;text-transform:uppercase;letter-spacing:.06em;margin-right:2px}
+.lb-desc{font-size:11px;color:#888;margin-right:4px}
+.lb-sep{width:1px;height:20px;background:#e0e0e0}
+.lb-kchip{font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px}
+.lb-kchip.good{background:#f1f8e9;border:1px solid #a5d6a7;color:#2e7d32}
+.lb-kchip.avg{background:#fffde7;border:1px solid #ffe082;color:#f57f17}
 .card{background:#fff;border:1.5px solid #e0e0e0;border-radius:14px;overflow:hidden}
 .card:hover{border-color:#bbb;box-shadow:0 3px 16px rgba(0,0,0,.07)}
 .card-header{padding:12px 16px 10px;border-bottom:1px solid #f0f0ec}
@@ -83,64 +87,241 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 .score-analysis{font-size:11px;color:#555;line-height:1.6;flex:1;min-width:200px}
 .card-toggle{padding:6px;border-top:1px solid #f5f5f0;font-size:11px;color:#bbb;cursor:pointer;text-align:center;background:#fafaf8}
 .card-body.col{display:none}
-
-/* ===== MOBILE ===== */
 @media(max-width:480px){
-  .topbar{padding:10px 12px}
-  .search input{width:120px}
-  .content{padding:8px 10px}
-  .teams-row{gap:0}
-  .tcode{font-size:22px}
-  .tfull{font-size:10px}
-  .vstime{font-size:12px;padding:2px 8px}
+  .topbar{padding:10px 12px}.search input{width:120px}.content{padding:8px 10px}
+  .tcode{font-size:22px}.tfull{font-size:10px}.vstime{font-size:12px;padding:2px 8px}
   .pred-header-row{grid-template-columns:74px 1fr 1fr;font-size:9px;padding:4px 10px}
   .pred-row{grid-template-columns:74px 1fr 1fr;padding:8px 10px;gap:5px}
-  .pred-cat-cell{font-size:11px}
-  .pname{font-size:13px}
-  .p-note{font-size:10px}
-  .p-stat{font-size:9px}
-  .info-grid{grid-template-columns:1fr 1fr}
-  .kname{font-size:13px}
-  .score-row{flex-direction:column;gap:6px}
-  .score-analysis{font-size:10px;min-width:unset}
-  .filters{gap:5px;padding:8px 10px}
-  .chip{font-size:11px;padding:4px 10px}
+  .pred-cat-cell{font-size:11px}.pname{font-size:13px}.p-note{font-size:10px}.p-stat{font-size:9px}
+  .info-grid{grid-template-columns:1fr 1fr}.kname{font-size:13px}
+  .score-row{flex-direction:column;gap:6px}.score-analysis{font-size:10px;min-width:unset}
+  .filters{gap:5px;padding:8px 10px}.chip{font-size:11px;padding:4px 10px}
+  .lb-sep{display:none}.legend-bar{gap:8px 12px;padding:8px 12px}
 }
-</style>
-</head>
+
+.conf-badge{font-size:10px;font-weight:800;padding:1px 6px;border-radius:4px;border:1px solid;margin-left:4px;white-space:nowrap}
+.p-extra{font-size:10px;color:#666;background:#f0f4ff;border:1px solid #c5cae9;border-radius:4px;padding:2px 7px;margin-top:2px;display:inline-flex;align-self:flex-start;gap:6px}
+.b2b{background:#ffebee;color:#c62828;border:1px solid #ffcdd2;border-radius:4px;padding:1px 6px;font-size:10px;font-weight:700}
+
+.top3-bar{background:#fff;border:2px solid #1a1a1a;border-radius:14px;overflow:hidden;max-width:1000px;margin:0 auto}
+.t3-title{font-size:12px;font-weight:800;color:#fff;background:#1a1a1a;padding:8px 16px;letter-spacing:.04em;text-transform:uppercase}
+.trc-grid{display:grid;grid-template-columns:1fr auto 1fr auto 1fr}
+.trc-col{padding:0}
+.trc-head{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#aaa;padding:8px 14px 4px;border-bottom:1px solid #f0f0ec;background:#fafaf8}
+.tr-row{display:flex;align-items:center;justify-content:space-between;padding:7px 14px;border-bottom:1px solid #f5f5f0;cursor:pointer;gap:8px;transition:background .12s}
+.tr-row:last-child{border-bottom:none}
+.tr-row:hover{background:#f5f5f0}
+.tr-left{display:flex;align-items:center;gap:5px;flex-wrap:wrap;min-width:0}
+.tr-player{font-size:13px;font-weight:700;white-space:nowrap}
+.tr-right{display:flex;flex-direction:column;align-items:flex-end;gap:2px;min-width:fit-content}
+.tr-matchup{font-size:9px;color:#bbb;white-space:nowrap}
+.t3-sep{width:1px;background:#f0f0ec}
+@media(max-width:600px){.trc-grid{grid-template-columns:1fr}.t3-sep{width:100%;height:1px}}
+</style></head>
 <body>
 <div class="topbar">
   <div style="display:flex;align-items:center;gap:8px">
     <span class="brand">NHL <span>Oracle</span></span>
     <span class="badge gray">14 Mars 2026</span>
-    <span class="badge green">✓ Effectifs confirmés 17h00</span>
+    <span class="badge green">✓ Dernière MàJ 18h00 CET</span>
   </div>
-  <div class="topright">
-    <div class="search">
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input id="si" placeholder="Équipe, joueur..." oninput="filterAll()"/>
-    </div>
-  </div>
+  <div class="topright"><div class="search">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="si" placeholder="Équipe, joueur..." oninput="filterAll()"/>
+  </div></div>
 </div>
 <div class="filters">
-  <button class="chip on" onclick="setF('all',this)">Tous (10)</button>
+  <button class="chip on" onclick="setF('all',this)">Tous (14)</button>
   <button class="chip" onclick="setF('tight',this)">🔥 Serrés</button>
-  <button class="chip" onclick="setF('early',this)">19h–22h</button>
-  <button class="chip" onclick="setF('mid',this)">00h–02h</button>
-  <button class="chip" onclick="setF('late',this)">03h–04h</button>
+  <button class="chip" onclick="setF('early',this)">19h–22h (3)</button>
+  <button class="chip" onclick="setF('mid',this)">00h–02h (8)</button>
+  <button class="chip" onclick="setF('late',this)">03h–04h (3)</button>
 </div>
+<div style="padding:10px 16px 0;max-width:1000px;margin:0 auto"><div class="top3-bar">
+  <div class="t3-title">⭐ Top Picks du soir — Classement par catégorie</div>
+  <div class="trc-grid">
+    <div class="trc-col">
+  <div class="trc-head">🎯 But</div>
+  <div class="tr-row" onclick="document.getElementById('m-col-wpg').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">N. MacKinnon</span>
+    <span class="ptag" style="font-size:10px">COL</span>
+    <span class='tp-serie'>série 4M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">COL@WPG · 22h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">7.1/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-nyr-min').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">K. Kaprizov</span>
+    <span class="ptag" style="font-size:10px">MIN</span>
+    <span class='tp-serie'>série 4M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">NYR@MIN · 00h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">6.8/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-ana-ott').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">T. Stutzle</span>
+    <span class="ptag" style="font-size:10px">OTT</span>
+    <span class='tp-serie'>série 4M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">ANA@OTT · 19h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">6.6/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-chi-vgk').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">J. Eichel</span>
+    <span class="ptag" style="font-size:10px">VGK</span>
+    <span class='tp-serie'>série 5M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">CHI@VGK · 04h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">6.6/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-bos-wsh').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">D. Pastrnak</span>
+    <span class="ptag" style="font-size:10px">BOS</span>
+    <span class='tp-serie'>série 5M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">BOS@WSH · 21h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">6.5/10</span>
+  </div>
+</div>
+</div>
+    <div class="t3-sep"></div>
+    <div class="trc-col">
+  <div class="trc-head">⭐ Point</div>
+  <div class="tr-row" onclick="document.getElementById('m-col-wpg').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">N. MacKinnon</span>
+    <span class="ptag" style="font-size:10px">COL</span>
+    
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">COL@WPG · 22h00</span>
+    <span class="conf-badge" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32;font-size:11px;padding:2px 7px">8.0/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-nyr-min').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">K. Kaprizov</span>
+    <span class="ptag" style="font-size:10px">MIN</span>
+    <span class='tp-serie'>série 6M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">NYR@MIN · 00h00</span>
+    <span class="conf-badge" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32;font-size:11px;padding:2px 7px">7.9/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-ana-ott').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">T. Stutzle</span>
+    <span class="ptag" style="font-size:10px">OTT</span>
+    <span class='tp-serie'>série 6M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">ANA@OTT · 19h00</span>
+    <span class="conf-badge" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32;font-size:11px;padding:2px 7px">7.7/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-lak-njd').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">J. Hughes</span>
+    <span class="ptag" style="font-size:10px">NJD</span>
+    <span class='tp-serie'>série 6M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">LAK@NJD · 01h00</span>
+    <span class="conf-badge" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32;font-size:11px;padding:2px 7px">7.7/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-bos-wsh').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">D. Pastrnak</span>
+    <span class="ptag" style="font-size:10px">BOS</span>
+    <span class='tp-serie'>série 8M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">BOS@WSH · 21h00</span>
+    <span class="conf-badge" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32;font-size:11px;padding:2px 7px">7.7/10</span>
+  </div>
+</div>
+</div>
+    <div class="t3-sep"></div>
+    <div class="trc-col">
+  <div class="trc-head">🤝 Assist</div>
+  <div class="tr-row" onclick="document.getElementById('m-col-wpg').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">C. Makar</span>
+    <span class="ptag" style="font-size:10px">COL</span>
+    
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">COL@WPG · 22h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">6.7/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-tor-buf').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">R. Dahlin</span>
+    <span class="ptag" style="font-size:10px">BUF</span>
+    <span class='tp-serie'>série 4M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">TOR@BUF · 01h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">6.4/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-det-dal').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">M. Heiskanen</span>
+    <span class="ptag" style="font-size:10px">DAL</span>
+    
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">DET@DAL · 02h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">5.8/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-car-tbl').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">B. Point</span>
+    <span class="ptag" style="font-size:10px">TBL</span>
+    
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">CAR@TBL · 01h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">5.7/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-sjs-mtl').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">J. Slafkovsky</span>
+    <span class="ptag" style="font-size:10px">MTL</span>
+    
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">SJS@MTL · 01h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">5.6/10</span>
+  </div>
+</div>
+</div>
+  </div>
+</div><div style="height:8px"></div><div class="legend-bar">
+  <div class="lb-group"><span class="lb-title">H2H</span><span class="lb-desc">Stats face à cet adversaire cette saison</span></div>
+  <div class="lb-sep"></div>
+  <div class="lb-group"><span class="lb-title">Statuts</span><span class="bdtd">DTD</span><span class="lb-desc">Incertain</span><span class="binj">OUT</span><span class="lb-desc">Absent</span><span class="birs">IR-LT</span><span class="lb-desc">Long terme</span><span class="b2b">🔴 B2B</span><span class="lb-desc">2ème match en 2 jours</span></div>
+  <div class="lb-sep"></div>
+  <div class="lb-group"><span class="lb-title">Gardiens</span><span class="lb-kchip good">SV%</span><span class="lb-desc">% arrêts (+= meilleur)</span><span class="lb-kchip avg">GAA</span><span class="lb-desc">Buts/match (-= meilleur)</span><span class="lb-kchip good">PP%</span><span class="lb-desc">% powerplay</span><span class="lb-kchip good">PK%</span><span class="lb-desc">% infériorité</span></div>
+  <div class="lb-sep"></div>
+  <div class="lb-group"><span class="lb-title">Picks</span><span class="lb-desc">⏱ Temps de jeu moyen · 🎯 Tirs/match · 🔑 xAssist/match · <b>X/10</b> Score de confiance IA</span></div>
+</div></div>
 <div class="content"><div class="card" id="m-ana-ott" data-bucket="early">
   <div class="card-header">
     <div class="teams-row">
-      <div class="tblock"><div class="tcode">ANA</div><div class="tfull">Anaheim Ducks</div><div class="trole">VISITEUR</div></div>
+      <div class="tblock"><div class="tcode">ANA</div><div class="tfull">Anaheim Ducks</div><div class="trole">VISITEUR </div></div>
       <div class="vsblock"><div class="vstime">19h00</div><div class="vsat">CET</div></div>
-      <div class="tblock tright"><div class="tcode">OTT</div><div class="tfull">Ottawa Senators</div><div class="trole">DOMICILE</div></div>
+      <div class="tblock tright"><div class="tcode">OTT</div><div class="tfull">Ottawa Senators</div><div class="trole"> DOMICILE</div></div>
     </div>
-    <div class="prob-row">
-      <span class="prob-lbl away-lbl">38%</span>
-      <div class="pbar-outer"><div class="pbar-a" style="width:38%"></div><div class="pbar-h" style="width:62%"></div></div>
-      <span class="prob-lbl home-lbl">62%</span>
-    </div>
+    <div class="prob-row"><span class="prob-lbl away-lbl">38%</span><div class="pbar-outer"><div class="pbar-a" style="width:38%"></div><div class="pbar-h" style="width:62%"></div></div><span class="prob-lbl home-lbl">62%</span></div>
     <div class="form-row">
       <div class="fside"><div class="fbadges"><div class="fb l">L</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div></div><span class="rec">36-26-3</span><span class="streak up">▲ 1W</span></div>
       <div class="fside fright"><span class="streak up">▲ 2W</span><span class="rec">32-23-9</span><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb w">W</div></div></div>
@@ -148,122 +329,125 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </div>
   <div class="card-body">
     <div class="info-grid">
-      <div class="info-col"><div class="info-label">ANA · GARDIEN</div><div class="kname">L. Dostal</div><div class="kstats"><span class="kchip good">SV% .906</span><span class="kchip avg">GAA 2.89</span></div><div class="pp-line">PP1: Carlsson · Kreider · Gauthier</div></div>
-      <div class="info-col"><div class="info-label">OTT · GARDIEN</div><div class="kname">L. Ullmark</div><div class="kstats"><span class="kchip good">SV% .914</span><span class="kchip avg">GAA 2.71</span></div><div class="pp-line">PP1: Stutzle · B.Tkachuk · Batherson</div></div>
-      <div class="info-col"><div class="info-label">Absents ANA</div><div class="ab-item"><span class="ab-name">T. Terry</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">R. Gudas</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
-      <div class="info-col"><div class="info-label">Absents OTT</div><div class="ab-item"><span class="ab-name">J. Sanderson</span><span class="binj">OUT/IR</span><span class="ab-reason">haut du corps</span></div></div>
+      <div class="info-col"><div class="info-label">ANA · GARDIEN</div><div class="kname">L. Dostal</div><div class="kstats"><span class="kchip good">SV% .906</span><span class="kchip avg">GAA 2.89</span><span class="kchip ">PP 16.8%</span><span class="kchip avg">PK 79.2%</span></div><div class="pp-line">PP1: Carlsson · Kreider · Gauthier</div></div>
+      <div class="info-col"><div class="info-label">OTT · GARDIEN</div><div class="kname">L. Ullmark</div><div class="kstats"><span class="kchip good">SV% .914</span><span class="kchip avg">GAA 2.71</span><span class="kchip good">PP 22.4%</span><span class="kchip good">PK 83.1%</span></div><div class="pp-line">PP1: Stutzle · B.Tkachuk · Batherson</div></div>
+      <div class="info-col"><div class="info-label">Absents ANA</div><div class="ab-item"><span class="ab-name">T. Terry</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 15</span></div><div class="ab-item"><span class="ab-name">R. Gudas</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
+      <div class="info-col"><div class="info-label">Absents OTT</div><div class="ab-item"><span class="ab-name">J. Sanderson</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 28</span></div><div class="ab-item"><span class="ab-name">N. Jensen</span><span class="binj">OUT/IR</span><span class="ab-reason">ce soir</span></div></div>
     </div>
     <div class="pred-header-row"><div>CATÉGORIE</div><div>ANA — VISITEUR</div><div>OTT — DOMICILE</div></div>
     <div class="pred-row">
   <div class="pred-cat-cell">🎯 But</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">ANA</span><span class="pname">L. Carlsson</span></div>
+    <div class="p-top"><span class="ptag">ANA</span><span class="pname">L. Carlsson</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:34%"></div></div>
     <div class="p-pct ">34%</div>
     <div class="p-note">PP1 centre · 0,48 but/m</div>
+    <div class="p-extra">⏱ 18:24 · 🎯 3.2 tirs/m</div>
     <div class="p-h2h">H2H · vs OTT : 3B/8M</div>
     <div class="p-stat">14B · 65 matchs · série 0</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">OTT</span><span class="pname">T. Stutzle</span></div>
+    <div class="p-top"><span class="ptag">OTT</span><span class="pname">T. Stutzle</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.6/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:56%"></div></div>
     <div class="p-pct ">56%</div>
     <div class="p-note">PP1 · 0,85 but/m dom</div>
+    <div class="p-extra">⏱ 21:18 · 🎯 4.1 tirs/m</div>
     <div class="p-h2h">H2H · vs ANA : 8B/11M</div>
     <div class="p-stat">38B · 62M · série 4M🔥</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">⭐ Point</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">ANA</span><span class="pname">L. Carlsson</span></div>
+    <div class="p-top"><span class="ptag">ANA</span><span class="pname">L. Carlsson</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">5.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:51%"></div></div>
     <div class="p-pct ">51%</div>
     <div class="p-note">PP1 · 0,78 pt/m</div>
+    <div class="p-extra">⏱ 18:24 · 🎯 3.2 tirs/m · 🔑 —</div>
     <div class="p-h2h">H2H · vs OTT : 0,7pt/m</div>
     <div class="p-stat">31Pts · 65M · actif 3M</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">OTT</span><span class="pname">T. Stutzle</span></div>
+    <div class="p-top"><span class="ptag">OTT</span><span class="pname">T. Stutzle</span><span class="conf-badge" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32">7.7/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:72%"></div></div>
     <div class="p-pct ">72%</div>
     <div class="p-note">1,18 pt/m · Sanderson OUT</div>
+    <div class="p-extra">⏱ 21:18 · 🎯 4.1 tirs/m · 🔑 0.82 xA/m</div>
     <div class="p-h2h">H2H · vs ANA : 1,4pt/m</div>
     <div class="p-stat">68Pts · 62M · série 6M🔥</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">🤝 Assist</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">ANA</span><span class="pname">A. Killorn</span></div>
+    <div class="p-top"><span class="ptag">ANA</span><span class="pname">A. Killorn</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:42%"></div></div>
     <div class="p-pct ">42%</div>
     <div class="p-note">PP2 wing · 0,52 ast/m</div>
+    <div class="p-extra">⏱ 16:42 · 🔑 0.44 xA/m</div>
     <div class="p-h2h">H2H · vs OTT : 5A/7M</div>
     <div class="p-stat">22A · 68M · actif 2M</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">OTT</span><span class="pname">B. Tkachuk</span></div>
+    <div class="p-top"><span class="ptag">OTT</span><span class="pname">B. Tkachuk</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">5.4/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:58%"></div></div>
     <div class="p-pct ">58%</div>
     <div class="p-note">PP1 LW · 0,71 ast/m</div>
+    <div class="p-extra">⏱ 19:54 · 🔑 0.68 xA/m</div>
     <div class="p-h2h">H2H · vs ANA : 12A/14M</div>
     <div class="p-stat">40A · 64M · série 3M</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">💥 2+ Pts</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">OTT</span><span class="pname">T. Stutzle</span></div>
-    <div class="pbar-wrap"><div class="pbar-fill" style="width:28%"></div></div>
-    <div class="p-pct ">28%</div>
-    <div class="p-note">OTT dom · ANA perméable</div>
-    <div class="p-h2h">H2H · vs ANA : 3×2+pts</div>
-    <div class="p-stat">Moy. 1,18pt/m sur 10 derniers</div>
-  </div>
-  <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">ANA</span><span class="pname">L. Carlsson</span></div>
+    <div class="p-top"><span class="ptag">ANA</span><span class="pname">L. Carlsson</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:14%"></div></div>
     <div class="p-pct ">14%</div>
     <div class="p-note">Espoir gros match ANA</div>
+    <div class="p-extra">⏱ 18:24 · 🎯 3.2 tirs/m · 🔑 —</div>
     <div class="p-h2h">H2H · vs OTT : 1×2+pts</div>
     <div class="p-stat">Moy. 0,78pt/m cette saison</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">OTT</span><span class="pname">T. Stutzle</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:28%"></div></div>
+    <div class="p-pct ">28%</div>
+    <div class="p-note">OTT dom · ANA perméable</div>
+    <div class="p-extra">⏱ 21:18 · 🎯 4.1 tirs/m · 🔑 0.82 xA/m</div>
+    <div class="p-h2h">H2H · vs ANA : 3×2+pts</div>
+    <div class="p-stat">Moy. 1,18pt/m sur 10 derniers</div>
   </div>
 </div><div class="pred-row outsider-row">
   <div class="pred-cat-cell">🔥 Outsider</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">ANA</span><span class="pname">C. Gauthier</span></div>
+    <div class="p-top"><span class="ptag">ANA</span><span class="pname">C. Gauthier</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:13%"></div></div>
     <div class="p-pct o-pct">13%</div>
     <div class="p-note">PP1 RW · vitesse pure</div>
+    <div class="p-extra">⏱ 14:30 · 🎯 2.8 tirs/m</div>
     <div class="p-h2h">H2H · vs OTT : 2B/5M</div>
     <div class="p-stat">18B · 61M · 2B sur 4 derniers</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">OTT</span><span class="pname">D. Batherson</span></div>
+    <div class="p-top"><span class="ptag">OTT</span><span class="pname">D. Batherson</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:16%"></div></div>
     <div class="p-pct o-pct">16%</div>
     <div class="p-note">PP1 RW · sniper discret</div>
+    <div class="p-extra">⏱ 17:12 · 🎯 2.9 tirs/m</div>
     <div class="p-h2h">H2H · vs ANA : 4B/8M</div>
     <div class="p-stat">26B · 63M · actif 2M</div>
   </div>
 </div>
-    <div class="score-row">
-      <div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">OTT 4 – ANA 1</div></div>
-      <div class="score-analysis">OTT -165. Ullmark vs Dostal. Sanderson OUT réduit le PP mais Stutzle–Tkachuk–Batherson restent dominants.</div>
-    </div>
+    <div class="score-row"><div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">OTT 4 – ANA 1</div></div><div class="score-analysis">OTT -165. Ullmark vs Dostal. Sanderson OUT réduit le PP mais Stutzle–Tkachuk–Batherson restent dominants.</div></div>
   </div>
   <div class="card-toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
 </div>
 <div class="card" id="m-bos-wsh" data-bucket="early">
   <div class="card-header">
     <div class="teams-row">
-      <div class="tblock"><div class="tcode">BOS</div><div class="tfull">Boston Bruins</div><div class="trole">VISITEUR</div></div>
+      <div class="tblock"><div class="tcode">BOS</div><div class="tfull">Boston Bruins</div><div class="trole">VISITEUR </div></div>
       <div class="vsblock"><div class="vstime">21h00</div><div class="vsat">CET</div></div>
-      <div class="tblock tright"><div class="tcode">WSH</div><div class="tfull">Washington Capitals</div><div class="trole">DOMICILE</div></div>
+      <div class="tblock tright"><div class="tcode">WSH</div><div class="tfull">Washington Capitals</div><div class="trole"> DOMICILE</div></div>
     </div>
-    <div class="prob-row">
-      <span class="prob-lbl away-lbl">43%</span>
-      <div class="pbar-outer"><div class="pbar-a" style="width:43%"></div><div class="pbar-h" style="width:57%"></div></div>
-      <span class="prob-lbl home-lbl">57%</span>
-    </div>
+    <div class="prob-row"><span class="prob-lbl away-lbl">43%</span><div class="pbar-outer"><div class="pbar-a" style="width:43%"></div><div class="pbar-h" style="width:57%"></div></div><span class="prob-lbl home-lbl">57%</span></div>
     <div class="form-row">
       <div class="fside"><div class="fbadges"><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div></div><span class="rec">36-23-6</span><span class="streak up">▲ 1W</span></div>
       <div class="fside fright"><span class="streak dn">▼ 1L</span><span class="rec">33-27-7</span><div class="fbadges"><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div></div></div>
@@ -271,122 +455,125 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </div>
   <div class="card-body">
     <div class="info-grid">
-      <div class="info-col"><div class="info-label">BOS · GARDIEN</div><div class="kname">J. Swayman</div><div class="kstats"><span class="kchip good">SV% .912</span><span class="kchip avg">GAA 2.64</span></div><div class="pp-line">PP1: E.Lindholm · Mittelstadt · Pastrnak</div></div>
-      <div class="info-col"><div class="info-label">WSH · GARDIEN</div><div class="kname">L. Thompson</div><div class="kstats"><span class="kchip good">SV% .908</span><span class="kchip avg">GAA 2.81</span></div><div class="pp-line">PP1: Dubois · Ovechkin · T.Wilson</div></div>
+      <div class="info-col"><div class="info-label">BOS · GARDIEN</div><div class="kname">J. Swayman</div><div class="kstats"><span class="kchip good">SV% .912</span><span class="kchip avg">GAA 2.64</span><span class="kchip avg">PP 21.3%</span><span class="kchip avg">PK 81.6%</span></div><div class="pp-line">PP1: E.Lindholm · Mittelstadt · Pastrnak</div></div>
+      <div class="info-col"><div class="info-label">WSH · GARDIEN</div><div class="kname">L. Thompson</div><div class="kstats"><span class="kchip good">SV% .908</span><span class="kchip avg">GAA 2.81</span><span class="kchip avg">PP 19.8%</span><span class="kchip avg">PK 80.4%</span></div><div class="pp-line">PP1: Dubois · Ovechkin · T.Wilson</div></div>
       <div class="info-col"><div class="info-label">Absents BOS</div><div class="ab-item"><span class="ab-name">D. Locmelis</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
-      <div class="info-col"><div class="info-label">Absents WSH</div><div class="ab-item"><span class="ab-name">D. Kampf</span><span class="bdtd">DTD</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">E. Mateiko</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
+      <div class="info-col"><div class="info-label">Absents WSH</div><div class="ab-item"><span class="ab-name">D. Kampf</span><span class="bdtd">DTD</span><span class="ab-reason"></span></div></div>
     </div>
     <div class="pred-header-row"><div>CATÉGORIE</div><div>BOS — VISITEUR</div><div>WSH — DOMICILE</div></div>
     <div class="pred-row">
   <div class="pred-cat-cell">🎯 But</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">BOS</span><span class="pname">D. Pastrnak</span></div>
+    <div class="p-top"><span class="ptag">BOS</span><span class="pname">D. Pastrnak</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:54%"></div></div>
     <div class="p-pct ">54%</div>
     <div class="p-note">PP1 RW · 0,78 but/m ext</div>
+    <div class="p-extra">⏱ 21:06 · 🎯 5.2 tirs/m</div>
     <div class="p-h2h">H2H · vs WSH : 12B/17M</div>
     <div class="p-stat">44B · 65M · série 5M🔥</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">WSH</span><span class="pname">A. Ovechkin</span></div>
+    <div class="p-top"><span class="ptag">WSH</span><span class="pname">A. Ovechkin</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">5.2/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:48%"></div></div>
     <div class="p-pct ">48%</div>
     <div class="p-note">PP1 · chasse record Gretzky</div>
+    <div class="p-extra">⏱ 20:18 · 🎯 5.8 tirs/m</div>
     <div class="p-h2h">H2H · vs BOS : 48B/72M carrière</div>
     <div class="p-stat">37B · 67M · série 2M</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">⭐ Point</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">BOS</span><span class="pname">D. Pastrnak</span></div>
+    <div class="p-top"><span class="ptag">BOS</span><span class="pname">D. Pastrnak</span><span class="conf-badge" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32">7.7/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:71%"></div></div>
     <div class="p-pct ">71%</div>
     <div class="p-note">1,21 pt/m ext · série active</div>
+    <div class="p-extra">⏱ 21:06 · 🎯 5.2 tirs/m · 🔑 0.74 xA/m</div>
     <div class="p-h2h">H2H · vs WSH : 1,3pt/m</div>
     <div class="p-stat">74Pts · 65M · série 8M🔥</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">WSH</span><span class="pname">P. Dubois</span></div>
+    <div class="p-top"><span class="ptag">WSH</span><span class="pname">P. Dubois</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">5.6/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:58%"></div></div>
     <div class="p-pct ">58%</div>
     <div class="p-note">PP1 · Wilson de retour</div>
+    <div class="p-extra">⏱ — · 🎯 — · 🔑 —</div>
     <div class="p-h2h">H2H · vs BOS : 0,9pt/m</div>
     <div class="p-stat">55Pts · 67M · actif 3M</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">🤝 Assist</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">BOS</span><span class="pname">E. Lindholm</span></div>
+    <div class="p-top"><span class="ptag">BOS</span><span class="pname">E. Lindholm</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">5.2/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:55%"></div></div>
     <div class="p-pct ">55%</div>
     <div class="p-note">PP1 centre · 0,72 ast/m</div>
+    <div class="p-extra">⏱ 19:42 · 🔑 0.71 xA/m</div>
     <div class="p-h2h">H2H · vs WSH : 8A/11M</div>
     <div class="p-stat">44A · 65M · actif 4M</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">WSH</span><span class="pname">D. Strome</span></div>
+    <div class="p-top"><span class="ptag">WSH</span><span class="pname">D. Strome</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">5.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:52%"></div></div>
     <div class="p-pct ">52%</div>
     <div class="p-note">PP1 RD · 0,68 ast/m</div>
+    <div class="p-extra">⏱ 17:54 · 🔑 0.58 xA/m</div>
     <div class="p-h2h">H2H · vs BOS : 0,7pt/m</div>
     <div class="p-stat">38A · 67M · actif 2M</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">💥 2+ Pts</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">BOS</span><span class="pname">D. Pastrnak</span></div>
+    <div class="p-top"><span class="ptag">BOS</span><span class="pname">D. Pastrnak</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:32%"></div></div>
     <div class="p-pct ">32%</div>
     <div class="p-note">BOS PP fort · en feu</div>
+    <div class="p-extra">⏱ 21:06 · 🎯 5.2 tirs/m · 🔑 0.74 xA/m</div>
     <div class="p-h2h">H2H · vs WSH : 3×2+pts</div>
     <div class="p-stat">3 matchs 2+pts sur 5 derniers</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">WSH</span><span class="pname">A. Ovechkin</span></div>
+    <div class="p-top"><span class="ptag">WSH</span><span class="pname">A. Ovechkin</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:26%"></div></div>
     <div class="p-pct ">26%</div>
     <div class="p-note">PP1 complet avec Wilson</div>
+    <div class="p-extra">⏱ 20:18 · 🎯 5.8 tirs/m · 🔑 0.61 xA/m</div>
     <div class="p-h2h">H2H · vs BOS : 3×2+pts</div>
     <div class="p-stat">2 matchs 2+pts sur 5 derniers</div>
   </div>
 </div><div class="pred-row outsider-row">
   <div class="pred-cat-cell">🔥 Outsider</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">WSH</span><span class="pname">T. Wilson</span></div>
-    <div class="pbar-wrap"><div class="pbar-fill" style="width:17%"></div></div>
-    <div class="p-pct o-pct">17%</div>
-    <div class="p-note">Retour blessure · PP1 · motivé</div>
-    <div class="p-h2h">H2H · vs BOS : 3B/5M</div>
-    <div class="p-stat">9B · 28M (retour) · énergie+</div>
-  </div>
-  <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">BOS</span><span class="pname">C. Mittelstadt</span></div>
+    <div class="p-top"><span class="ptag">BOS</span><span class="pname">C. Mittelstadt</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:12%"></div></div>
     <div class="p-pct o-pct">12%</div>
     <div class="p-note">PP1 LW · 2B récents</div>
+    <div class="p-extra">⏱ 17:36 · 🎯 2.7 tirs/m</div>
     <div class="p-h2h">H2H · vs WSH : 2B/6M</div>
     <div class="p-stat">18B · 63M · discret mais efficace</div>
   </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">WSH</span><span class="pname">T. Wilson</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:17%"></div></div>
+    <div class="p-pct o-pct">17%</div>
+    <div class="p-note">Retour blessure · PP1 · motivé</div>
+    <div class="p-extra">⏱ 16:48 · 🎯 3.1 tirs/m</div>
+    <div class="p-h2h">H2H · vs BOS : 3B/5M</div>
+    <div class="p-stat">9B · 28M (retour) · énergie+</div>
+  </div>
 </div>
-    <div class="score-row">
-      <div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">WSH 3 – BOS 2</div></div>
-      <div class="score-analysis">WSH -130. T.Wilson retour renforce PP1 Ovechkin–Dubois. Pastrnak seule vraie réponse de BOS.</div>
-    </div>
+    <div class="score-row"><div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">WSH 3 – BOS 2</div></div><div class="score-analysis">WSH -130. T.Wilson retour renforce PP1 Ovechkin–Dubois. Pastrnak seule vraie réponse de BOS.</div></div>
   </div>
   <div class="card-toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
 </div>
 <div class="card" id="m-col-wpg" data-bucket="early">
   <div class="card-header">
     <div class="teams-row">
-      <div class="tblock"><div class="tcode">COL</div><div class="tfull">Colorado Avalanche</div><div class="trole">VISITEUR</div></div>
+      <div class="tblock"><div class="tcode">COL</div><div class="tfull">Colorado Avalanche</div><div class="trole">VISITEUR </div></div>
       <div class="vsblock"><div class="vstime">22h00</div><div class="vsat">CET</div></div>
-      <div class="tblock tright"><div class="tcode">WPG</div><div class="tfull">Winnipeg Jets</div><div class="trole">DOMICILE</div></div>
+      <div class="tblock tright"><div class="tcode">WPG</div><div class="tfull">Winnipeg Jets</div><div class="trole"><span class="b2b">🔴 B2B</span> DOMICILE</div></div>
     </div>
-    <div class="prob-row">
-      <span class="prob-lbl away-lbl">65%</span>
-      <div class="pbar-outer"><div class="pbar-a" style="width:65%"></div><div class="pbar-h" style="width:35%"></div></div>
-      <span class="prob-lbl home-lbl">35%</span>
-    </div>
+    <div class="prob-row"><span class="prob-lbl away-lbl">65%</span><div class="pbar-outer"><div class="pbar-a" style="width:65%"></div><div class="pbar-h" style="width:35%"></div></div><span class="prob-lbl home-lbl">35%</span></div>
     <div class="form-row">
       <div class="fside"><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div></div><span class="rec">44-11-9</span><span class="streak up">▲ 3W</span></div>
       <div class="fside fright"><span class="streak up">▲ 1W</span><span class="rec">26-28-10</span><div class="fbadges"><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb l">L</div><div class="fb w">W</div></div></div>
@@ -394,122 +581,251 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </div>
   <div class="card-body">
     <div class="info-grid">
-      <div class="info-col"><div class="info-label">COL · GARDIEN</div><div class="kname">M. Blackwood</div><div class="kstats"><span class="kchip good">SV% .908</span><span class="kchip avg">GAA 2.77</span></div><div class="pp-line">PP1: MacKinnon · Makar · Necas · Kadri</div></div>
-      <div class="info-col"><div class="info-label">WPG · GARDIEN</div><div class="kname">C. Hellebuyck</div><div class="kstats"><span class="kchip good">SV% .921</span><span class="kchip avg">GAA 2.38</span></div><div class="pp-line">PP1: Scheifele · Connor · Vilardi · Morrissey</div></div>
-      <div class="info-col"><div class="info-label">Absents COL</div><div class="ab-item"><span class="ab-name">G. Landeskog</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">A. Lehkonen</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">R. Colton</span><span class="bdtd">DTD</span><span class="ab-reason"></span></div></div>
-      <div class="info-col"><div class="info-label">Absents WPG</div><div class="ab-item"><span class="ab-name">N. Pionk</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">N. Niederreiter</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">V. Namestnikov</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
+      <div class="info-col"><div class="info-label">COL · GARDIEN</div><div class="kname">M. Blackwood</div><div class="kstats"><span class="kchip good">SV% .908</span><span class="kchip avg">GAA 2.77</span><span class="kchip good">PP 28.6%</span><span class="kchip good">PK 82.1%</span></div><div class="pp-line">PP1: MacKinnon · Makar · Necas · Kadri</div></div>
+      <div class="info-col"><div class="info-label">WPG · GARDIEN</div><div class="kname">C. Hellebuyck</div><div class="kstats"><span class="kchip good">SV% .921</span><span class="kchip avg">GAA 2.38</span><span class="kchip ">PP 17.2%</span><span class="kchip ">PK 77.4%</span></div><div class="pp-line">PP1: Scheifele · Connor · Vilardi · Morrissey</div></div>
+      <div class="info-col"><div class="info-label">Absents COL</div><div class="ab-item"><span class="ab-name">G. Landeskog</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 22</span></div><div class="ab-item"><span class="ab-name">A. Lehkonen</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 24</span></div><div class="ab-item"><span class="ab-name">R. Colton</span><span class="bdtd">DTD</span><span class="ab-reason"></span></div></div>
+      <div class="info-col"><div class="info-label">Absents WPG</div><div class="ab-item"><span class="ab-name">N. Pionk</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 26</span></div><div class="ab-item"><span class="ab-name">C. Miller</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 26</span></div><div class="ab-item"><span class="ab-name">N. Niederreiter</span><span class="binj">OUT/IR</span><span class="ab-reason">avr 11</span></div><div class="ab-item"><span class="ab-name">V. Namestnikov</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 21</span></div></div>
     </div>
     <div class="pred-header-row"><div>CATÉGORIE</div><div>COL — VISITEUR</div><div>WPG — DOMICILE</div></div>
     <div class="pred-row">
   <div class="pred-cat-cell">🎯 But</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">COL</span><span class="pname">N. MacKinnon</span></div>
+    <div class="p-top"><span class="ptag">COL</span><span class="pname">N. MacKinnon</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">7.1/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:68%"></div></div>
     <div class="p-pct ">68%</div>
     <div class="p-note">PP1 · 0,91 but/m · 7B/8 derniers</div>
+    <div class="p-extra">⏱ 22:12 · 🎯 5.4 tirs/m</div>
     <div class="p-h2h">H2H · vs WPG : 1,1B/m</div>
     <div class="p-stat">56B · 64M · série 4M🔥</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">WPG</span><span class="pname">K. Connor</span></div>
+    <div class="p-top"><span class="ptag">WPG</span><span class="pname">K. Connor</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:38%"></div></div>
     <div class="p-pct ">38%</div>
     <div class="p-note">PP1 · 0,54 but/m dom</div>
+    <div class="p-extra">⏱ 18:30 · 🎯 3.8 tirs/m</div>
     <div class="p-h2h">H2H · vs COL : 7B/14M</div>
     <div class="p-stat">32B · 64M · actif 1M</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">⭐ Point</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">COL</span><span class="pname">N. MacKinnon</span></div>
+    <div class="p-top"><span class="ptag">COL</span><span class="pname">N. MacKinnon</span><span class="conf-badge" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32">8.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:85%"></div></div>
     <div class="p-pct ">85%</div>
     <div class="p-note">1,82 pt/m sur 10 derniers🔥</div>
+    <div class="p-extra">⏱ 22:12 · 🎯 5.4 tirs/m · 🔑 1.08 xA/m</div>
     <div class="p-h2h">H2H · vs WPG : 1,9pt/m</div>
     <div class="p-stat">108Pts · 64M · MVP niveau</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">WPG</span><span class="pname">M. Scheifele</span></div>
+    <div class="p-top"><span class="ptag">WPG</span><span class="pname">M. Scheifele</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">5.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:52%"></div></div>
     <div class="p-pct ">52%</div>
     <div class="p-note">PP1 · 0,88 pt/m</div>
+    <div class="p-extra">⏱ 19:36 · 🎯 3.2 tirs/m · 🔑 0.72 xA/m</div>
     <div class="p-h2h">H2H · vs COL : 0,9pt/m</div>
     <div class="p-stat">54Pts · 64M · actif 2M</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">🤝 Assist</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">COL</span><span class="pname">C. Makar</span></div>
+    <div class="p-top"><span class="ptag">COL</span><span class="pname">C. Makar</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.7/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:72%"></div></div>
     <div class="p-pct ">72%</div>
     <div class="p-note">PP1 QB · 0,94 ast/m</div>
+    <div class="p-extra">⏱ 24:06 · 🔑 0.94 xA/m</div>
     <div class="p-h2h">H2H · vs WPG : 14A/16M</div>
     <div class="p-stat">58A · 63M · meilleur D offensif</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">WPG</span><span class="pname">J. Morrissey</span></div>
+    <div class="p-top"><span class="ptag">WPG</span><span class="pname">J. Morrissey</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.8/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:49%"></div></div>
     <div class="p-pct ">49%</div>
     <div class="p-note">PP1 QB · 0,78 ast/m</div>
+    <div class="p-extra">⏱ 23:18 · 🔑 0.72 xA/m</div>
     <div class="p-h2h">H2H · vs COL : 0,7pt/m</div>
     <div class="p-stat">48A · 64M · seul D offensif restant</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">💥 2+ Pts</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">COL</span><span class="pname">N. MacKinnon</span></div>
+    <div class="p-top"><span class="ptag">COL</span><span class="pname">N. MacKinnon</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:54%"></div></div>
     <div class="p-pct ">54%</div>
     <div class="p-note">COL -185 · WPG très affaibli</div>
+    <div class="p-extra">⏱ 22:12 · 🎯 5.4 tirs/m · 🔑 1.08 xA/m</div>
     <div class="p-h2h">H2H · vs WPG : 5×2+pts</div>
     <div class="p-stat">5 matchs 2+pts sur 8 derniers🔥</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">WPG</span><span class="pname">M. Scheifele</span></div>
+    <div class="p-top"><span class="ptag">WPG</span><span class="pname">M. Scheifele</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:22%"></div></div>
     <div class="p-pct ">22%</div>
     <div class="p-note">Hellebuyck tient mais offensif limité</div>
+    <div class="p-extra">⏱ 19:36 · 🎯 3.2 tirs/m · 🔑 0.72 xA/m</div>
     <div class="p-h2h">H2H · vs COL : 1×2+pts</div>
     <div class="p-stat">1 match 2+pts sur 8 derniers</div>
   </div>
 </div><div class="pred-row outsider-row">
   <div class="pred-cat-cell">🔥 Outsider</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">COL</span><span class="pname">M. Necas</span></div>
+    <div class="p-top"><span class="ptag">COL</span><span class="pname">M. Necas</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:18%"></div></div>
     <div class="p-pct o-pct">18%</div>
     <div class="p-note">PP1 RW · 3B récents</div>
+    <div class="p-extra">⏱ 17:48 · 🎯 3.2 tirs/m</div>
     <div class="p-h2h">H2H · vs WPG : 4B/7M</div>
     <div class="p-stat">28B · 64M · en progression</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">WPG</span><span class="pname">G. Vilardi</span></div>
+    <div class="p-top"><span class="ptag">WPG</span><span class="pname">G. Vilardi</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:13%"></div></div>
     <div class="p-pct o-pct">13%</div>
     <div class="p-note">PP1 RW · finisseur</div>
+    <div class="p-extra">⏱ 15:54 · 🎯 2.4 tirs/m</div>
     <div class="p-h2h">H2H · vs COL : 2B/5M</div>
     <div class="p-stat">20B · 62M · à surveiller</div>
   </div>
 </div>
-    <div class="score-row">
-      <div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">COL 5 – WPG 2</div></div>
-      <div class="score-analysis">COL -185. Hellebuyck (.921) mais MacKinnon+Makar inarrêtables. WPG très affaibli (Pionk/Niederreiter/Namestnikov OUT).</div>
+    <div class="score-row"><div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">COL 5 – WPG 2</div></div><div class="score-analysis">COL -185. Hellebuyck (.921) mais MacKinnon+Makar inarrêtables. WPG très affaibli (Pionk/Niederreiter/Namestnikov OUT).</div></div>
+  </div>
+  <div class="card-toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
+</div>
+<div class="card" id="m-nyr-min" data-bucket="mid">
+  <div class="card-header">
+    <div class="teams-row">
+      <div class="tblock"><div class="tcode">NYR</div><div class="tfull">New York Rangers</div><div class="trole">VISITEUR <span class="b2b">🔴 B2B</span></div></div>
+      <div class="vsblock"><div class="vstime">00h00</div><div class="vsat">CET</div></div>
+      <div class="tblock tright"><div class="tcode">MIN</div><div class="tfull">Minnesota Wild</div><div class="trole"> DOMICILE</div></div>
     </div>
+    <div class="prob-row"><span class="prob-lbl away-lbl">30%</span><div class="pbar-outer"><div class="pbar-a" style="width:30%"></div><div class="pbar-h" style="width:70%"></div></div><span class="prob-lbl home-lbl">70%</span></div>
+    <div class="form-row">
+      <div class="fside"><div class="fbadges"><div class="fb l">L</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb l">L</div></div><span class="rec">27-30-8</span><span class="streak dn">▼ 2L</span></div>
+      <div class="fside fright"><span class="streak up">▲ 2W</span><span class="rec">38-16-12</span><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="info-grid">
+      <div class="info-col"><div class="info-label">NYR · GARDIEN</div><div class="kname">I. Shesterkin</div><div class="kstats"><span class="kchip good">SV% .920</span><span class="kchip avg">GAA 2.52</span><span class="kchip ">PP 17.4%</span><span class="kchip avg">PK 78.8%</span></div><div class="pp-line">PP1: Trocheck · Lafreniere · Zibanejad · Fox</div></div>
+      <div class="info-col"><div class="info-label">MIN · GARDIEN</div><div class="kname">F. Gustavsson</div><div class="kstats"><span class="kchip good">SV% .918</span><span class="kchip avg">GAA 2.61</span><span class="kchip good">PP 24.1%</span><span class="kchip good">PK 84.2%</span></div><div class="pp-line">PP1: Eriksson Ek · Kaprizov · Boldy · Zuccarello</div></div>
+      <div class="info-col"><div class="info-label">Absents NYR</div><div class="ab-item"><span class="ab-name">J.T. Miller</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">M. Rempe</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 16</span></div></div>
+      <div class="info-col"><div class="info-label">Absents MIN</div><div class="ab-item"><span class="ab-name">M. Foligno</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 17</span></div><div class="ab-item"><span class="ab-name">B. Brink</span><span class="bdtd">DTD</span><span class="ab-reason">a pratiqué vendredi</span></div></div>
+    </div>
+    <div class="pred-header-row"><div>CATÉGORIE</div><div>NYR — VISITEUR</div><div>MIN — DOMICILE</div></div>
+    <div class="pred-row">
+  <div class="pred-cat-cell">🎯 But</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">NYR</span><span class="pname">J.T. Miller</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.8/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:44%"></div></div>
+    <div class="p-pct ">44%</div>
+    <div class="p-note">GTD · PP1 centre · retour motivé · 0,44 but/m</div>
+    <div class="p-extra">⏱ — · 🎯 —</div>
+    <div class="p-h2h">H2H · vs MIN : 6B/9M</div>
+    <div class="p-stat">28B · 58M · retour blessure 🟢</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">MIN</span><span class="pname">K. Kaprizov</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.8/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:58%"></div></div>
+    <div class="p-pct ">58%</div>
+    <div class="p-note">PP1 LW · 0,74 but/m dom</div>
+    <div class="p-extra">⏱ 21:54 · 🎯 4.6 tirs/m</div>
+    <div class="p-h2h">H2H · vs NYR : 9B/12M</div>
+    <div class="p-stat">44B · 66M · série 4M🔥</div>
+  </div>
+</div><div class="pred-row">
+  <div class="pred-cat-cell">⭐ Point</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">NYR</span><span class="pname">J.T. Miller</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">5.6/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:58%"></div></div>
+    <div class="p-pct ">58%</div>
+    <div class="p-note">Retour PP1 · playmaker élite · motivé</div>
+    <div class="p-extra">⏱ — · 🎯 — · 🔑 —</div>
+    <div class="p-h2h">H2H · vs MIN : 1,1pt/m</div>
+    <div class="p-stat">62Pts · 58M · retour🟢</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">MIN</span><span class="pname">K. Kaprizov</span><span class="conf-badge" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32">7.9/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:74%"></div></div>
+    <div class="p-pct ">74%</div>
+    <div class="p-note">1,22 pt/m · PP1 dom</div>
+    <div class="p-extra">⏱ 21:54 · 🎯 4.6 tirs/m · 🔑 0.88 xA/m</div>
+    <div class="p-h2h">H2H · vs NYR : 1,3pt/m</div>
+    <div class="p-stat">76Pts · 66M · série 6M🔥</div>
+  </div>
+</div><div class="pred-row">
+  <div class="pred-cat-cell">🤝 Assist</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">NYR</span><span class="pname">A. Fox</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.9/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:52%"></div></div>
+    <div class="p-pct ">52%</div>
+    <div class="p-note">PP1 RD · 0,81 ast/m · Miller revient = plus d'espace</div>
+    <div class="p-extra">⏱ 24:30 · 🔑 0.92 xA/m</div>
+    <div class="p-h2h">H2H · vs MIN : 11A/14M</div>
+    <div class="p-stat">52A · 65M · meilleur D NYR</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">MIN</span><span class="pname">M. Zuccarello</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">5.2/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:55%"></div></div>
+    <div class="p-pct ">55%</div>
+    <div class="p-note">PP1 · 0,69 ast/m</div>
+    <div class="p-extra">⏱ 17:12 · 🔑 0.64 xA/m</div>
+    <div class="p-h2h">H2H · vs NYR : 8A/11M</div>
+    <div class="p-stat">42A · 66M · actif 3M</div>
+  </div>
+</div><div class="pred-row">
+  <div class="pred-cat-cell">💥 2+ Pts</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">NYR</span><span class="pname">J.T. Miller</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:26%"></div></div>
+    <div class="p-pct ">26%</div>
+    <div class="p-note">Retour = grosse motivation · PP1 complet</div>
+    <div class="p-extra">⏱ — · 🎯 — · 🔑 —</div>
+    <div class="p-h2h">H2H · vs MIN : 2×2+pts</div>
+    <div class="p-stat">2 matchs 2+pts sur 6 derniers</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">MIN</span><span class="pname">K. Kaprizov</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:36%"></div></div>
+    <div class="p-pct ">36%</div>
+    <div class="p-note">MIN -235 · domine NYR affaibli</div>
+    <div class="p-extra">⏱ 21:54 · 🎯 4.6 tirs/m · 🔑 0.88 xA/m</div>
+    <div class="p-h2h">H2H · vs NYR : 3×2+pts</div>
+    <div class="p-stat">3 matchs 2+pts sur 7 derniers</div>
+  </div>
+</div><div class="pred-row outsider-row">
+  <div class="pred-cat-cell">🔥 Outsider</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">NYR</span><span class="pname">M. Zibanejad</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:15%"></div></div>
+    <div class="p-pct o-pct">15%</div>
+    <div class="p-note">PP1 centre si Miller GTD absent · retour ligne complète</div>
+    <div class="p-extra">⏱ — · 🎯 —</div>
+    <div class="p-h2h">H2H · vs MIN : 2B/7M</div>
+    <div class="p-stat">18B · 65M · peut exploser avec Miller</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">MIN</span><span class="pname">M. Boldy</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:16%"></div></div>
+    <div class="p-pct o-pct">16%</div>
+    <div class="p-note">PP1 RW · finisseur discret</div>
+    <div class="p-extra">⏱ 17:06 · 🎯 3.1 tirs/m</div>
+    <div class="p-h2h">H2H · vs NYR : 3B/7M</div>
+    <div class="p-stat">24B · 66M · silencieux efficace</div>
+  </div>
+</div>
+    <div class="score-row"><div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">MIN 4 – NYR 1</div></div><div class="score-analysis">MIN -235. Rangers améliorés avec retour probable Miller (GTD). Mais Wild 38-16-12 dom reste favori écrasant. Kaprizov en série 4M🔥.</div></div>
   </div>
   <div class="card-toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
 </div>
 <div class="card" id="m-tor-buf" data-bucket="mid" data-tight="1">
   <div class="card-header">
     <div class="teams-row">
-      <div class="tblock"><div class="tcode">TOR</div><div class="tfull">Toronto Maple Leafs</div><div class="trole">VISITEUR</div></div>
+      <div class="tblock"><div class="tcode">TOR</div><div class="tfull">Toronto Maple Leafs</div><div class="trole">VISITEUR </div></div>
       <div class="vsblock"><div class="vstime">01h00</div><div class="vsat">CET</div></div>
-      <div class="tblock tright"><div class="tcode">BUF</div><div class="tfull">Buffalo Sabres</div><div class="trole">DOMICILE</div></div>
+      <div class="tblock tright"><div class="tcode">BUF</div><div class="tfull">Buffalo Sabres</div><div class="trole"> DOMICILE</div></div>
     </div>
-    <div class="prob-row">
-      <span class="prob-lbl away-lbl">30%</span>
-      <div class="pbar-outer"><div class="pbar-a" style="width:30%"></div><div class="pbar-h" style="width:70%"></div></div>
-      <span class="prob-lbl home-lbl">70%</span>
-    </div>
+    <div class="prob-row"><span class="prob-lbl away-lbl">30%</span><div class="pbar-outer"><div class="pbar-a" style="width:30%"></div><div class="pbar-h" style="width:70%"></div></div><span class="prob-lbl home-lbl">70%</span></div>
     <div class="form-row">
       <div class="fside"><div class="fbadges"><div class="fb l">L</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb l">L</div></div><span class="rec">28-27-11</span><span class="streak dn">▼ 2L</span></div>
       <div class="fside fright"><span class="streak up">▲ 2W</span><span class="rec">40-20-6</span><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb w">W</div></div></div>
@@ -517,122 +833,125 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </div>
   <div class="card-body">
     <div class="info-grid">
-      <div class="info-col"><div class="info-label">TOR · GARDIEN</div><div class="kname">J. Woll</div><div class="kstats"><span class="kchip good">SV% .913</span><span class="kchip avg">GAA 2.65</span></div><div class="pp-line">PP1: J.Tavares · Knies · Nylander</div></div>
-      <div class="info-col"><div class="info-label">BUF · GARDIEN</div><div class="kname">A. Lyon</div><div class="kstats"><span class="kchip good">SV% .901</span><span class="kchip avg">GAA 2.94</span></div><div class="pp-line">PP1: Norris · Doan · T.Thompson · Dahlin</div></div>
+      <div class="info-col"><div class="info-label">TOR · GARDIEN</div><div class="kname">J. Woll</div><div class="kstats"><span class="kchip good">SV% .913</span><span class="kchip avg">GAA 2.65</span><span class="kchip avg">PP 18.2%</span><span class="kchip avg">PK 80.1%</span></div><div class="pp-line">PP1: J.Tavares · Knies · Nylander</div></div>
+      <div class="info-col"><div class="info-label">BUF · GARDIEN</div><div class="kname">A. Lyon</div><div class="kstats"><span class="kchip good">SV% .901</span><span class="kchip avg">GAA 2.94</span><span class="kchip good">PP 23.8%</span><span class="kchip good">PK 82.6%</span></div><div class="pp-line">PP1: Norris · Doan · T.Thompson · Dahlin</div></div>
       <div class="info-col"><div class="info-label">Absents TOR</div><div class="ab-item"><span class="ab-name">A. Matthews</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">C. Tanev</span><span class="birs">IR-LT</span><span class="ab-reason"></span></div></div>
-      <div class="info-col"><div class="info-label">Absents BUF</div><div class="ab-item"><span class="ab-name">A. Tuch</span><span class="bdtd">DTD</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">T. Pearson</span><span class="bdtd">DTD</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">J. Greenway</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
+      <div class="info-col"><div class="info-label">Absents BUF</div><div class="ab-item"><span class="ab-name">A. Tuch</span><span class="bdtd">DTD</span><span class="ab-reason">a pratiqué</span></div><div class="ab-item"><span class="ab-name">T. Pearson</span><span class="bdtd">DTD</span><span class="ab-reason">n'a pas pratiqué</span></div><div class="ab-item"><span class="ab-name">M. Samuelsson</span><span class="bdtd">DTD</span><span class="ab-reason">n'a pas pratiqué</span></div><div class="ab-item"><span class="ab-name">J. Greenway</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">J. Kulich</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
     </div>
     <div class="pred-header-row"><div>CATÉGORIE</div><div>TOR — VISITEUR</div><div>BUF — DOMICILE</div></div>
     <div class="pred-row">
   <div class="pred-cat-cell">🎯 But</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">TOR</span><span class="pname">W. Nylander</span></div>
+    <div class="p-top"><span class="ptag">TOR</span><span class="pname">W. Nylander</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.7/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:41%"></div></div>
     <div class="p-pct ">41%</div>
     <div class="p-note">PP1 · hérite rôle Matthews</div>
+    <div class="p-extra">⏱ 20:18 · 🎯 3.9 tirs/m</div>
     <div class="p-h2h">H2H · vs BUF : 11B/14M</div>
     <div class="p-stat">38B · 66M · série 3M</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">BUF</span><span class="pname">T. Thompson</span></div>
+    <div class="p-top"><span class="ptag">BUF</span><span class="pname">T. Thompson</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.7/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:42%"></div></div>
     <div class="p-pct ">42%</div>
     <div class="p-note">PP1 · 0,58 but/m dom</div>
+    <div class="p-extra">⏱ 17:42 · 🎯 3.2 tirs/m</div>
     <div class="p-h2h">H2H · vs TOR : 7B/10M</div>
     <div class="p-stat">34B · 66M · actif 2M</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">⭐ Point</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">TOR</span><span class="pname">W. Nylander</span></div>
+    <div class="p-top"><span class="ptag">TOR</span><span class="pname">W. Nylander</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.7/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:62%"></div></div>
     <div class="p-pct ">62%</div>
     <div class="p-note">1,01 pt/m · leader TOR sans Matthews</div>
+    <div class="p-extra">⏱ 20:18 · 🎯 3.9 tirs/m · 🔑 0.68 xA/m</div>
     <div class="p-h2h">H2H · vs BUF : 1,1pt/m</div>
     <div class="p-stat">62Pts · 66M · série 5M🔥</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">BUF</span><span class="pname">R. Dahlin</span></div>
+    <div class="p-top"><span class="ptag">BUF</span><span class="pname">R. Dahlin</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">5.6/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:58%"></div></div>
     <div class="p-pct ">58%</div>
     <div class="p-note">PP1 QB · 0,71 pt/m dom</div>
+    <div class="p-extra">⏱ 24:18 · 🎯 4.1 tirs/m · 🔑 0.88 xA/m</div>
     <div class="p-h2h">H2H · vs TOR : 0,8pt/m</div>
     <div class="p-stat">46Pts · 66M · meilleur D BUF</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">🤝 Assist</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">TOR</span><span class="pname">J. Tavares</span></div>
+    <div class="p-top"><span class="ptag">TOR</span><span class="pname">J. Tavares</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.9/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:51%"></div></div>
     <div class="p-pct ">51%</div>
     <div class="p-note">PP1 centre vétéran · 0,62 ast/m</div>
+    <div class="p-extra">⏱ 18:54 · 🔑 0.72 xA/m</div>
     <div class="p-h2h">H2H · vs BUF : 8A/11M</div>
     <div class="p-stat">39A · 66M · expérience</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">BUF</span><span class="pname">R. Dahlin</span></div>
+    <div class="p-top"><span class="ptag">BUF</span><span class="pname">R. Dahlin</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.4/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:62%"></div></div>
     <div class="p-pct ">62%</div>
     <div class="p-note">PP1 RD · 3A sur 4 derniers</div>
+    <div class="p-extra">⏱ 24:18 · 🔑 0.88 xA/m</div>
     <div class="p-h2h">H2H · vs TOR : 10A/12M</div>
     <div class="p-stat">42A · 66M · série 4M🔥</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">💥 2+ Pts</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">TOR</span><span class="pname">W. Nylander</span></div>
+    <div class="p-top"><span class="ptag">TOR</span><span class="pname">W. Nylander</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:28%"></div></div>
     <div class="p-pct ">28%</div>
     <div class="p-note">Forced à prendre le leadership</div>
+    <div class="p-extra">⏱ 20:18 · 🎯 3.9 tirs/m · 🔑 0.68 xA/m</div>
     <div class="p-h2h">H2H · vs BUF : 2×2+pts</div>
     <div class="p-stat">2 matchs 2+pts sur 6 derniers</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">BUF</span><span class="pname">R. Dahlin</span></div>
+    <div class="p-top"><span class="ptag">BUF</span><span class="pname">R. Dahlin</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:32%"></div></div>
     <div class="p-pct ">32%</div>
     <div class="p-note">BUF -235 dom · Lyon titulaire</div>
+    <div class="p-extra">⏱ 24:18 · 🎯 4.1 tirs/m · 🔑 0.88 xA/m</div>
     <div class="p-h2h">H2H · vs TOR : 2×2+pts</div>
     <div class="p-stat">2 matchs 2+pts sur 5 derniers</div>
   </div>
 </div><div class="pred-row outsider-row">
   <div class="pred-cat-cell">🔥 Outsider</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">TOR</span><span class="pname">M. Knies</span></div>
+    <div class="p-top"><span class="ptag">TOR</span><span class="pname">M. Knies</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:15%"></div></div>
     <div class="p-pct o-pct">15%</div>
     <div class="p-note">PP1 LW · 2B sur 4 derniers</div>
+    <div class="p-extra">⏱ 14:36 · 🎯 2.6 tirs/m</div>
     <div class="p-h2h">H2H · vs BUF : 3B/6M</div>
     <div class="p-stat">21B · 64M · silencieux mais efficace</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">BUF</span><span class="pname">J. Norris</span></div>
+    <div class="p-top"><span class="ptag">BUF</span><span class="pname">J. Norris</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:13%"></div></div>
     <div class="p-pct o-pct">13%</div>
     <div class="p-note">PP1 · remplace Tuch blessé</div>
+    <div class="p-extra">⏱ 16:12 · 🎯 2.4 tirs/m</div>
     <div class="p-h2h">H2H · vs TOR : 2B/5M</div>
     <div class="p-stat">18B · 63M · prend plus de responsabilités</div>
   </div>
 </div>
-    <div class="score-row">
-      <div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">BUF 4 – TOR 1</div></div>
-      <div class="score-analysis">🚨 Matthews OUT = absence majeure. BUF -235 (40-20-6). Lyon titulaire (Ellis DTD). Dahlin–Thompson PP1 dominant.</div>
-    </div>
+    <div class="score-row"><div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">BUF 4 – TOR 1</div></div><div class="score-analysis">🚨 Matthews OUT = absence majeure. BUF -235 (40-20-6). Lyon titulaire (Ellis DTD). Dahlin–Thompson PP1 dominant.</div></div>
   </div>
   <div class="card-toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
 </div>
 <div class="card" id="m-sjs-mtl" data-bucket="mid">
   <div class="card-header">
     <div class="teams-row">
-      <div class="tblock"><div class="tcode">SJS</div><div class="tfull">San Jose Sharks</div><div class="trole">VISITEUR</div></div>
+      <div class="tblock"><div class="tcode">SJS</div><div class="tfull">San Jose Sharks</div><div class="trole">VISITEUR </div></div>
       <div class="vsblock"><div class="vstime">01h00</div><div class="vsat">CET</div></div>
-      <div class="tblock tright"><div class="tcode">MTL</div><div class="tfull">Montréal Canadiens</div><div class="trole">DOMICILE</div></div>
+      <div class="tblock tright"><div class="tcode">MTL</div><div class="tfull">Montréal Canadiens</div><div class="trole"> DOMICILE</div></div>
     </div>
-    <div class="prob-row">
-      <span class="prob-lbl away-lbl">38%</span>
-      <div class="pbar-outer"><div class="pbar-a" style="width:38%"></div><div class="pbar-h" style="width:62%"></div></div>
-      <span class="prob-lbl home-lbl">62%</span>
-    </div>
+    <div class="prob-row"><span class="prob-lbl away-lbl">38%</span><div class="pbar-outer"><div class="pbar-a" style="width:38%"></div><div class="pbar-h" style="width:62%"></div></div><span class="prob-lbl home-lbl">62%</span></div>
     <div class="form-row">
       <div class="fside"><div class="fbadges"><div class="fb w">W</div><div class="fb l">L</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div></div><span class="rec">31-26-6</span><span class="streak dn">▼ 1L</span></div>
       <div class="fside fright"><span class="streak up">▲ 3W</span><span class="rec">36-18-10</span><div class="fbadges"><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div></div></div>
@@ -640,122 +959,125 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </div>
   <div class="card-body">
     <div class="info-grid">
-      <div class="info-col"><div class="info-label">SJS · GARDIEN</div><div class="kname">A. Nedeljkovic</div><div class="kstats"><span class="kchip good">SV% .903</span><span class="kchip avg">GAA 2.98</span></div><div class="pp-line">PP1: Celebrini · Wennberg · W.Smith · Toffoli</div></div>
-      <div class="info-col"><div class="info-label">MTL · GARDIEN</div><div class="kname">J. Dobes</div><div class="kstats"><span class="kchip good">SV% .912</span><span class="kchip avg">GAA 2.71</span></div><div class="pp-line">PP1: Suzuki · Demidov · Slafkovsky · Hutson</div></div>
-      <div class="info-col"><div class="info-label">Absents SJS</div><div class="ab-item"><span class="ab-name">L. Couture</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">T. Dellandrea</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
-      <div class="info-col"><div class="info-label">Absents MTL</div><div class="ab-item"><span class="ab-name">C. Caufield</span><span class="bdtd">DTD</span><span class="ab-reason">maladie</span></div><div class="ab-item"><span class="ab-name">P. Laine</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
+      <div class="info-col"><div class="info-label">SJS · GARDIEN</div><div class="kname">A. Nedeljkovic</div><div class="kstats"><span class="kchip good">SV% .903</span><span class="kchip avg">GAA 2.98</span><span class="kchip ">PP 15.6%</span><span class="kchip ">PK 76.3%</span></div><div class="pp-line">PP1: Celebrini · Wennberg · W.Smith · Toffoli</div></div>
+      <div class="info-col"><div class="info-label">MTL · GARDIEN</div><div class="kname">J. Dobes</div><div class="kstats"><span class="kchip good">SV% .912</span><span class="kchip avg">GAA 2.71</span><span class="kchip avg">PP 20.9%</span><span class="kchip avg">PK 81.8%</span></div><div class="pp-line">PP1: Suzuki · Demidov · Slafkovsky · Hutson</div></div>
+      <div class="info-col"><div class="info-label">Absents SJS</div><div class="ab-item"><span class="ab-name">T. Dellandrea</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 15</span></div><div class="ab-item"><span class="ab-name">Y. Askarov</span><span class="bdtd">DTD</span><span class="ab-reason">DTD</span></div></div>
+      <div class="info-col"><div class="info-label">Absents MTL</div><div class="ab-item"><span class="ab-name">C. Caufield</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">P. Laine</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 17</span></div></div>
     </div>
     <div class="pred-header-row"><div>CATÉGORIE</div><div>SJS — VISITEUR</div><div>MTL — DOMICILE</div></div>
     <div class="pred-row">
   <div class="pred-cat-cell">🎯 But</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">SJS</span><span class="pname">M. Celebrini</span></div>
+    <div class="p-top"><span class="ptag">SJS</span><span class="pname">M. Celebrini</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:38%"></div></div>
     <div class="p-pct ">38%</div>
     <div class="p-note">PP1 centre rookie élite</div>
+    <div class="p-extra">⏱ 19:48 · 🎯 3.6 tirs/m</div>
     <div class="p-h2h">H2H · vs MTL : 4B/7M</div>
     <div class="p-stat">28B · 63M · meilleur rookie NHL</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">MTL</span><span class="pname">N. Suzuki</span></div>
+    <div class="p-top"><span class="ptag">MTL</span><span class="pname">N. Suzuki</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.3/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:52%"></div></div>
     <div class="p-pct ">52%</div>
     <div class="p-note">PP1 · 0,71 but/m · 5B récents</div>
+    <div class="p-extra">⏱ 20:42 · 🎯 3.4 tirs/m</div>
     <div class="p-h2h">H2H · vs SJS : 8B/10M</div>
     <div class="p-stat">40B · 64M · série 4M🔥</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">⭐ Point</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">SJS</span><span class="pname">M. Celebrini</span></div>
+    <div class="p-top"><span class="ptag">SJS</span><span class="pname">M. Celebrini</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">5.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:52%"></div></div>
     <div class="p-pct ">52%</div>
     <div class="p-note">Déjà dominant en PP1</div>
+    <div class="p-extra">⏱ 19:48 · 🎯 3.6 tirs/m · 🔑 0.62 xA/m</div>
     <div class="p-h2h">H2H · vs MTL : 0,8pt/m</div>
     <div class="p-stat">48Pts · 63M · +17 différentiel</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">MTL</span><span class="pname">N. Suzuki</span></div>
+    <div class="p-top"><span class="ptag">MTL</span><span class="pname">N. Suzuki</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">7.4/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:68%"></div></div>
     <div class="p-pct ">68%</div>
     <div class="p-note">1,11 pt/m · Dobes confirmé</div>
+    <div class="p-extra">⏱ 20:42 · 🎯 3.4 tirs/m · 🔑 0.84 xA/m</div>
     <div class="p-h2h">H2H · vs SJS : 1,3pt/m</div>
     <div class="p-stat">68Pts · 64M · série 6M🔥</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">🤝 Assist</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">SJS</span><span class="pname">T. Toffoli</span></div>
+    <div class="p-top"><span class="ptag">SJS</span><span class="pname">T. Toffoli</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:44%"></div></div>
     <div class="p-pct ">44%</div>
     <div class="p-note">PP1 · 0,59 ast/m</div>
+    <div class="p-extra">⏱ 17:06 · 🔑 0.54 xA/m</div>
     <div class="p-h2h">H2H · vs MTL : son ancienne équipe</div>
     <div class="p-stat">32A · 66M · vétéran créatif</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">MTL</span><span class="pname">J. Slafkovsky</span></div>
+    <div class="p-top"><span class="ptag">MTL</span><span class="pname">J. Slafkovsky</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">5.6/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:58%"></div></div>
     <div class="p-pct ">58%</div>
     <div class="p-note">PP1 RW · 0,71 ast/m</div>
+    <div class="p-extra">⏱ 18:24 · 🔑 0.66 xA/m</div>
     <div class="p-h2h">H2H · vs SJS : 6A/7M</div>
     <div class="p-stat">42A · 64M · grand talent en hausse</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">💥 2+ Pts</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">MTL</span><span class="pname">N. Suzuki</span></div>
-    <div class="pbar-wrap"><div class="pbar-fill" style="width:32%"></div></div>
-    <div class="p-pct ">32%</div>
-    <div class="p-note">MTL dom 3W · SJS défense perméable</div>
-    <div class="p-h2h">H2H · vs SJS : 2×2+pts</div>
-    <div class="p-stat">2 matchs 2+pts sur 5 derniers</div>
-  </div>
-  <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">SJS</span><span class="pname">M. Celebrini</span></div>
+    <div class="p-top"><span class="ptag">SJS</span><span class="pname">M. Celebrini</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:19%"></div></div>
     <div class="p-pct ">19%</div>
     <div class="p-note">Rookie mais niveau élite</div>
+    <div class="p-extra">⏱ 19:48 · 🎯 3.6 tirs/m · 🔑 0.62 xA/m</div>
     <div class="p-h2h">H2H · vs MTL : 1×2+pts</div>
     <div class="p-stat">1 match 2+pts sur 6 derniers</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">MTL</span><span class="pname">N. Suzuki</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:32%"></div></div>
+    <div class="p-pct ">32%</div>
+    <div class="p-note">MTL dom 3W · SJS défense perméable</div>
+    <div class="p-extra">⏱ 20:42 · 🎯 3.4 tirs/m · 🔑 0.84 xA/m</div>
+    <div class="p-h2h">H2H · vs SJS : 2×2+pts</div>
+    <div class="p-stat">2 matchs 2+pts sur 5 derniers</div>
   </div>
 </div><div class="pred-row outsider-row">
   <div class="pred-cat-cell">🔥 Outsider</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">MTL</span><span class="pname">I. Demidov</span></div>
-    <div class="pbar-wrap"><div class="pbar-fill" style="width:18%"></div></div>
-    <div class="p-pct o-pct">18%</div>
-    <div class="p-note">PP1 LW · 3B sur 5 derniers</div>
-    <div class="p-h2h">H2H · vs SJS : 2B/4M</div>
-    <div class="p-stat">19B · 48M · prospect explosif</div>
-  </div>
-  <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">SJS</span><span class="pname">W. Smith</span></div>
+    <div class="p-top"><span class="ptag">SJS</span><span class="pname">W. Smith</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:13%"></div></div>
     <div class="p-pct o-pct">13%</div>
     <div class="p-note">PP1 RW · compère Celebrini</div>
+    <div class="p-extra">⏱ 15:42 · 🎯 2.6 tirs/m</div>
     <div class="p-h2h">H2H · vs MTL : 1B/5M</div>
     <div class="p-stat">14B · 63M · en progression</div>
   </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">MTL</span><span class="pname">I. Demidov</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:18%"></div></div>
+    <div class="p-pct o-pct">18%</div>
+    <div class="p-note">PP1 LW · 3B sur 5 derniers</div>
+    <div class="p-extra">⏱ 16:18 · 🎯 2.8 tirs/m</div>
+    <div class="p-h2h">H2H · vs SJS : 2B/4M</div>
+    <div class="p-stat">19B · 48M · prospect explosif</div>
+  </div>
 </div>
-    <div class="score-row">
-      <div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">MTL 4 – SJS 2</div></div>
-      <div class="score-analysis">MTL -165. Dobes confirmé. Caufield DTD. Suzuki–Demidov–Slafkovsky explosifs. Celebrini seul danger SJS.</div>
-    </div>
+    <div class="score-row"><div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">MTL 4 – SJS 2</div></div><div class="score-analysis">MTL -165. Dobes confirmé. Caufield DTD. Suzuki–Demidov–Slafkovsky explosifs. Celebrini seul danger SJS.</div></div>
   </div>
   <div class="card-toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
 </div>
 <div class="card" id="m-car-tbl" data-bucket="mid">
   <div class="card-header">
     <div class="teams-row">
-      <div class="tblock"><div class="tcode">CAR</div><div class="tfull">Carolina Hurricanes</div><div class="trole">VISITEUR</div></div>
+      <div class="tblock"><div class="tcode">CAR</div><div class="tfull">Carolina Hurricanes</div><div class="trole">VISITEUR </div></div>
       <div class="vsblock"><div class="vstime">01h00</div><div class="vsat">CET</div></div>
-      <div class="tblock tright"><div class="tcode">TBL</div><div class="tfull">Tampa Bay Lightning</div><div class="trole">DOMICILE</div></div>
+      <div class="tblock tright"><div class="tcode">TBL</div><div class="tfull">Tampa Bay Lightning</div><div class="trole"> DOMICILE</div></div>
     </div>
-    <div class="prob-row">
-      <span class="prob-lbl away-lbl">43%</span>
-      <div class="pbar-outer"><div class="pbar-a" style="width:43%"></div><div class="pbar-h" style="width:57%"></div></div>
-      <span class="prob-lbl home-lbl">57%</span>
-    </div>
+    <div class="prob-row"><span class="prob-lbl away-lbl">43%</span><div class="pbar-outer"><div class="pbar-a" style="width:43%"></div><div class="pbar-h" style="width:57%"></div></div><span class="prob-lbl home-lbl">57%</span></div>
     <div class="form-row">
       <div class="fside"><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div></div><span class="rec">41-18-6</span><span class="streak up">▲ 3W</span></div>
       <div class="fside fright"><span class="streak up">▲ 3W</span><span class="rec">40-20-4</span><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb w">W</div></div></div>
@@ -763,122 +1085,503 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </div>
   <div class="card-body">
     <div class="info-grid">
-      <div class="info-col"><div class="info-label">CAR · GARDIEN</div><div class="kname">B. Bussi</div><div class="kstats"><span class="kchip good">SV% .914</span><span class="kchip avg">GAA 2.62</span></div><div class="pp-line">PP1: Stankoven · Ehlers · Blake · Hall</div></div>
-      <div class="info-col"><div class="info-label">TBL · GARDIEN</div><div class="kname">A. Vasilevskiy</div><div class="kstats"><span class="kchip good">SV% .919</span><span class="kchip avg">GAA 2.48</span></div><div class="pp-line">PP1: B.Point · Kucherov · Guentzel · Perry</div></div>
-      <div class="info-col"><div class="info-label">Absents CAR</div><div class="ab-item"><span class="ab-name">S. Gostisbehere</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
-      <div class="info-col"><div class="info-label">Absents TBL</div><div class="ab-item"><span class="ab-name">N. Paul</span><span class="birs">IR-LT</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">E. Lilleberg</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
+      <div class="info-col"><div class="info-label">CAR · GARDIEN</div><div class="kname">B. Bussi</div><div class="kstats"><span class="kchip good">SV% .914</span><span class="kchip avg">GAA 2.62</span><span class="kchip good">PP 23.4%</span><span class="kchip good">PK 83.6%</span></div><div class="pp-line">PP1: Stankoven · Ehlers · Blake · Hall</div></div>
+      <div class="info-col"><div class="info-label">TBL · GARDIEN</div><div class="kname">A. Vasilevskiy</div><div class="kstats"><span class="kchip good">SV% .919</span><span class="kchip avg">GAA 2.48</span><span class="kchip good">PP 24.8%</span><span class="kchip good">PK 84.1%</span></div><div class="pp-line">PP1: B.Point · Kucherov · Guentzel · Perry</div></div>
+      <div class="info-col"><div class="info-label">Absents CAR</div><div class="ab-item"><span class="ab-name">S. Gostisbehere</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 17</span></div></div>
+      <div class="info-col"><div class="info-label">Absents TBL</div><div class="ab-item"><span class="ab-name">N. Paul</span><span class="binj">OUT/IR</span><span class="ab-reason">retour possible ce soir ❓ 🟢</span></div><div class="ab-item"><span class="ab-name">E. Lilleberg</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 19</span></div></div>
     </div>
     <div class="pred-header-row"><div>CATÉGORIE</div><div>CAR — VISITEUR</div><div>TBL — DOMICILE</div></div>
     <div class="pred-row">
   <div class="pred-cat-cell">🎯 But</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">CAR</span><span class="pname">N. Ehlers</span></div>
+    <div class="p-top"><span class="ptag">CAR</span><span class="pname">N. Ehlers</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">5.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:46%"></div></div>
     <div class="p-pct ">46%</div>
     <div class="p-note">PP1 LW · 0,62 but/m · 4B récents</div>
+    <div class="p-extra">⏱ 19:18 · 🎯 3.8 tirs/m</div>
     <div class="p-h2h">H2H · vs TBL : 7B/10M</div>
     <div class="p-stat">34B · 63M · série 3M🔥</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">TBL</span><span class="pname">N. Kucherov</span></div>
+    <div class="p-top"><span class="ptag">TBL</span><span class="pname">N. Kucherov</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">5.6/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:52%"></div></div>
     <div class="p-pct ">52%</div>
     <div class="p-note">PP1 · 0,82 but/m dom</div>
+    <div class="p-extra">⏱ 21:42 · 🎯 4.4 tirs/m</div>
     <div class="p-h2h">H2H · vs CAR : 1,0B/m</div>
     <div class="p-stat">48B · 65M · série 4M🔥</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">⭐ Point</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">CAR</span><span class="pname">S. Aho</span></div>
+    <div class="p-top"><span class="ptag">CAR</span><span class="pname">S. Aho</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.8/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:62%"></div></div>
     <div class="p-pct ">62%</div>
     <div class="p-note">PP2 · 0,98 pt/m · série 6M</div>
+    <div class="p-extra">⏱ 20:54 · 🎯 3.2 tirs/m · 🔑 0.88 xA/m</div>
     <div class="p-h2h">H2H · vs TBL : 1,0pt/m</div>
     <div class="p-stat">61Pts · 65M · série 6M🔥</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">TBL</span><span class="pname">N. Kucherov</span></div>
+    <div class="p-top"><span class="ptag">TBL</span><span class="pname">N. Kucherov</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.8/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:72%"></div></div>
     <div class="p-pct ">72%</div>
     <div class="p-note">1,58 pt/m dom · combo Vasy</div>
+    <div class="p-extra">⏱ 21:42 · 🎯 4.4 tirs/m · 🔑 1.12 xA/m</div>
     <div class="p-h2h">H2H · vs CAR : 1,3pt/m</div>
     <div class="p-stat">94Pts · 65M · MVP pace</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">🤝 Assist</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">CAR</span><span class="pname">T. Hall</span></div>
+    <div class="p-top"><span class="ptag">CAR</span><span class="pname">T. Hall</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.9/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:52%"></div></div>
     <div class="p-pct ">52%</div>
     <div class="p-note">PP1 · 0,68 ast/m</div>
+    <div class="p-extra">⏱ 18:36 · 🔑 0.62 xA/m</div>
     <div class="p-h2h">H2H · vs TBL : 8A/11M</div>
     <div class="p-stat">42A · 65M · distributeur discret</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">TBL</span><span class="pname">B. Point</span></div>
+    <div class="p-top"><span class="ptag">TBL</span><span class="pname">B. Point</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">5.7/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:61%"></div></div>
     <div class="p-pct ">61%</div>
     <div class="p-note">PP1 centre · vision élite</div>
+    <div class="p-extra">⏱ 21:06 · 🔑 0.96 xA/m</div>
     <div class="p-h2h">H2H · vs CAR : 12A/15M</div>
     <div class="p-stat">58A · 65M · leader du PP</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">💥 2+ Pts</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">TBL</span><span class="pname">N. Kucherov</span></div>
-    <div class="pbar-wrap"><div class="pbar-fill" style="width:38%"></div></div>
-    <div class="p-pct ">38%</div>
-    <div class="p-note">TBL dom + Vasilevskiy .919</div>
-    <div class="p-h2h">H2H · vs CAR : 4×2+pts</div>
-    <div class="p-stat">4 matchs 2+pts sur 8 derniers🔥</div>
-  </div>
-  <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">CAR</span><span class="pname">N. Ehlers</span></div>
+    <div class="p-top"><span class="ptag">CAR</span><span class="pname">N. Ehlers</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:26%"></div></div>
     <div class="p-pct ">26%</div>
     <div class="p-note">CAR sur 3W · très en forme</div>
+    <div class="p-extra">⏱ 19:18 · 🎯 3.8 tirs/m · 🔑 0.58 xA/m</div>
     <div class="p-h2h">H2H · vs TBL : 2×2+pts</div>
+    <div class="p-stat">2 matchs 2+pts sur 6 derniers</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">TBL</span><span class="pname">N. Kucherov</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.4/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:38%"></div></div>
+    <div class="p-pct ">38%</div>
+    <div class="p-note">TBL dom + Vasilevskiy .919</div>
+    <div class="p-extra">⏱ 21:42 · 🎯 4.4 tirs/m · 🔑 1.12 xA/m</div>
+    <div class="p-h2h">H2H · vs CAR : 4×2+pts</div>
+    <div class="p-stat">4 matchs 2+pts sur 8 derniers🔥</div>
+  </div>
+</div><div class="pred-row outsider-row">
+  <div class="pred-cat-cell">🔥 Outsider</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">CAR</span><span class="pname">L. Stankoven</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:16%"></div></div>
+    <div class="p-pct o-pct">16%</div>
+    <div class="p-note">PP1 centre · 2B récents</div>
+    <div class="p-extra">⏱ 16:24 · 🎯 2.8 tirs/m</div>
+    <div class="p-h2h">H2H · vs TBL : 3B/6M</div>
+    <div class="p-stat">22B · 63M · profil discret</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">TBL</span><span class="pname">B. Hagel</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:15%"></div></div>
+    <div class="p-pct o-pct">15%</div>
+    <div class="p-note">PP2 · 3B sur 5 derniers</div>
+    <div class="p-extra">⏱ 16:48 · 🎯 3.2 tirs/m</div>
+    <div class="p-h2h">H2H · vs CAR : 4B/7M</div>
+    <div class="p-stat">24B · 65M · cote haute</div>
+  </div>
+</div>
+    <div class="score-row"><div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">TBL 3 – CAR 2</div></div><div class="score-analysis">TBL -135. Vasilevskiy (.919) vs Bussi. Match de prestige entre 2 prétendants. Kucherov–Point PP1 dominant.</div></div>
+  </div>
+  <div class="card-toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
+</div>
+<div class="card" id="m-cgy-nyi" data-bucket="mid" data-tight="1">
+  <div class="card-header">
+    <div class="teams-row">
+      <div class="tblock"><div class="tcode">CGY</div><div class="tfull">Calgary Flames</div><div class="trole">VISITEUR <span class="b2b">🔴 B2B</span></div></div>
+      <div class="vsblock"><div class="vstime">01h00</div><div class="vsat">CET</div></div>
+      <div class="tblock tright"><div class="tcode">NYI</div><div class="tfull">NY Islanders</div><div class="trole"> DOMICILE</div></div>
+    </div>
+    <div class="prob-row"><span class="prob-lbl away-lbl">40%</span><div class="pbar-outer"><div class="pbar-a" style="width:40%"></div><div class="pbar-h" style="width:60%"></div></div><span class="prob-lbl home-lbl">60%</span></div>
+    <div class="form-row">
+      <div class="fside"><div class="fbadges"><div class="fb w">W</div><div class="fb l">L</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div></div><span class="rec">26-32-7</span><span class="streak dn">▼ 1L</span></div>
+      <div class="fside fright"><span class="streak up">▲ 2W</span><span class="rec">37-24-5</span><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="info-grid">
+      <div class="info-col"><div class="info-label">CGY · GARDIEN</div><div class="kname">D. Wolf</div><div class="kstats"><span class="kchip good">SV% .912</span><span class="kchip avg">GAA 2.68</span><span class="kchip ">PP 16.4%</span><span class="kchip avg">PK 78.4%</span></div><div class="pp-line">PP1: Frost · Gridin · Coronato · Sharangovich</div></div>
+      <div class="info-col"><div class="info-label">NYI · GARDIEN</div><div class="kname">D. Rittich</div><div class="kstats"><span class="kchip good">SV% .908</span><span class="kchip avg">GAA 2.81</span><span class="kchip avg">PP 21.6%</span><span class="kchip good">PK 83.4%</span></div><div class="pp-line">PP1: Horvat · Schenn · Barzal · Schaefer</div></div>
+      <div class="info-col"><div class="info-label">Absents CGY</div><div class="ab-item"><span class="ab-name">J. Huberdeau</span><span class="birs">IR-LT</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">Z. Whitecloud</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 16</span></div><div class="ab-item"><span class="ab-name">J. Bean</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
+      <div class="info-col"><div class="info-label">Absents NYI</div><div class="ab-item"><span class="ab-name">A. Romanov</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">K. Palmieri</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">S. Varlamov</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
+    </div>
+    <div class="pred-header-row"><div>CATÉGORIE</div><div>CGY — VISITEUR</div><div>NYI — DOMICILE</div></div>
+    <div class="pred-row">
+  <div class="pred-cat-cell">🎯 But</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">CGY</span><span class="pname">M. Coronato</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:38%"></div></div>
+    <div class="p-pct ">38%</div>
+    <div class="p-note">PP1 RW · 0,52 but/m</div>
+    <div class="p-extra">⏱ 17:24 · 🎯 3.1 tirs/m</div>
+    <div class="p-h2h">H2H · vs NYI : 2B/5M</div>
+    <div class="p-stat">28B · 65M · vitesse pure</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">NYI</span><span class="pname">M. Barzal</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">5.2/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:48%"></div></div>
+    <div class="p-pct ">48%</div>
+    <div class="p-note">PP1 · 0,68 but/m dom · 3B récents</div>
+    <div class="p-extra">⏱ 20:06 · 🎯 3.8 tirs/m</div>
+    <div class="p-h2h">H2H · vs CGY : 8B/12M</div>
+    <div class="p-stat">36B · 66M · série 3M</div>
+  </div>
+</div><div class="pred-row">
+  <div class="pred-cat-cell">⭐ Point</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">CGY</span><span class="pname">M. Coronato</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">5.0/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:52%"></div></div>
+    <div class="p-pct ">52%</div>
+    <div class="p-note">Meilleur dynamisme CGY sans Huberdeau</div>
+    <div class="p-extra">⏱ 17:24 · 🎯 3.1 tirs/m · 🔑 0.46 xA/m</div>
+    <div class="p-h2h">H2H · vs NYI : 0,7pt/m</div>
+    <div class="p-stat">44Pts · 65M · leader CGY par défaut</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">NYI</span><span class="pname">M. Barzal</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.5/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:62%"></div></div>
+    <div class="p-pct ">62%</div>
+    <div class="p-note">1,11 pt/m dom · PP dominant</div>
+    <div class="p-extra">⏱ 20:06 · 🎯 3.8 tirs/m · 🔑 0.82 xA/m</div>
+    <div class="p-h2h">H2H · vs CGY : 1,2pt/m</div>
+    <div class="p-stat">66Pts · 66M · série 4M🔥</div>
+  </div>
+</div><div class="pred-row">
+  <div class="pred-cat-cell">🤝 Assist</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">CGY</span><span class="pname">M. Frost</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:44%"></div></div>
+    <div class="p-pct ">44%</div>
+    <div class="p-note">PP1 centre · 0,61 ast/m</div>
+    <div class="p-extra">⏱ 17:48 · 🔑 0.58 xA/m</div>
+    <div class="p-h2h">H2H · vs NYI : 5A/8M</div>
+    <div class="p-stat">36A · 65M · distributeur fiable</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">NYI</span><span class="pname">B. Horvat</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">5.2/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:55%"></div></div>
+    <div class="p-pct ">55%</div>
+    <div class="p-note">PP1 · 0,68 ast/m</div>
+    <div class="p-extra">⏱ 19:12 · 🔑 0.66 xA/m</div>
+    <div class="p-h2h">H2H · vs CGY : 7A/10M</div>
+    <div class="p-stat">42A · 66M · actif 3M</div>
+  </div>
+</div><div class="pred-row">
+  <div class="pred-cat-cell">💥 2+ Pts</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">CGY</span><span class="pname">M. Coronato</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:18%"></div></div>
+    <div class="p-pct ">18%</div>
+    <div class="p-note">Seul espoir gros match CGY</div>
+    <div class="p-extra">⏱ 17:24 · 🎯 3.1 tirs/m · 🔑 0.46 xA/m</div>
+    <div class="p-h2h">H2H · vs NYI : 1×2+pts</div>
+    <div class="p-stat">1 match 2+pts sur 6 derniers</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">NYI</span><span class="pname">M. Barzal</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:28%"></div></div>
+    <div class="p-pct ">28%</div>
+    <div class="p-note">NYI -150 · Rittich titulaire</div>
+    <div class="p-extra">⏱ 20:06 · 🎯 3.8 tirs/m · 🔑 0.82 xA/m</div>
+    <div class="p-h2h">H2H · vs CGY : 2×2+pts</div>
     <div class="p-stat">2 matchs 2+pts sur 6 derniers</div>
   </div>
 </div><div class="pred-row outsider-row">
   <div class="pred-cat-cell">🔥 Outsider</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">CAR</span><span class="pname">L. Stankoven</span></div>
-    <div class="pbar-wrap"><div class="pbar-fill" style="width:16%"></div></div>
-    <div class="p-pct o-pct">16%</div>
-    <div class="p-note">PP1 centre · 2B récents</div>
-    <div class="p-h2h">H2H · vs TBL : 3B/6M</div>
-    <div class="p-stat">22B · 63M · profil discret</div>
+    <div class="p-top"><span class="ptag">CGY</span><span class="pname">Y. Sharangovich</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:14%"></div></div>
+    <div class="p-pct o-pct">14%</div>
+    <div class="p-note">PP1 · 2B sur 5 derniers</div>
+    <div class="p-extra">⏱ 15:36 · 🎯 2.4 tirs/m</div>
+    <div class="p-h2h">H2H · vs NYI : 2B/5M</div>
+    <div class="p-stat">22B · 65M · coup de poker</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">TBL</span><span class="pname">B. Hagel</span></div>
-    <div class="pbar-wrap"><div class="pbar-fill" style="width:15%"></div></div>
-    <div class="p-pct o-pct">15%</div>
-    <div class="p-note">PP2 · 3B sur 5 derniers</div>
-    <div class="p-h2h">H2H · vs CAR : 4B/7M</div>
-    <div class="p-stat">24B · 65M · cote haute</div>
+    <div class="p-top"><span class="ptag">NYI</span><span class="pname">B. Schenn</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:14%"></div></div>
+    <div class="p-pct o-pct">14%</div>
+    <div class="p-note">PP1 LW vétéran · 2B récents</div>
+    <div class="p-extra">⏱ 16:54 · 🎯 2.6 tirs/m</div>
+    <div class="p-h2h">H2H · vs CGY : 3B/7M</div>
+    <div class="p-stat">18B · 66M · expérience</div>
   </div>
 </div>
-    <div class="score-row">
-      <div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">TBL 3 – CAR 2</div></div>
-      <div class="score-analysis">TBL -135. Vasilevskiy (.919) vs Bussi. Match de prestige entre 2 prétendants. Kucherov–Point PP1 dominant.</div>
+    <div class="score-row"><div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">NYI 3 – CGY 2</div></div><div class="score-analysis">NYI -150. Rittich (confirmé, Varlamov IR saison). CGY très affaibli sans Huberdeau (IR-LT). Barzal–Horvat–Schenn PP1 dominant.</div></div>
+  </div>
+  <div class="card-toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
+</div>
+<div class="card" id="m-lak-njd" data-bucket="mid">
+  <div class="card-header">
+    <div class="teams-row">
+      <div class="tblock"><div class="tcode">LAK</div><div class="tfull">Los Angeles Kings</div><div class="trole">VISITEUR </div></div>
+      <div class="vsblock"><div class="vstime">01h00</div><div class="vsat">CET</div></div>
+      <div class="tblock tright"><div class="tcode">NJD</div><div class="tfull">New Jersey Devils</div><div class="trole"> DOMICILE</div></div>
     </div>
+    <div class="prob-row"><span class="prob-lbl away-lbl">41%</span><div class="pbar-outer"><div class="pbar-a" style="width:41%"></div><div class="pbar-h" style="width:59%"></div></div><span class="prob-lbl home-lbl">59%</span></div>
+    <div class="form-row">
+      <div class="fside"><div class="fbadges"><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div></div><span class="rec">27-23-15</span><span class="streak dn">▼ 1L</span></div>
+      <div class="fside fright"><span class="streak up">▲ 2W</span><span class="rec">32-31-2</span><div class="fbadges"><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb w">W</div></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="info-grid">
+      <div class="info-col"><div class="info-label">LAK · GARDIEN</div><div class="kname">A. Forsberg</div><div class="kstats"><span class="kchip good">SV% .907</span><span class="kchip avg">GAA 2.84</span><span class="kchip avg">PP 18.8%</span><span class="kchip avg">PK 80.9%</span></div><div class="pp-line">PP1: A.Kopitar · Panarin · A.Kempe · Clarke</div></div>
+      <div class="info-col"><div class="info-label">NJD · GARDIEN</div><div class="kname">J. Markstrom</div><div class="kstats"><span class="kchip good">SV% .909</span><span class="kchip avg">GAA 2.78</span><span class="kchip good">PP 22.3%</span><span class="kchip good">PK 82.1%</span></div><div class="pp-line">PP1: J.Hughes · Bratt · C.Brown · L.Hughes · Hischier</div></div>
+      <div class="info-col"><div class="info-label">Absents LAK</div><div class="ab-item"><span class="ab-name">K. Fiala</span><span class="birs">IR-LT</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">A. Kuzmenko</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 24</span></div><div class="ab-item"><span class="ab-name">J. Armia</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 19</span></div></div>
+      <div class="info-col"><div class="info-label">Absents NJD</div><div class="ab-item"><span class="ab-name">B. Pesce</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 16</span></div><div class="ab-item"><span class="ab-name">S. Noesen</span><span class="binj">OUT/IR</span><span class="ab-reason">avr 5</span></div><div class="ab-item"><span class="ab-name">Z. MacEwen</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
+    </div>
+    <div class="pred-header-row"><div>CATÉGORIE</div><div>LAK — VISITEUR</div><div>NJD — DOMICILE</div></div>
+    <div class="pred-row">
+  <div class="pred-cat-cell">🎯 But</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">LAK</span><span class="pname">A. Kopitar</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.6/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:42%"></div></div>
+    <div class="p-pct ">42%</div>
+    <div class="p-note">PP1 centre · Fiala absent · 0,44 but/m</div>
+    <div class="p-extra">⏱ 19:42 · 🎯 2.8 tirs/m</div>
+    <div class="p-h2h">H2H · vs NJD : 8B/12M</div>
+    <div class="p-stat">28B · 65M · vétéran leader</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">NJD</span><span class="pname">J. Hughes</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.4/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:54%"></div></div>
+    <div class="p-pct ">54%</div>
+    <div class="p-note">PP1 · 0,72 but/m dom · 4B récents</div>
+    <div class="p-extra">⏱ 22:18 · 🎯 4.2 tirs/m</div>
+    <div class="p-h2h">H2H · vs LAK : 10B/14M</div>
+    <div class="p-stat">40B · 66M · série 4M🔥</div>
+  </div>
+</div><div class="pred-row">
+  <div class="pred-cat-cell">⭐ Point</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">LAK</span><span class="pname">A. Kopitar</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">5.6/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:58%"></div></div>
+    <div class="p-pct ">58%</div>
+    <div class="p-note">Fiala absent = Kopitar porte tout</div>
+    <div class="p-extra">⏱ 19:42 · 🎯 2.8 tirs/m · 🔑 0.68 xA/m</div>
+    <div class="p-h2h">H2H · vs NJD : 0,9pt/m</div>
+    <div class="p-stat">56Pts · 65M · lourde charge</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">NJD</span><span class="pname">J. Hughes</span><span class="conf-badge" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32">7.7/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:72%"></div></div>
+    <div class="p-pct ">72%</div>
+    <div class="p-note">1,22 pt/m · PP1 QB dominant</div>
+    <div class="p-extra">⏱ 22:18 · 🎯 4.2 tirs/m · 🔑 1.02 xA/m</div>
+    <div class="p-h2h">H2H · vs LAK : 1,4pt/m</div>
+    <div class="p-stat">74Pts · 66M · série 6M🔥</div>
+  </div>
+</div><div class="pred-row">
+  <div class="pred-cat-cell">🤝 Assist</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">LAK</span><span class="pname">A. Panarin</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.7/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:48%"></div></div>
+    <div class="p-pct ">48%</div>
+    <div class="p-note">PP1 LW · 0,71 ast/m</div>
+    <div class="p-extra">⏱ 19:54 · 🔑 0.78 xA/m</div>
+    <div class="p-h2h">H2H · vs NJD : 6A/8M</div>
+    <div class="p-stat">44A · 65M · créativité élite</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">NJD</span><span class="pname">L. Hughes</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">5.5/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:58%"></div></div>
+    <div class="p-pct ">58%</div>
+    <div class="p-note">PP1 RD · frère de Jack</div>
+    <div class="p-extra">⏱ 23:06 · 🔑 0.86 xA/m</div>
+    <div class="p-h2h">H2H · vs LAK : 8A/10M</div>
+    <div class="p-stat">48A · 66M · série 3M</div>
+  </div>
+</div><div class="pred-row">
+  <div class="pred-cat-cell">💥 2+ Pts</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">LAK</span><span class="pname">A. Kopitar</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:19%"></div></div>
+    <div class="p-pct ">19%</div>
+    <div class="p-note">Seul capable gros match LAK</div>
+    <div class="p-extra">⏱ 19:42 · 🎯 2.8 tirs/m · 🔑 0.68 xA/m</div>
+    <div class="p-h2h">H2H · vs NJD : 1×2+pts</div>
+    <div class="p-stat">1 match 2+pts sur 6 derniers</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">NJD</span><span class="pname">J. Hughes</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.1/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:34%"></div></div>
+    <div class="p-pct ">34%</div>
+    <div class="p-note">NJD -145 · PP fort même sans Pesce</div>
+    <div class="p-extra">⏱ 22:18 · 🎯 4.2 tirs/m · 🔑 1.02 xA/m</div>
+    <div class="p-h2h">H2H · vs LAK : 4×2+pts</div>
+    <div class="p-stat">4 matchs 2+pts sur 8 derniers🔥</div>
+  </div>
+</div><div class="pred-row outsider-row">
+  <div class="pred-cat-cell">🔥 Outsider</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">LAK</span><span class="pname">A. Kempe</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:16%"></div></div>
+    <div class="p-pct o-pct">16%</div>
+    <div class="p-note">PP1 RW · 3B sur 5 derniers</div>
+    <div class="p-extra">⏱ 16:48 · 🎯 3.2 tirs/m</div>
+    <div class="p-h2h">H2H · vs NJD : 3B/6M</div>
+    <div class="p-stat">22B · 65M · finisseur discret</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">NJD</span><span class="pname">J. Bratt</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:16%"></div></div>
+    <div class="p-pct o-pct">16%</div>
+    <div class="p-note">PP1 LW · sniper efficace</div>
+    <div class="p-extra">⏱ 17:54 · 🎯 3.0 tirs/m</div>
+    <div class="p-h2h">H2H · vs LAK : 4B/8M</div>
+    <div class="p-stat">28B · 66M · profil régulier</div>
+  </div>
+</div>
+    <div class="score-row"><div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">NJD 3 – LAK 2</div></div><div class="score-analysis">NJD -145. Markstrom vs Forsberg. LAK très affaibli: Fiala IR-LT fin saison + Kuzmenko + Armia IR. Jack Hughes PP1 dominant.</div></div>
+  </div>
+  <div class="card-toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
+</div>
+<div class="card" id="m-cbj-phi" data-bucket="mid">
+  <div class="card-header">
+    <div class="teams-row">
+      <div class="tblock"><div class="tcode">CBJ</div><div class="tfull">Columbus Blue Jackets</div><div class="trole">VISITEUR </div></div>
+      <div class="vsblock"><div class="vstime">01h30</div><div class="vsat">CET</div></div>
+      <div class="tblock tright"><div class="tcode">PHI</div><div class="tfull">Philadelphia Flyers</div><div class="trole"><span class="b2b">🔴 B2B</span> DOMICILE</div></div>
+    </div>
+    <div class="prob-row"><span class="prob-lbl away-lbl">52%</span><div class="pbar-outer"><div class="pbar-a" style="width:52%"></div><div class="pbar-h" style="width:48%"></div></div><span class="prob-lbl home-lbl">48%</span></div>
+    <div class="form-row">
+      <div class="fside"><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb w">W</div></div><span class="rec">33-21-11</span><span class="streak up">▲ 3W</span></div>
+      <div class="fside fright"><span class="streak dn">▼ 1L</span><span class="rec">31-23-11</span><div class="fbadges"><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="info-grid">
+      <div class="info-col"><div class="info-label">CBJ · GARDIEN</div><div class="kname">J. Greaves</div><div class="kstats"><span class="kchip good">SV% .911</span><span class="kchip avg">GAA 2.73</span><span class="kchip avg">PP 20.1%</span><span class="kchip avg">PK 81.2%</span></div><div class="pp-line">PP1: Fantilli · Marchment · Marchenko · Werenski</div></div>
+      <div class="info-col"><div class="info-label">PHI · GARDIEN</div><div class="kname">D. Vladar</div><div class="kstats"><span class="kchip good">SV% .908</span><span class="kchip avg">GAA 2.82</span><span class="kchip avg">PP 18.6%</span><span class="kchip avg">PK 79.8%</span></div><div class="pp-line">PP1: Zegras · Michkov · Konecny · Drysdale</div></div>
+      <div class="info-col"><div class="info-label">Absents CBJ</div><div class="ab-item"><span class="ab-name">B. Smith</span><span class="binj">OUT/IR</span><span class="ab-reason">avr 7</span></div><div class="ab-item"><span class="ab-name">E. Gudbranson</span><span class="bdtd">DTD</span><span class="ab-reason">nouveau</span></div></div>
+      <div class="info-col"><div class="info-label">Absents PHI</div><div class="ab-item"><span class="ab-name">T. Foerster</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">R. Abols</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 24</span></div><div class="ab-item"><span class="ab-name">R. Ellis</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
+    </div>
+    <div class="pred-header-row"><div>CATÉGORIE</div><div>CBJ — VISITEUR</div><div>PHI — DOMICILE</div></div>
+    <div class="pred-row">
+  <div class="pred-cat-cell">🎯 But</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">CBJ</span><span class="pname">A. Fantilli</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">5.3/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:48%"></div></div>
+    <div class="p-pct ">48%</div>
+    <div class="p-note">PP1 centre rookie · 4B récents</div>
+    <div class="p-extra">⏱ 20:12 · 🎯 3.8 tirs/m</div>
+    <div class="p-h2h">H2H · vs PHI : 6B/8M</div>
+    <div class="p-stat">32B · 64M · meilleur rookie NHL</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">PHI</span><span class="pname">M. Michkov</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">5.0/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:46%"></div></div>
+    <div class="p-pct ">46%</div>
+    <div class="p-note">PP1 LW · talent explosif</div>
+    <div class="p-extra">⏱ 18:54 · 🎯 3.4 tirs/m</div>
+    <div class="p-h2h">H2H · vs CBJ : 5B/7M</div>
+    <div class="p-stat">28B · 64M · série 2M</div>
+  </div>
+</div><div class="pred-row">
+  <div class="pred-cat-cell">⭐ Point</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">CBJ</span><span class="pname">A. Fantilli</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.5/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:62%"></div></div>
+    <div class="p-pct ">62%</div>
+    <div class="p-note">1,01 pt/m · niveau élite</div>
+    <div class="p-extra">⏱ 20:12 · 🎯 3.8 tirs/m · 🔑 0.72 xA/m</div>
+    <div class="p-h2h">H2H · vs PHI : 0,9pt/m</div>
+    <div class="p-stat">60Pts · 64M · série 4M🔥</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">PHI</span><span class="pname">T. Zegras</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">5.6/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:58%"></div></div>
+    <div class="p-pct ">58%</div>
+    <div class="p-note">PP1 centre · revenu blessure</div>
+    <div class="p-extra">⏱ 18:06 · 🎯 3.0 tirs/m · 🔑 0.74 xA/m</div>
+    <div class="p-h2h">H2H · vs CBJ : 0,8pt/m</div>
+    <div class="p-stat">48Pts · 62M · remontée en forme</div>
+  </div>
+</div><div class="pred-row">
+  <div class="pred-cat-cell">🤝 Assist</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">CBJ</span><span class="pname">Z. Werenski</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">5.3/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:55%"></div></div>
+    <div class="p-pct ">55%</div>
+    <div class="p-note">PP1 QB · 0,71 ast/m</div>
+    <div class="p-extra">⏱ 22:48 · 🔑 0.82 xA/m</div>
+    <div class="p-h2h">H2H · vs PHI : 8A/9M</div>
+    <div class="p-stat">44A · 64M · distributeur élite</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">PHI</span><span class="pname">J. Drysdale</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.9/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:51%"></div></div>
+    <div class="p-pct ">51%</div>
+    <div class="p-note">PP1 RD · passeur depuis la bleue</div>
+    <div class="p-extra">⏱ — · 🔑 —</div>
+    <div class="p-h2h">H2H · vs CBJ : 6A/8M</div>
+    <div class="p-stat">38A · 64M · actif 2M</div>
+  </div>
+</div><div class="pred-row">
+  <div class="pred-cat-cell">💥 2+ Pts</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">CBJ</span><span class="pname">A. Fantilli</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:32%"></div></div>
+    <div class="p-pct ">32%</div>
+    <div class="p-note">CBJ -130 · sur 3W · favori</div>
+    <div class="p-extra">⏱ 20:12 · 🎯 3.8 tirs/m · 🔑 0.72 xA/m</div>
+    <div class="p-h2h">H2H · vs PHI : 3×2+pts</div>
+    <div class="p-stat">3 matchs 2+pts sur 7 derniers</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">PHI</span><span class="pname">M. Michkov</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:26%"></div></div>
+    <div class="p-pct ">26%</div>
+    <div class="p-note">Talent brut peut exploser</div>
+    <div class="p-extra">⏱ 18:54 · 🎯 3.4 tirs/m · 🔑 0.62 xA/m</div>
+    <div class="p-h2h">H2H · vs CBJ : 2×2+pts</div>
+    <div class="p-stat">2 matchs 2+pts sur 6 derniers</div>
+  </div>
+</div><div class="pred-row outsider-row">
+  <div class="pred-cat-cell">🔥 Outsider</div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">CBJ</span><span class="pname">K. Marchenko</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:16%"></div></div>
+    <div class="p-pct o-pct">16%</div>
+    <div class="p-note">PP1 RW · 2B récents</div>
+    <div class="p-extra">⏱ 15:48 · 🎯 2.6 tirs/m</div>
+    <div class="p-h2h">H2H · vs PHI : 3B/5M</div>
+    <div class="p-stat">22B · 64M · sniper discret</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">PHI</span><span class="pname">T. Konecny</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:15%"></div></div>
+    <div class="p-pct o-pct">15%</div>
+    <div class="p-note">PP1 RW · en méforme récente</div>
+    <div class="p-extra">⏱ 17:12 · 🎯 3.0 tirs/m</div>
+    <div class="p-h2h">H2H · vs CBJ : 4B/8M</div>
+    <div class="p-stat">24B · 64M · à surveiller</div>
+  </div>
+</div>
+    <div class="score-row"><div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">CBJ 3 – PHI 2</div></div><div class="score-analysis">CBJ -130 (surprise!). Columbus 33-21-11 sur 3W vs PHI en baisse. Fantilli est le meilleur rookie NHL cette saison.</div></div>
   </div>
   <div class="card-toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
 </div>
 <div class="card" id="m-det-dal" data-bucket="late">
   <div class="card-header">
     <div class="teams-row">
-      <div class="tblock"><div class="tcode">DET</div><div class="tfull">Detroit Red Wings</div><div class="trole">VISITEUR</div></div>
+      <div class="tblock"><div class="tcode">DET</div><div class="tfull">Detroit Red Wings</div><div class="trole">VISITEUR <span class="b2b">🔴 B2B</span></div></div>
       <div class="vsblock"><div class="vstime">02h00</div><div class="vsat">CET</div></div>
-      <div class="tblock tright"><div class="tcode">DAL</div><div class="tfull">Dallas Stars</div><div class="trole">DOMICILE</div></div>
+      <div class="tblock tright"><div class="tcode">DAL</div><div class="tfull">Dallas Stars</div><div class="trole"> DOMICILE</div></div>
     </div>
-    <div class="prob-row">
-      <span class="prob-lbl away-lbl">26%</span>
-      <div class="pbar-outer"><div class="pbar-a" style="width:26%"></div><div class="pbar-h" style="width:74%"></div></div>
-      <span class="prob-lbl home-lbl">74%</span>
-    </div>
+    <div class="prob-row"><span class="prob-lbl away-lbl">26%</span><div class="pbar-outer"><div class="pbar-a" style="width:26%"></div><div class="pbar-h" style="width:74%"></div></div><span class="prob-lbl home-lbl">74%</span></div>
     <div class="form-row">
       <div class="fside"><div class="fbadges"><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb l">L</div><div class="fb l">L</div></div><span class="rec">36-23-7</span><span class="streak dn">▼ 3L</span></div>
       <div class="fside fright"><span class="streak up">▲ 5W</span><span class="rec">41-14-10</span><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div></div></div>
@@ -886,122 +1589,125 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </div>
   <div class="card-body">
     <div class="info-grid">
-      <div class="info-col"><div class="info-label">DET · GARDIEN</div><div class="kname">J. Gibson</div><div class="kstats"><span class="kchip good">SV% .907</span><span class="kchip avg">GAA 2.86</span></div><div class="pp-line">PP1: J.T.Compher · DeBrincat · P.Kane · Seider</div></div>
-      <div class="info-col"><div class="info-label">DAL · GARDIEN</div><div class="kname">J. Oettinger</div><div class="kstats"><span class="kchip good">SV% .911</span><span class="kchip avg">GAA 2.60</span></div><div class="pp-line">PP1: Johnston · Robertson · Benn · Heiskanen</div></div>
-      <div class="info-col"><div class="info-label">Absents DET</div><div class="ab-item"><span class="ab-name">D. Larkin</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">A. Copp</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">D. Perron</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
-      <div class="info-col"><div class="info-label">Absents DAL</div><div class="ab-item"><span class="ab-name">R. Hintz</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">T. Seguin</span><span class="birs">IR-LT</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">M. Rantanen</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
+      <div class="info-col"><div class="info-label">DET · GARDIEN</div><div class="kname">J. Gibson</div><div class="kstats"><span class="kchip good">SV% .907</span><span class="kchip avg">GAA 2.86</span><span class="kchip ">PP 17.9%</span><span class="kchip avg">PK 79.4%</span></div><div class="pp-line">PP1: J.T.Compher · DeBrincat · P.Kane · Seider</div></div>
+      <div class="info-col"><div class="info-label">DAL · GARDIEN</div><div class="kname">J. Oettinger</div><div class="kstats"><span class="kchip good">SV% .911</span><span class="kchip avg">GAA 2.60</span><span class="kchip good">PP 25.2%</span><span class="kchip good">PK 85.1%</span></div><div class="pp-line">PP1: Johnston · Robertson · Benn · Heiskanen</div></div>
+      <div class="info-col"><div class="info-label">Absents DET</div><div class="ab-item"><span class="ab-name">D. Larkin</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 27</span></div><div class="ab-item"><span class="ab-name">A. Copp</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 27</span></div><div class="ab-item"><span class="ab-name">D. Perron</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 21</span></div></div>
+      <div class="info-col"><div class="info-label">Absents DAL</div><div class="ab-item"><span class="ab-name">R. Hintz</span><span class="binj">OUT/IR</span><span class="ab-reason">avr 7</span></div><div class="ab-item"><span class="ab-name">T. Seguin</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">M. Rantanen</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 29</span></div><div class="ab-item"><span class="ab-name">R. Faksa</span><span class="binj">OUT/IR</span><span class="ab-reason">avr 13</span></div></div>
     </div>
     <div class="pred-header-row"><div>CATÉGORIE</div><div>DET — VISITEUR</div><div>DAL — DOMICILE</div></div>
     <div class="pred-row">
   <div class="pred-cat-cell">🎯 But</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">DET</span><span class="pname">A. DeBrincat</span></div>
+    <div class="p-top"><span class="ptag">DET</span><span class="pname">A. DeBrincat</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:38%"></div></div>
     <div class="p-pct ">38%</div>
     <div class="p-note">PP1 · 0,66 but/m · Larkin OUT</div>
+    <div class="p-extra">⏱ 19:24 · 🎯 4.2 tirs/m</div>
     <div class="p-h2h">H2H · vs DAL : 5B/9M</div>
     <div class="p-stat">38B · 65M · porte DET seul</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">DAL</span><span class="pname">J. Robertson</span></div>
+    <div class="p-top"><span class="ptag">DAL</span><span class="pname">J. Robertson</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.3/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:54%"></div></div>
     <div class="p-pct ">54%</div>
     <div class="p-note">PP1 LW · 0,65 but/m · 4B récents</div>
+    <div class="p-extra">⏱ 18:48 · 🎯 3.6 tirs/m</div>
     <div class="p-h2h">H2H · vs DET : 10B/13M</div>
     <div class="p-stat">36B · 65M · série 3M🔥</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">⭐ Point</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">DET</span><span class="pname">A. DeBrincat</span></div>
+    <div class="p-top"><span class="ptag">DET</span><span class="pname">A. DeBrincat</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">5.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:52%"></div></div>
     <div class="p-pct ">52%</div>
     <div class="p-note">Larkin+Copp OUT = 1er centre PP1</div>
+    <div class="p-extra">⏱ 19:24 · 🎯 4.2 tirs/m · 🔑 0.54 xA/m</div>
     <div class="p-h2h">H2H · vs DAL : 0,9pt/m</div>
     <div class="p-stat">55Pts · 65M · lourde charge</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">DAL</span><span class="pname">W. Johnston</span></div>
+    <div class="p-top"><span class="ptag">DAL</span><span class="pname">W. Johnston</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">7.1/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:68%"></div></div>
     <div class="p-pct ">68%</div>
     <div class="p-note">PP1 · hérite rôle Hintz</div>
+    <div class="p-extra">⏱ 19:36 · 🎯 3.4 tirs/m · 🔑 0.64 xA/m</div>
     <div class="p-h2h">H2H · vs DET : 1,0pt/m</div>
     <div class="p-stat">52Pts · 65M · série 4M🔥</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">🤝 Assist</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">DET</span><span class="pname">M. Seider</span></div>
+    <div class="p-top"><span class="ptag">DET</span><span class="pname">M. Seider</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.6/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:48%"></div></div>
     <div class="p-pct ">48%</div>
     <div class="p-note">PP1 QB · 0,68 ast/m</div>
+    <div class="p-extra">⏱ 23:54 · 🔑 0.78 xA/m</div>
     <div class="p-h2h">H2H · vs DAL : 6A/9M</div>
     <div class="p-stat">42A · 65M · pilier du PP</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">DAL</span><span class="pname">M. Heiskanen</span></div>
+    <div class="p-top"><span class="ptag">DAL</span><span class="pname">M. Heiskanen</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">5.8/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:62%"></div></div>
     <div class="p-pct ">62%</div>
     <div class="p-note">PP1 QB · 0,84 ast/m</div>
+    <div class="p-extra">⏱ 25:12 · 🔑 0.94 xA/m</div>
     <div class="p-h2h">H2H · vs DET : 10A/12M</div>
     <div class="p-stat">52A · 65M · meilleur D DAL</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">💥 2+ Pts</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">DAL</span><span class="pname">W. Johnston</span></div>
-    <div class="pbar-wrap"><div class="pbar-fill" style="width:38%"></div></div>
-    <div class="p-pct ">38%</div>
-    <div class="p-note">DAL sur 5W · DET décimé</div>
-    <div class="p-h2h">H2H · vs DET : 3×2+pts</div>
-    <div class="p-stat">3 matchs 2+pts sur 7 derniers</div>
-  </div>
-  <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">DET</span><span class="pname">A. DeBrincat</span></div>
+    <div class="p-top"><span class="ptag">DET</span><span class="pname">A. DeBrincat</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:18%"></div></div>
     <div class="p-pct ">18%</div>
     <div class="p-note">Seul capable gros match DET</div>
+    <div class="p-extra">⏱ 19:24 · 🎯 4.2 tirs/m · 🔑 0.54 xA/m</div>
     <div class="p-h2h">H2H · vs DAL : 1×2+pts</div>
     <div class="p-stat">1 match 2+pts sur 7 derniers</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">DAL</span><span class="pname">W. Johnston</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:38%"></div></div>
+    <div class="p-pct ">38%</div>
+    <div class="p-note">DAL sur 5W · DET décimé</div>
+    <div class="p-extra">⏱ 19:36 · 🎯 3.4 tirs/m · 🔑 0.64 xA/m</div>
+    <div class="p-h2h">H2H · vs DET : 3×2+pts</div>
+    <div class="p-stat">3 matchs 2+pts sur 7 derniers</div>
   </div>
 </div><div class="pred-row outsider-row">
   <div class="pred-cat-cell">🔥 Outsider</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">DET</span><span class="pname">P. Kane</span></div>
+    <div class="p-top"><span class="ptag">DET</span><span class="pname">P. Kane</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:15%"></div></div>
     <div class="p-pct o-pct">15%</div>
     <div class="p-note">PP1 vétéran · 2B récents</div>
+    <div class="p-extra">⏱ 16:42 · 🎯 2.8 tirs/m</div>
     <div class="p-h2h">H2H · vs DAL : 3B/7M</div>
     <div class="p-stat">14B · 62M · expérience playoffs</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">DAL</span><span class="pname">J. Benn</span></div>
+    <div class="p-top"><span class="ptag">DAL</span><span class="pname">J. Benn</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:14%"></div></div>
     <div class="p-pct o-pct">14%</div>
     <div class="p-note">PP1 capitaine motivé dom</div>
+    <div class="p-extra">⏱ 16:18 · 🎯 2.6 tirs/m</div>
     <div class="p-h2h">H2H · vs DET : 2B/5M</div>
     <div class="p-stat">18B · 65M · leadership</div>
   </div>
 </div>
-    <div class="score-row">
-      <div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">DAL 5 – DET 1</div></div>
-      <div class="score-analysis">🚨 DET sans Larkin+Copp (jambe). DAL -180 sur 5W consécutives. Johnston+Robertson en feu. Mismatch total.</div>
-    </div>
+    <div class="score-row"><div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">DAL 5 – DET 1</div></div><div class="score-analysis">🚨 DET sans Larkin+Copp (jambe). DAL -180 sur 5W consécutives. Johnston+Robertson en feu. Mismatch total.</div></div>
   </div>
   <div class="card-toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
 </div>
 <div class="card" id="m-pit-uta" data-bucket="late" data-tight="1">
   <div class="card-header">
     <div class="teams-row">
-      <div class="tblock"><div class="tcode">PIT</div><div class="tfull">Pittsburgh Penguins</div><div class="trole">VISITEUR</div></div>
+      <div class="tblock"><div class="tcode">PIT</div><div class="tfull">Pittsburgh Penguins</div><div class="trole">VISITEUR </div></div>
       <div class="vsblock"><div class="vstime">03h00</div><div class="vsat">CET</div></div>
-      <div class="tblock tright"><div class="tcode">UTA</div><div class="tfull">Utah Mammoth</div><div class="trole">DOMICILE</div></div>
+      <div class="tblock tright"><div class="tcode">UTA</div><div class="tfull">Utah Mammoth</div><div class="trole"> DOMICILE</div></div>
     </div>
-    <div class="prob-row">
-      <span class="prob-lbl away-lbl">41%</span>
-      <div class="pbar-outer"><div class="pbar-a" style="width:41%"></div><div class="pbar-h" style="width:59%"></div></div>
-      <span class="prob-lbl home-lbl">59%</span>
-    </div>
+    <div class="prob-row"><span class="prob-lbl away-lbl">41%</span><div class="pbar-outer"><div class="pbar-a" style="width:41%"></div><div class="pbar-h" style="width:59%"></div></div><span class="prob-lbl home-lbl">59%</span></div>
     <div class="form-row">
       <div class="fside"><div class="fbadges"><div class="fb w">W</div><div class="fb l">L</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div></div><span class="rec">32-18-15</span><span class="streak dn">▼ 1L</span></div>
       <div class="fside fright"><span class="streak up">▲ 2W</span><span class="rec">34-26-6</span><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div></div></div>
@@ -1009,122 +1715,125 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </div>
   <div class="card-body">
     <div class="info-grid">
-      <div class="info-col"><div class="info-label">PIT · GARDIEN</div><div class="kname">S. Skinner</div><div class="kstats"><span class="kchip good">SV% .910</span><span class="kchip avg">GAA 2.76</span></div><div class="pp-line">PP1: Rakell · Chinakhov · Rust · E.Karlsson</div></div>
-      <div class="info-col"><div class="info-label">UTA · GARDIEN</div><div class="kname">K. Vejmelka</div><div class="kstats"><span class="kchip good">SV% .914</span><span class="kchip avg">GAA 2.58</span></div><div class="pp-line">PP1: Hayton · C.Keller · Guenther · Sergachev</div></div>
-      <div class="info-col"><div class="info-label">Absents PIT</div><div class="ab-item"><span class="ab-name">S. Crosby</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">E. Malkin</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">K. Hayes</span><span class="bdtd">DTD</span><span class="ab-reason"></span></div></div>
+      <div class="info-col"><div class="info-label">PIT · GARDIEN</div><div class="kname">S. Skinner</div><div class="kstats"><span class="kchip good">SV% .910</span><span class="kchip avg">GAA 2.76</span><span class="kchip ">PP 16.1%</span><span class="kchip ">PK 77.8%</span></div><div class="pp-line">PP1: Rakell · Chinakhov · Rust · E.Karlsson</div></div>
+      <div class="info-col"><div class="info-label">UTA · GARDIEN</div><div class="kname">K. Vejmelka</div><div class="kstats"><span class="kchip good">SV% .914</span><span class="kchip avg">GAA 2.58</span><span class="kchip avg">PP 20.4%</span><span class="kchip good">PK 82.8%</span></div><div class="pp-line">PP1: Hayton · C.Keller · Guenther · Sergachev</div></div>
+      <div class="info-col"><div class="info-label">Absents PIT</div><div class="ab-item"><span class="ab-name">S. Crosby</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 18</span></div><div class="ab-item"><span class="ab-name">E. Malkin</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 16</span></div><div class="ab-item"><span class="ab-name">K. Hayes</span><span class="bdtd">DTD</span><span class="ab-reason">nouveau</span></div><div class="ab-item"><span class="ab-name">S. Girard</span><span class="bdtd">DTD</span><span class="ab-reason">nouveau</span></div></div>
       <div class="info-col"><div class="info-label">Absents UTA</div><span class="no-absent">Aucun absent confirmé ✅</span></div>
     </div>
     <div class="pred-header-row"><div>CATÉGORIE</div><div>PIT — VISITEUR</div><div>UTA — DOMICILE</div></div>
     <div class="pred-row">
   <div class="pred-cat-cell">🎯 But</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">PIT</span><span class="pname">R. Rakell</span></div>
+    <div class="p-top"><span class="ptag">PIT</span><span class="pname">R. Rakell</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.6/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:42%"></div></div>
     <div class="p-pct ">42%</div>
     <div class="p-note">PP1 · seul centre PP1 disponible</div>
+    <div class="p-extra">⏱ 18:12 · 🎯 3.0 tirs/m</div>
     <div class="p-h2h">H2H · vs UTA : 5B/8M</div>
     <div class="p-stat">24B · 65M · lourde charge sans Sid</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">UTA</span><span class="pname">C. Keller</span></div>
+    <div class="p-top"><span class="ptag">UTA</span><span class="pname">C. Keller</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">5.7/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:54%"></div></div>
     <div class="p-pct ">54%</div>
     <div class="p-note">PP1 LW · 0,58 but/m · 3B récents</div>
+    <div class="p-extra">⏱ 19:48 · 🎯 3.6 tirs/m</div>
     <div class="p-h2h">H2H · vs PIT : 6B/9M</div>
     <div class="p-stat">32B · 66M · série 3M</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">⭐ Point</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">PIT</span><span class="pname">R. Rakell</span></div>
+    <div class="p-top"><span class="ptag">PIT</span><span class="pname">R. Rakell</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">5.4/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:56%"></div></div>
     <div class="p-pct ">56%</div>
     <div class="p-note">Sans Crosby ET Malkin = 1er rôle</div>
+    <div class="p-extra">⏱ 18:12 · 🎯 3.0 tirs/m · 🔑 0.52 xA/m</div>
     <div class="p-h2h">H2H · vs UTA : 0,8pt/m</div>
     <div class="p-stat">48Pts · 65M · responsabilité max</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">UTA</span><span class="pname">B. Hayton</span></div>
+    <div class="p-top"><span class="ptag">UTA</span><span class="pname">B. Hayton</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.1/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:64%"></div></div>
     <div class="p-pct ">64%</div>
     <div class="p-note">PP1 centre · 0,78 pt/m dom</div>
+    <div class="p-extra">⏱ 19:12 · 🎯 2.8 tirs/m · 🔑 0.62 xA/m</div>
     <div class="p-h2h">H2H · vs PIT : 0,9pt/m</div>
     <div class="p-stat">50Pts · 66M · leader UTA</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">🤝 Assist</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">PIT</span><span class="pname">E. Karlsson</span></div>
+    <div class="p-top"><span class="ptag">PIT</span><span class="pname">E. Karlsson</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.9/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:52%"></div></div>
     <div class="p-pct ">52%</div>
     <div class="p-note">PP1 QB · 0,72 ast/m</div>
+    <div class="p-extra">⏱ 24:42 · 🔑 0.98 xA/m</div>
     <div class="p-h2h">H2H · vs UTA : 9A/11M</div>
     <div class="p-stat">56A · 65M · seul D offensif PIT</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">UTA</span><span class="pname">M. Sergachev</span></div>
+    <div class="p-top"><span class="ptag">UTA</span><span class="pname">M. Sergachev</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">5.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:58%"></div></div>
     <div class="p-pct ">58%</div>
     <div class="p-note">PP1 QB · 0,74 ast/m</div>
+    <div class="p-extra">⏱ 23:18 · 🔑 0.84 xA/m</div>
     <div class="p-h2h">H2H · vs PIT : 8A/10M</div>
     <div class="p-stat">48A · 66M · meilleur D UTA</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">💥 2+ Pts</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">UTA</span><span class="pname">C. Keller</span></div>
-    <div class="pbar-wrap"><div class="pbar-fill" style="width:32%"></div></div>
-    <div class="p-pct ">32%</div>
-    <div class="p-note">UTA -145 · PIT sans Crosby ET Malkin</div>
-    <div class="p-h2h">H2H · vs PIT : 2×2+pts</div>
-    <div class="p-stat">2 matchs 2+pts sur 6 derniers</div>
-  </div>
-  <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">PIT</span><span class="pname">R. Rakell</span></div>
+    <div class="p-top"><span class="ptag">PIT</span><span class="pname">R. Rakell</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:18%"></div></div>
     <div class="p-pct ">18%</div>
     <div class="p-note">Contexte difficile mais qualité</div>
+    <div class="p-extra">⏱ 18:12 · 🎯 3.0 tirs/m · 🔑 0.52 xA/m</div>
     <div class="p-h2h">H2H · vs UTA : 1×2+pts</div>
     <div class="p-stat">1 match 2+pts sur 6 derniers</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">UTA</span><span class="pname">C. Keller</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:32%"></div></div>
+    <div class="p-pct ">32%</div>
+    <div class="p-note">UTA -145 · PIT sans Crosby ET Malkin</div>
+    <div class="p-extra">⏱ 19:48 · 🎯 3.6 tirs/m · 🔑 0.66 xA/m</div>
+    <div class="p-h2h">H2H · vs PIT : 2×2+pts</div>
+    <div class="p-stat">2 matchs 2+pts sur 6 derniers</div>
   </div>
 </div><div class="pred-row outsider-row">
   <div class="pred-cat-cell">🔥 Outsider</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">PIT</span><span class="pname">Y. Chinakhov</span></div>
+    <div class="p-top"><span class="ptag">PIT</span><span class="pname">Y. Chinakhov</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:17%"></div></div>
     <div class="p-pct o-pct">17%</div>
     <div class="p-note">PP1 LW · 2B sur 5 derniers</div>
+    <div class="p-extra">⏱ 14:54 · 🎯 2.8 tirs/m</div>
     <div class="p-h2h">H2H · vs UTA : 2B/5M</div>
     <div class="p-stat">20B · 63M · style imprévisible</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">UTA</span><span class="pname">N. Schmaltz</span></div>
+    <div class="p-top"><span class="ptag">UTA</span><span class="pname">N. Schmaltz</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:15%"></div></div>
     <div class="p-pct o-pct">15%</div>
     <div class="p-note">PP1 · discret mais régulier</div>
+    <div class="p-extra">⏱ 17:06 · 🎯 2.6 tirs/m</div>
     <div class="p-h2h">H2H · vs PIT : 3B/7M</div>
     <div class="p-stat">22B · 65M · profil constant</div>
   </div>
 </div>
-    <div class="score-row">
-      <div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">UTA 4 – PIT 1</div></div>
-      <div class="score-analysis">🚨 PIT SANS Crosby (IR) ET Malkin (OUT). UTA -145 effectif complet. Vejmelka (.914) solide.</div>
-    </div>
+    <div class="score-row"><div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">UTA 4 – PIT 1</div></div><div class="score-analysis">🚨 PIT SANS Crosby (IR) ET Malkin (OUT). UTA -145 effectif complet. Vejmelka (.914) solide.</div></div>
   </div>
   <div class="card-toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
 </div>
 <div class="card" id="m-sea-van" data-bucket="late">
   <div class="card-header">
     <div class="teams-row">
-      <div class="tblock"><div class="tcode">SEA</div><div class="tfull">Seattle Kraken</div><div class="trole">VISITEUR</div></div>
+      <div class="tblock"><div class="tcode">SEA</div><div class="tfull">Seattle Kraken</div><div class="trole">VISITEUR </div></div>
       <div class="vsblock"><div class="vstime">04h00</div><div class="vsat">CET</div></div>
-      <div class="tblock tright"><div class="tcode">VAN</div><div class="tfull">Vancouver Canucks</div><div class="trole">DOMICILE</div></div>
+      <div class="tblock tright"><div class="tcode">VAN</div><div class="tfull">Vancouver Canucks</div><div class="trole"><span class="b2b">🔴 B2B</span> DOMICILE</div></div>
     </div>
-    <div class="prob-row">
-      <span class="prob-lbl away-lbl">56%</span>
-      <div class="pbar-outer"><div class="pbar-a" style="width:56%"></div><div class="pbar-h" style="width:44%"></div></div>
-      <span class="prob-lbl home-lbl">44%</span>
-    </div>
+    <div class="prob-row"><span class="prob-lbl away-lbl">56%</span><div class="pbar-outer"><div class="pbar-a" style="width:56%"></div><div class="pbar-h" style="width:44%"></div></div><span class="prob-lbl home-lbl">44%</span></div>
     <div class="form-row">
       <div class="fside"><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div></div><span class="rec">29-26-9</span><span class="streak up">▲ 3W</span></div>
       <div class="fside fright"><span class="streak dn">▼ 3L</span><span class="rec">20-37-8</span><div class="fbadges"><div class="fb l">L</div><div class="fb l">L</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div></div></div>
@@ -1132,122 +1841,125 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </div>
   <div class="card-body">
     <div class="info-grid">
-      <div class="info-col"><div class="info-label">SEA · GARDIEN</div><div class="kname">P. Grubauer</div><div class="kstats"><span class="kchip good">SV% .909</span><span class="kchip avg">GAA 2.74</span></div><div class="pp-line">PP1: Stephenson · McCann · Tolvanen · Beniers</div></div>
-      <div class="info-col"><div class="info-label">VAN · GARDIEN</div><div class="kname">K. Lankinen</div><div class="kstats"><span class="kchip good">SV% .906</span><span class="kchip avg">GAA 2.88</span></div><div class="pp-line">PP1: E.Kane · Hronek · Pettersson · Buium</div></div>
-      <div class="info-col"><div class="info-label">Absents SEA</div><div class="ab-item"><span class="ab-name">J. Schwartz</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">M. McCormick</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
-      <div class="info-col"><div class="info-label">Absents VAN</div><div class="ab-item"><span class="ab-name">T. Demko</span><span class="birs">IR-LT</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">F. Chytil</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">J. Lekkerimaki</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
+      <div class="info-col"><div class="info-label">SEA · GARDIEN</div><div class="kname">P. Grubauer</div><div class="kstats"><span class="kchip good">SV% .909</span><span class="kchip avg">GAA 2.74</span><span class="kchip avg">PP 19.6%</span><span class="kchip avg">PK 81.4%</span></div><div class="pp-line">PP1: Stephenson · McCann · Tolvanen · Beniers</div></div>
+      <div class="info-col"><div class="info-label">VAN · GARDIEN</div><div class="kname">K. Lankinen</div><div class="kstats"><span class="kchip good">SV% .906</span><span class="kchip avg">GAA 2.88</span><span class="kchip ">PP 14.8%</span><span class="kchip ">PK 74.2%</span></div><div class="pp-line">PP1: E.Kane · Hronek · Pettersson · Buium</div></div>
+      <div class="info-col"><div class="info-label">Absents SEA</div><div class="ab-item"><span class="ab-name">J. Schwartz</span><span class="binj">OUT/IR</span><span class="ab-reason">avr 2</span></div></div>
+      <div class="info-col"><div class="info-label">Absents VAN</div><div class="ab-item"><span class="ab-name">T. Demko</span><span class="birs">IR-LT</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">F. Chytil</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 17</span></div><div class="ab-item"><span class="ab-name">P.O. Joseph</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 24</span></div><div class="ab-item"><span class="ab-name">D. Forbort</span><span class="binj">OUT/IR</span><span class="ab-reason">avr 12</span></div></div>
     </div>
     <div class="pred-header-row"><div>CATÉGORIE</div><div>SEA — VISITEUR</div><div>VAN — DOMICILE</div></div>
     <div class="pred-row">
   <div class="pred-cat-cell">🎯 But</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">SEA</span><span class="pname">J. McCann</span></div>
+    <div class="p-top"><span class="ptag">SEA</span><span class="pname">J. McCann</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.4/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:54%"></div></div>
     <div class="p-pct ">54%</div>
     <div class="p-note">PP1 LW · 0,62 but/m · 4B récents</div>
+    <div class="p-extra">⏱ 19:06 · 🎯 3.4 tirs/m</div>
     <div class="p-h2h">H2H · vs VAN : 8B/11M</div>
     <div class="p-stat">36B · 64M · série 4M🔥</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">VAN</span><span class="pname">E. Kane</span></div>
+    <div class="p-top"><span class="ptag">VAN</span><span class="pname">E. Kane</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:38%"></div></div>
     <div class="p-pct ">38%</div>
     <div class="p-note">PP1 · seul finisseur restant</div>
+    <div class="p-extra">⏱ 17:24 · 🎯 3.2 tirs/m</div>
     <div class="p-h2h">H2H · vs SEA : 5B/9M</div>
     <div class="p-stat">28B · 66M · mode survie</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">⭐ Point</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">SEA</span><span class="pname">J. McCann</span></div>
+    <div class="p-top"><span class="ptag">SEA</span><span class="pname">J. McCann</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:68%"></div></div>
     <div class="p-pct ">68%</div>
     <div class="p-note">1,04 pt/m · SEA sur 3W · VAN décimé</div>
+    <div class="p-extra">⏱ 19:06 · 🎯 3.4 tirs/m · 🔑 0.58 xA/m</div>
     <div class="p-h2h">H2H · vs VAN : 1,0pt/m</div>
     <div class="p-stat">62Pts · 64M · en forme</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">VAN</span><span class="pname">E. Pettersson</span></div>
+    <div class="p-top"><span class="ptag">VAN</span><span class="pname">E. Pettersson</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">5.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:52%"></div></div>
     <div class="p-pct ">52%</div>
     <div class="p-note">PP2 · 0,88 pt/m si 100%</div>
+    <div class="p-extra">⏱ 20:18 · 🎯 3.2 tirs/m · 🔑 0.78 xA/m</div>
     <div class="p-h2h">H2H · vs SEA : 1,0pt/m</div>
     <div class="p-stat">54Pts · 62M · leader VAN</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">🤝 Assist</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">SEA</span><span class="pname">C. Stephenson</span></div>
+    <div class="p-top"><span class="ptag">SEA</span><span class="pname">C. Stephenson</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">5.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:58%"></div></div>
     <div class="p-pct ">58%</div>
     <div class="p-note">PP1 centre · 0,72 ast/m</div>
+    <div class="p-extra">⏱ 18:42 · 🔑 0.72 xA/m</div>
     <div class="p-h2h">H2H · vs VAN : 9A/12M</div>
     <div class="p-stat">46A · 64M · distributeur élite</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">VAN</span><span class="pname">F. Hronek</span></div>
+    <div class="p-top"><span class="ptag">VAN</span><span class="pname">F. Hronek</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.6/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:48%"></div></div>
     <div class="p-pct ">48%</div>
     <div class="p-note">PP1 QB · meilleur D VAN restant</div>
+    <div class="p-extra">⏱ 23:06 · 🔑 0.82 xA/m</div>
     <div class="p-h2h">H2H · vs SEA : 7A/10M</div>
     <div class="p-stat">44A · 66M · pilier PP1</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">💥 2+ Pts</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">SEA</span><span class="pname">J. McCann</span></div>
+    <div class="p-top"><span class="ptag">SEA</span><span class="pname">J. McCann</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:38%"></div></div>
     <div class="p-pct ">38%</div>
     <div class="p-note">SEA -130 · VAN 20-37-8 en ruines</div>
+    <div class="p-extra">⏱ 19:06 · 🎯 3.4 tirs/m · 🔑 0.58 xA/m</div>
     <div class="p-h2h">H2H · vs VAN : 3×2+pts</div>
     <div class="p-stat">3 matchs 2+pts sur 7 derniers</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">SEA</span><span class="pname">C. Stephenson</span></div>
+    <div class="p-top"><span class="ptag">VAN</span><span class="pname">E. Pettersson</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:24%"></div></div>
     <div class="p-pct ">24%</div>
-    <div class="p-note">PP dominant vs PK VAN catastrophique</div>
-    <div class="p-h2h">H2H · vs VAN : 2×2+pts</div>
-    <div class="p-stat">2 matchs 2+pts sur 7 derniers</div>
+    <div class="p-note">PP2 · leader VAN · mode survie</div>
+    <div class="p-extra">⏱ 20:18 · 🎯 3.2 tirs/m · 🔑 0.78 xA/m</div>
+    <div class="p-h2h">H2H · vs SEA : 2×2+pts</div>
+    <div class="p-stat">2 matchs 2+pts sur 5 derniers</div>
   </div>
 </div><div class="pred-row outsider-row">
   <div class="pred-cat-cell">🔥 Outsider</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">SEA</span><span class="pname">M. Beniers</span></div>
+    <div class="p-top"><span class="ptag">SEA</span><span class="pname">M. Beniers</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:17%"></div></div>
     <div class="p-pct o-pct">17%</div>
     <div class="p-note">PP1 · 2B sur 5 derniers</div>
+    <div class="p-extra">⏱ 17:48 · 🎯 2.9 tirs/m</div>
     <div class="p-h2h">H2H · vs VAN : 3B/7M</div>
     <div class="p-stat">20B · 64M · en progression</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">VAN</span><span class="pname">E. Kane</span></div>
+    <div class="p-top"><span class="ptag">VAN</span><span class="pname">E. Kane</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:13%"></div></div>
     <div class="p-pct o-pct">13%</div>
     <div class="p-note">VAN a besoin d'un héros</div>
+    <div class="p-extra">⏱ 17:24 · 🎯 3.2 tirs/m</div>
     <div class="p-h2h">H2H · vs SEA : 2B/4M</div>
     <div class="p-stat">28B · 66M · mode héros forcé</div>
   </div>
 </div>
-    <div class="score-row">
-      <div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">SEA 4 – VAN 1</div></div>
-      <div class="score-analysis">SEA -130. VAN 20-37-8 pire équipe NHL. Demko IR-LT, Lankinen par défaut. McCann–Stephenson PP1 dominant.</div>
-    </div>
+    <div class="score-row"><div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">SEA 4 – VAN 1</div></div><div class="score-analysis">SEA -130. VAN 20-37-8 pire équipe NHL. Demko IR-LT, Lankinen par défaut. McCann–Stephenson PP1 dominant.</div></div>
   </div>
   <div class="card-toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
 </div>
 <div class="card" id="m-chi-vgk" data-bucket="late">
   <div class="card-header">
     <div class="teams-row">
-      <div class="tblock"><div class="tcode">CHI</div><div class="tfull">Chicago Blackhawks</div><div class="trole">VISITEUR</div></div>
+      <div class="tblock"><div class="tcode">CHI</div><div class="tfull">Chicago Blackhawks</div><div class="trole">VISITEUR </div></div>
       <div class="vsblock"><div class="vstime">04h00</div><div class="vsat">CET</div></div>
-      <div class="tblock tright"><div class="tcode">VGK</div><div class="tfull">Vegas Golden Knights</div><div class="trole">DOMICILE</div></div>
+      <div class="tblock tright"><div class="tcode">VGK</div><div class="tfull">Vegas Golden Knights</div><div class="trole"> DOMICILE</div></div>
     </div>
-    <div class="prob-row">
-      <span class="prob-lbl away-lbl">29%</span>
-      <div class="pbar-outer"><div class="pbar-a" style="width:29%"></div><div class="pbar-h" style="width:71%"></div></div>
-      <span class="prob-lbl home-lbl">71%</span>
-    </div>
+    <div class="prob-row"><span class="prob-lbl away-lbl">29%</span><div class="pbar-outer"><div class="pbar-a" style="width:29%"></div><div class="pbar-h" style="width:71%"></div></div><span class="prob-lbl home-lbl">71%</span></div>
     <div class="form-row">
       <div class="fside"><div class="fbadges"><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb l">L</div><div class="fb w">W</div></div><span class="rec">25-29-11</span><span class="streak up">▲ 1W</span></div>
       <div class="fside fright"><span class="streak up">▲ 2W</span><span class="rec">30-22-14</span><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb w">W</div></div></div>
@@ -1255,129 +1967,128 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   </div>
   <div class="card-body">
     <div class="info-grid">
-      <div class="info-col"><div class="info-label">CHI · GARDIEN</div><div class="kname">S. Knight</div><div class="kstats"><span class="kchip good">SV% .905</span><span class="kchip avg">GAA 2.91</span></div><div class="pp-line">PP1: C.Bedard · Bertuzzi · Teravainen · Levshunov</div></div>
-      <div class="info-col"><div class="info-label">VGK · GARDIEN</div><div class="kname">A. Schmid</div><div class="kstats"><span class="kchip good">SV% .914</span><span class="kchip avg">GAA 2.62</span></div><div class="pp-line">PP1: T.Hertl · Dorofeyev · M.Marner · M.Stone · J.Eichel</div></div>
-      <div class="info-col"><div class="info-label">Absents CHI</div><div class="ab-item"><span class="ab-name">O. Moore</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">R. Ellis</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">S. Weber</span><span class="birs">IR-LT</span><span class="ab-reason"></span></div></div>
-      <div class="info-col"><div class="info-label">Absents VGK</div><div class="ab-item"><span class="ab-name">A. Pietrangelo</span><span class="birs">IR-LT</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">W. Karlsson</span><span class="birs">IR-LT</span><span class="ab-reason"></span></div></div>
+      <div class="info-col"><div class="info-label">CHI · GARDIEN</div><div class="kname">S. Knight</div><div class="kstats"><span class="kchip good">SV% .905</span><span class="kchip avg">GAA 2.91</span><span class="kchip ">PP 15.2%</span><span class="kchip ">PK 76.8%</span></div><div class="pp-line">PP1: C.Bedard · Bertuzzi · Teravainen · Levshunov</div></div>
+      <div class="info-col"><div class="info-label">VGK · GARDIEN</div><div class="kname">A. Schmid</div><div class="kstats"><span class="kchip good">SV% .914</span><span class="kchip avg">GAA 2.62</span><span class="kchip good">PP 23.6%</span><span class="kchip good">PK 83.9%</span></div><div class="pp-line">PP1: T.Hertl · Dorofeyev · M.Marner · M.Stone · J.Eichel</div></div>
+      <div class="info-col"><div class="info-label">Absents CHI</div><div class="ab-item"><span class="ab-name">O. Moore</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 31</span></div><div class="ab-item"><span class="ab-name">W. Kaiser</span><span class="bdtd">DTD</span><span class="ab-reason">nouveau</span></div><div class="ab-item"><span class="ab-name">S. Weber</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div></div>
+      <div class="info-col"><div class="info-label">Absents VGK</div><div class="ab-item"><span class="ab-name">A. Pietrangelo</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">W. Karlsson</span><span class="binj">OUT/IR</span><span class="ab-reason"></span></div><div class="ab-item"><span class="ab-name">C. Hart</span><span class="binj">OUT/IR</span><span class="ab-reason">mars 22</span></div></div>
     </div>
     <div class="pred-header-row"><div>CATÉGORIE</div><div>CHI — VISITEUR</div><div>VGK — DOMICILE</div></div>
     <div class="pred-row">
   <div class="pred-cat-cell">🎯 But</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">CHI</span><span class="pname">C. Bedard</span></div>
+    <div class="p-top"><span class="ptag">CHI</span><span class="pname">C. Bedard</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:42%"></div></div>
     <div class="p-pct ">42%</div>
     <div class="p-note">PP1 · 0,64 but/m · 3B récents</div>
+    <div class="p-extra">⏱ 20:42 · 🎯 4.4 tirs/m</div>
     <div class="p-h2h">H2H · vs VGK : 4B/8M</div>
     <div class="p-stat">36B · 64M · phénomène</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">VGK</span><span class="pname">J. Eichel</span></div>
+    <div class="p-top"><span class="ptag">VGK</span><span class="pname">J. Eichel</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.6/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:54%"></div></div>
     <div class="p-pct ">54%</div>
     <div class="p-note">PP1 · 0,71 but/m · 5B récents</div>
+    <div class="p-extra">⏱ 21:06 · 🎯 4.6 tirs/m</div>
     <div class="p-h2h">H2H · vs CHI : 11B/14M</div>
     <div class="p-stat">42B · 65M · série 5M🔥</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">⭐ Point</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">CHI</span><span class="pname">C. Bedard</span></div>
+    <div class="p-top"><span class="ptag">CHI</span><span class="pname">C. Bedard</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">5.6/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:58%"></div></div>
     <div class="p-pct ">58%</div>
     <div class="p-note">1,01 pt/m · seul pour tenir tête</div>
+    <div class="p-extra">⏱ 20:42 · 🎯 4.4 tirs/m · 🔑 0.88 xA/m</div>
     <div class="p-h2h">H2H · vs VGK : 1,1pt/m</div>
     <div class="p-stat">60Pts · 64M · niveau élite</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">VGK</span><span class="pname">M. Marner</span></div>
+    <div class="p-top"><span class="ptag">VGK</span><span class="pname">M. Marner</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">6.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:68%"></div></div>
     <div class="p-pct ">68%</div>
     <div class="p-note">PP1 · 1,18 pt/m dom</div>
+    <div class="p-extra">⏱ 21:18 · 🎯 3.4 tirs/m · 🔑 1.04 xA/m</div>
     <div class="p-h2h">H2H · vs CHI : 0,9pt/m depuis transfert</div>
     <div class="p-stat">74Pts · 65M · transfert réussi</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">🤝 Assist</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">CHI</span><span class="pname">T. Teravainen</span></div>
+    <div class="p-top"><span class="ptag">CHI</span><span class="pname">T. Teravainen</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.9/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:51%"></div></div>
     <div class="p-pct ">51%</div>
     <div class="p-note">PP1 · 0,68 ast/m</div>
+    <div class="p-extra">⏱ 18:24 · 🔑 0.64 xA/m</div>
     <div class="p-h2h">H2H · vs VGK : 7A/10M</div>
     <div class="p-stat">42A · 64M · silencieux régulier</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">VGK</span><span class="pname">M. Stone</span></div>
+    <div class="p-top"><span class="ptag">VGK</span><span class="pname">M. Stone</span><span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17">5.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:58%"></div></div>
     <div class="p-pct ">58%</div>
     <div class="p-note">PP1 LD · 0,74 ast/m</div>
+    <div class="p-extra">⏱ 19:54 · 🔑 0.74 xA/m</div>
     <div class="p-h2h">H2H · vs CHI : 10A/12M</div>
     <div class="p-stat">46A · 65M · vision élite</div>
   </div>
 </div><div class="pred-row">
   <div class="pred-cat-cell">💥 2+ Pts</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">VGK</span><span class="pname">M. Marner</span></div>
-    <div class="pbar-wrap"><div class="pbar-fill" style="width:38%"></div></div>
-    <div class="p-pct ">38%</div>
-    <div class="p-note">VGK -245 · CHI défense perméable</div>
-    <div class="p-h2h">H2H · vs CHI : 3×2+pts</div>
-    <div class="p-stat">3 matchs 2+pts sur 7 derniers</div>
-  </div>
-  <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">CHI</span><span class="pname">C. Bedard</span></div>
+    <div class="p-top"><span class="ptag">CHI</span><span class="pname">C. Bedard</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:24%"></div></div>
     <div class="p-pct ">24%</div>
     <div class="p-note">Si CHI reste dans le match</div>
+    <div class="p-extra">⏱ 20:42 · 🎯 4.4 tirs/m · 🔑 0.88 xA/m</div>
     <div class="p-h2h">H2H · vs VGK : 2×2+pts</div>
     <div class="p-stat">2 matchs 2+pts sur 7 derniers</div>
+  </div>
+  <div class="pred-p-cell">
+    <div class="p-top"><span class="ptag">VGK</span><span class="pname">M. Marner</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.0/10</span></div>
+    <div class="pbar-wrap"><div class="pbar-fill" style="width:38%"></div></div>
+    <div class="p-pct ">38%</div>
+    <div class="p-note">VGK -245 · CHI défense perméable</div>
+    <div class="p-extra">⏱ 21:18 · 🎯 3.4 tirs/m · 🔑 1.04 xA/m</div>
+    <div class="p-h2h">H2H · vs CHI : 3×2+pts</div>
+    <div class="p-stat">3 matchs 2+pts sur 7 derniers</div>
   </div>
 </div><div class="pred-row outsider-row">
   <div class="pred-cat-cell">🔥 Outsider</div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">CHI</span><span class="pname">A. Levshunov</span></div>
+    <div class="p-top"><span class="ptag">CHI</span><span class="pname">A. Levshunov</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:16%"></div></div>
     <div class="p-pct o-pct">16%</div>
     <div class="p-note">PP1 rookie QB · 2B récents</div>
+    <div class="p-extra">⏱ 19:12 · 🎯 3.2 tirs/m</div>
     <div class="p-h2h">H2H · vs VGK : 2B/4M</div>
     <div class="p-stat">16B · 64M · défenseur offensif prometteur</div>
   </div>
   <div class="pred-p-cell">
-    <div class="p-top"><span class="ptag">VGK</span><span class="pname">P. Dorofeyev</span></div>
+    <div class="p-top"><span class="ptag">VGK</span><span class="pname">P. Dorofeyev</span><span class="conf-badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">4.5/10</span></div>
     <div class="pbar-wrap"><div class="pbar-fill" style="width:16%"></div></div>
     <div class="p-pct o-pct">16%</div>
     <div class="p-note">PP1 LW · finisseur discret</div>
+    <div class="p-extra">⏱ 16:36 · 🎯 2.8 tirs/m</div>
     <div class="p-h2h">H2H · vs CHI : 3B/7M</div>
     <div class="p-stat">22B · 65M · profil régulier</div>
   </div>
 </div>
-    <div class="score-row">
-      <div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">VGK 5 – CHI 2</div></div>
-      <div class="score-analysis">VGK -245 massif. Marner+Eichel+Hertl+Stone PP1 redoutable. Pietrangelo IR mais VGK très fort. Bedard seul rayon CHI.</div>
-    </div>
+    <div class="score-row"><div class="score-left"><div class="score-lbl">Score IA</div><div class="score-val">VGK 5 – CHI 2</div></div><div class="score-analysis">VGK -245 massif. Marner+Eichel+Hertl+Stone PP1 redoutable. Pietrangelo IR mais VGK très fort. Bedard seul rayon CHI.</div></div>
   </div>
   <div class="card-toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
 </div></div>
 <script>
 let af='all';
-function setF(f,el){
-  af=f;
-  document.querySelectorAll('.chip').forEach(b=>b.classList.remove('on'));
-  el.classList.add('on');
-  filterAll();
-}
+function setF(f,el){af=f;document.querySelectorAll('.chip').forEach(b=>b.classList.remove('on'));el.classList.add('on');filterAll();}
 function filterAll(){
   const q=document.getElementById('si').value.toLowerCase();
   document.querySelectorAll('.card').forEach(c=>{
-    const teams=c.id.replace('m-','').replace('-',' ');
-    const codes=c.querySelector('.tcode')?.textContent||'';
-    const t=(teams+' '+codes).toLowerCase();
+    const t=(c.id+' '+c.innerText.substring(0,60)).toLowerCase();
     const ms=!q||t.includes(q);
-    let mf=af==='all'||(af==='tight'&&c.dataset.tight==='1')||c.dataset.bucket===af;
+    const mf=af==='all'||(af==='tight'&&c.dataset.tight==='1')||c.dataset.bucket===af;
     c.style.display=(ms&&mf)?'':'none';
   });
 }
 </script>
-</body>
-</html>
+</body></html>
