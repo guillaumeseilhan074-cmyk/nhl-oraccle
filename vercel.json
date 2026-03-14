@@ -1,6 +1,15 @@
 {
   "version": 2,
-  "outputDirectory": "public",
-  "buildCommand": "pip install requests && python scraper.py && python generate.py",
-  "installCommand": "pip install requests"
+  "builds": [
+    {
+      "src": "public/index.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "public/$1"
+    }
+  ]
 }
