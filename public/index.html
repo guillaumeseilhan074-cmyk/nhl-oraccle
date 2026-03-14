@@ -1,4 +1,827 @@
 <!DOCTYPE html>
-<html><head><meta charset="UTF-8"/><title>NHL Oracle</title></head>
-<body><h1>NHL Oracle</h1><p>Chargement en cours...</p></body>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>NHL Oracle – 14 Mars 2026</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f5f5f0;color:#1a1a1a;font-size:14px}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:12px 20px;background:#fff;border-bottom:1px solid #e0e0e0;position:sticky;top:0;z-index:100;flex-wrap:wrap;gap:8px}
+.brand{font-size:20px;font-weight:700}.brand span{color:#e85d04}
+.badges{display:flex;gap:6px;flex-wrap:wrap}
+.badge{font-size:11px;border-radius:20px;padding:3px 10px}
+.badge.green{background:#e8f5e9;border:1px solid #a5d6a7;color:#2e7d32}
+.badge.gray{background:#f0f0ec;border:1px solid #ddd;color:#666}
+.search{display:flex;align-items:center;gap:8px;background:#f5f5f0;border:1px solid #ddd;border-radius:20px;padding:6px 14px}
+.search input{border:none;background:transparent;outline:none;font-size:13px;color:#333;width:180px}
+.filters{display:flex;gap:8px;padding:10px 20px;background:#fff;border-bottom:1px solid #eee;flex-wrap:wrap}
+.chip-btn{padding:5px 14px;border-radius:20px;border:1.5px solid #ddd;background:#fff;font-size:12px;font-weight:500;color:#555;cursor:pointer}
+.chip-btn.active{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+.content{padding:14px 20px;max-width:1000px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.card{background:#fff;border:1.5px solid #e0e0e0;border-radius:14px;overflow:hidden}
+.card:hover{border-color:#bbb;box-shadow:0 3px 16px rgba(0,0,0,.07)}
+.card-header{padding:12px 16px 10px;border-bottom:1px solid #f0f0ec}
+.teams-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.tblock{display:flex;flex-direction:column}.tblock.tr{text-align:right}
+.tcode{font-size:26px;font-weight:800;line-height:1}.tfull{font-size:11px;color:#888;margin-top:2px}
+.vsblock{display:flex;flex-direction:column;align-items:center;gap:3px}
+.vstime{background:#1a1a1a;color:#fff;border-radius:6px;padding:3px 10px;font-size:13px;font-weight:600}
+.vsat{font-size:10px;color:#bbb}
+.prob-row{display:flex;align-items:center;gap:10px;font-size:12px;font-weight:600;margin-bottom:8px}
+.prob-bar{flex:1;height:5px;border-radius:3px;background:#eee;position:relative}
+.prob-away{height:100%;border-radius:3px;background:#4caf50;position:absolute;left:0;top:0}
+.form-row{display:flex;justify-content:space-between}
+.fside{display:flex;align-items:center;gap:6px}.fside.fr{flex-direction:row-reverse}
+.fbadges{display:flex;gap:3px}
+.fb{width:20px;height:20px;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700}
+.fb.w{background:#e8f5e9;color:#2e7d32}.fb.l{background:#ffebee;color:#c62828}
+.streak{font-size:11px;font-weight:600}.streak.up{color:#2e7d32}.streak.down{color:#c62828}
+.rec{color:#888;font-size:11px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#f0f0ec;border-top:1px solid #f0f0ec}
+.kcol,.acol{background:#fff;padding:10px 16px}
+.klabel,.alabel{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#aaa;margin-bottom:4px}
+.kname{font-size:15px;font-weight:700;margin-bottom:5px}
+.kstats{display:flex;flex-wrap:wrap;gap:4px}
+.chip{font-size:11px;padding:2px 8px;border-radius:4px;border:1px solid #e0e0e0;background:#fafaf8;color:#444}
+.chip.good{border-color:#a5d6a7;background:#f1f8e9;color:#2e7d32}
+.chip.avg{border-color:#ffe082;background:#fffde7;color:#f57f17}
+.absent-item{display:inline-flex;align-items:center;gap:4px;margin-right:6px;margin-bottom:3px}
+.absent-name{font-size:12px;font-weight:600}
+.badge-dtd{background:#fff8e1;color:#f57f17;border:1px solid #ffe082;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:700}
+.badge-inj{background:#ffebee;color:#c62828;border:1px solid #ffcdd2;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:700}
+.badge-irs{background:#f3e5f5;color:#7b1fa2;border:1px solid #e1bee7;border-radius:4px;padding:1px 5px;font-size:10px;font-weight:700}
+.no-absent{font-size:12px;color:#bbb;font-style:italic}
+.absent-reason{font-size:10px;color:#aaa}
+.pred-header{display:grid;grid-template-columns:110px 1fr 1fr;background:#fafaf8;border-top:1px solid #f0f0ec;padding:5px 16px;font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#aaa;gap:8px}
+.pred-row{display:grid;grid-template-columns:110px 1fr 1fr;border-top:1px solid #f5f5f0;padding:9px 16px;gap:8px;align-items:start}
+.pred-row:hover{background:#fafaf8}
+.pred-row.pred-outsider .pfill{background:#ff9800}
+.pred-row.pred-outsider .ppct{color:#e65100}
+.pred-row.pred-outsider b{color:#e65100}
+.pred-cat{font-size:12px;font-weight:700;line-height:1.6}
+.pred-player{display:flex;flex-direction:column;gap:2px}
+.ptag{display:inline-flex;padding:1px 6px;border-radius:3px;font-size:10px;font-weight:700;background:#f0f0ec;color:#555;margin-right:4px}
+.pbar{height:3px;background:#eee;border-radius:2px;margin:2px 0;max-width:100px}
+.pfill{height:100%;border-radius:2px;background:#4caf50}
+.ppct{font-size:11px;font-weight:700;color:#2e7d32}
+.pnote{font-size:11px;color:#777;line-height:1.4}
+.ph2h{display:inline-flex;background:#fff8e1;border:1px solid #ffe082;border-radius:4px;padding:2px 7px;font-size:10px;font-weight:600;color:#e65100;margin-top:2px}
+.ph2h::before{content:"H2H · "}
+.score-block{display:flex;align-items:flex-start;justify-content:space-between;padding:10px 16px;border-top:1px solid #f0f0ec;background:#fafaf8;flex-wrap:wrap;gap:8px}
+.slabel{font-size:10px;text-transform:uppercase;letter-spacing:.08em;color:#aaa}
+.sval{font-size:16px;font-weight:800}
+.sanalysis{font-size:11px;color:#555;max-width:62%;line-height:1.5}
+.toggle{padding:5px;border-top:1px solid #f5f5f0;font-size:11px;color:#bbb;cursor:pointer;text-align:center;background:#fafaf8}
+.card-body.col{display:none}
+@media(max-width:600px){.pred-header,.pred-row{grid-template-columns:80px 1fr}.pred-row>*:last-child{grid-column:2}.sanalysis{max-width:100%}.content{padding:8px 10px}}</style>
+</head>
+<body>
+<div class="topbar">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+    <span class="brand">NHL <span>Oracle</span></span>
+    <div class="badges">
+      <span class="badge gray">14 Mars 2026</span>
+      <span class="badge green">✓ RotoWire · 17h00 CET</span>
+    </div>
+  </div>
+  <div class="search">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input id="si" placeholder="Équipe, joueur..." oninput="filterAll()"/>
+  </div>
+</div>
+<div class="filters">
+  <button class="chip-btn active" onclick="setF('all',this)">Tous (14)</button>
+  <button class="chip-btn" onclick="setF('tight',this)">🔥 Serrés</button>
+  <button class="chip-btn" onclick="setF('early',this)">19h–22h (3)</button>
+  <button class="chip-btn" onclick="setF('mid',this)">00h–02h (8)</button>
+  <button class="chip-btn" onclick="setF('late',this)">03h–04h (3)</button>
+</div>
+<div class="content"><div class="card" id="m-ana-ott" data-bucket="early">
+  <div class="card-header">
+    <div class="teams-row">
+      <div class="tblock"><div class="tcode">ANA</div><div class="tfull">Anaheim Ducks</div></div>
+      <div class="vsblock"><span class="vsat">EXT @ DOM</span><span class="vstime">19h00</span></div>
+      <div class="tblock tr"><div class="tcode">OTT</div><div class="tfull">Ottawa Senators</div></div>
+    </div>
+    <div class="prob-row"><span>38%</span><div class="prob-bar"><div class="prob-away" style="width:38%"></div><div class="prob-home" style="width:62%;right:0;position:absolute;top:0;height:100%;background:#ef5350;border-radius:3px"></div></div><span>62%</span></div>
+    <div class="form-row">
+      <div class="fside"><div class="fbadges"><div class="fb l">L</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div></div><span class="rec">36-26-3</span><span class="streak up">▲ 1W</span></div>
+      <div class="fside fr"><span class="streak up">▲ 2W</span><span class="rec">32-23-9</span><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb w">W</div></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="two-col">
+      <div class="kcol"><div class="klabel">ANA · GARDIEN</div><div class="kname">L. Dostal</div><div class="kstats"><span class="chip good">SV% .906</span><span class="chip avg">GAA 2.89</span><span class="chip">PP1: Carlsson · Kreider · Gauthier</span></div></div>
+      <div class="kcol"><div class="klabel">OTT · GARDIEN</div><div class="kname">L. Ullmark</div><div class="kstats"><span class="chip good">SV% .914</span><span class="chip avg">GAA 2.71</span><span class="chip">PP1: Stutzle · B.Tkachuk · Batherso</span></div></div>
+    </div>
+    <div class="two-col">
+      <div class="acol"><div class="alabel">Absents ANA</div><div class="absent-item"><span class="absent-name">T. Terry</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">R. Gudas</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div></div>
+      <div class="acol"><div class="alabel">Absents OTT</div><div class="absent-item"><span class="absent-name">J. Sanderson</span><span class="badge-inj">OUT/IR</span><span class="absent-reason">haut du corps</span></div></div>
+    </div>
+    <div class="pred-header"><div>CATÉGORIE</div><div>ANA — VISITEUR</div><div>OTT — DOMICILE</div></div>
+    <div class="pred-row">
+  <div class="pred-cat">🎯 But</div>
+  <div class="pred-player"><span class="ptag">ANA</span><b>L. Carlsson</b><div class="pbar"><div class="pfill" style="width:34%"></div></div><span class="ppct ">34%</span><div class="pnote">PP1 centre · 0,48 but/match</div><div class="ph2h">vs OTT : 3 buts en 8 matchs</div></div>
+  <div class="pred-player"><span class="ptag">OTT</span><b>T. Stutzle</b><div class="pbar"><div class="pfill" style="width:56%"></div></div><span class="ppct ">56%</span><div class="pnote">PP1 · 0,85 but/match · en forme à dom</div><div class="ph2h">vs ANA : 8 buts en 11 matchs</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">⭐ Point</div>
+  <div class="pred-player"><span class="ptag">ANA</span><b>L. Carlsson</b><div class="pbar"><div class="pfill" style="width:51%"></div></div><span class="ppct ">51%</span><div class="pnote">PP1 · 0,78 pt/match</div><div class="ph2h">vs OTT : 0,7pt/match</div></div>
+  <div class="pred-player"><span class="ptag">OTT</span><b>T. Stutzle</b><div class="pbar"><div class="pfill" style="width:72%"></div></div><span class="ppct ">72%</span><div class="pnote">1,18 pt/match · Sanderson absent</div><div class="ph2h">vs ANA : 1,4pt/match</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">🤝 Assist</div>
+  <div class="pred-player"><span class="ptag">ANA</span><b>A. Killorn</b><div class="pbar"><div class="pfill" style="width:42%"></div></div><span class="ppct ">42%</span><div class="pnote">PP2 wing · 0,52 assist/match</div><div class="ph2h">vs OTT : 5 assists en 7</div></div>
+  <div class="pred-player"><span class="ptag">OTT</span><b>B. Tkachuk</b><div class="pbar"><div class="pfill" style="width:58%"></div></div><span class="ppct ">58%</span><div class="pnote">PP1 LW · 0,71 assist/match</div><div class="ph2h">vs ANA : 12 assists en 14</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">💥 2+ Pts</div>
+  <div class="pred-player"><span class="ptag">OTT</span><b>T. Stutzle</b><div class="pbar"><div class="pfill" style="width:28%"></div></div><span class="ppct ">28%</span><div class="pnote">OTT dom · ANA défense perméable</div><div class="ph2h">vs ANA : 3 matchs 2+pts</div></div>
+  <div class="pred-player"><span class="ptag">ANA</span><b>L. Carlsson</b><div class="pbar"><div class="pfill" style="width:14%"></div></div><span class="ppct ">14%</span><div class="pnote">Meilleur espoir gros match ANA</div><div class="ph2h">vs OTT : 1 match 2+pts</div></div>
+</div><div class="pred-row pred-outsider">
+  <div class="pred-cat">🔥 Outsider</div>
+  <div class="pred-player"><span class="ptag">ANA</span><b>C. Gauthier</b><div class="pbar"><div class="pfill" style="width:13%"></div></div><span class="ppct out-pct">13%</span><div class="pnote">PP1 RW · vitesse · 2 buts récents</div><div class="ph2h">vs OTT : 2 buts en 5</div></div>
+  <div class="pred-player"><span class="ptag">OTT</span><b>D. Batherson</b><div class="pbar"><div class="pfill" style="width:16%"></div></div><span class="ppct out-pct">16%</span><div class="pnote">PP1 RW · 0,48 but/match</div><div class="ph2h">vs ANA : 4 buts en 8</div></div>
+</div>
+    <div class="score-block">
+      <div><div class="slabel">Score prédit IA</div><div class="sval">OTT 4 – ANA 1</div></div>
+      <div class="sanalysis">OTT -165 favori. Ullmark vs Dostal. Sanderson absent réduit le PP mais Stutzle–Tkachuk–Batherson restent dominants.</div>
+    </div>
+  </div>
+  <div class="toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
+</div>
+<div class="card" id="m-bos-wsh" data-bucket="early">
+  <div class="card-header">
+    <div class="teams-row">
+      <div class="tblock"><div class="tcode">BOS</div><div class="tfull">Boston Bruins</div></div>
+      <div class="vsblock"><span class="vsat">EXT @ DOM</span><span class="vstime">21h00</span></div>
+      <div class="tblock tr"><div class="tcode">WSH</div><div class="tfull">Washington Capitals</div></div>
+    </div>
+    <div class="prob-row"><span>43%</span><div class="prob-bar"><div class="prob-away" style="width:43%"></div><div class="prob-home" style="width:57%;right:0;position:absolute;top:0;height:100%;background:#ef5350;border-radius:3px"></div></div><span>57%</span></div>
+    <div class="form-row">
+      <div class="fside"><div class="fbadges"><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div></div><span class="rec">36-23-6</span><span class="streak up">▲ 1W</span></div>
+      <div class="fside fr"><span class="streak down">▼ 1L</span><span class="rec">33-27-7</span><div class="fbadges"><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="two-col">
+      <div class="kcol"><div class="klabel">BOS · GARDIEN</div><div class="kname">J. Swayman</div><div class="kstats"><span class="chip good">SV% .912</span><span class="chip avg">GAA 2.64</span><span class="chip">PP1: E.Lindholm · Mittelstadt · Pas</span></div></div>
+      <div class="kcol"><div class="klabel">WSH · GARDIEN</div><div class="kname">L. Thompson</div><div class="kstats"><span class="chip good">SV% .908</span><span class="chip avg">GAA 2.81</span><span class="chip">PP1: Dubois · Ovechkin · T.Wilson</span></div></div>
+    </div>
+    <div class="two-col">
+      <div class="acol"><div class="alabel">Absents BOS</div><div class="absent-item"><span class="absent-name">D. Locmelis</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div></div>
+      <div class="acol"><div class="alabel">Absents WSH</div><div class="absent-item"><span class="absent-name">D. Kampf</span><span class="badge-dtd">DTD</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">E. Mateiko</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div></div>
+    </div>
+    <div class="pred-header"><div>CATÉGORIE</div><div>BOS — VISITEUR</div><div>WSH — DOMICILE</div></div>
+    <div class="pred-row">
+  <div class="pred-cat">🎯 But</div>
+  <div class="pred-player"><span class="ptag">BOS</span><b>D. Pastrnak</b><div class="pbar"><div class="pfill" style="width:54%"></div></div><span class="ppct ">54%</span><div class="pnote">PP1 RW · 0,78 but/match ext</div><div class="ph2h">vs WSH : 12 buts en 17</div></div>
+  <div class="pred-player"><span class="ptag">WSH</span><b>A. Ovechkin</b><div class="pbar"><div class="pfill" style="width:48%"></div></div><span class="ppct ">48%</span><div class="pnote">PP1 LW · chasse record Gretzky</div><div class="ph2h">vs BOS : 48 buts en 72 carrière</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">⭐ Point</div>
+  <div class="pred-player"><span class="ptag">BOS</span><b>D. Pastrnak</b><div class="pbar"><div class="pfill" style="width:71%"></div></div><span class="ppct ">71%</span><div class="pnote">1,21 pt/match ext · série active</div><div class="ph2h">vs WSH : 1,3pt/match</div></div>
+  <div class="pred-player"><span class="ptag">WSH</span><b>P. Dubois</b><div class="pbar"><div class="pfill" style="width:58%"></div></div><span class="ppct ">58%</span><div class="pnote">PP1 centre · Wilson de retour</div><div class="ph2h">vs BOS : 0,9pt/match</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">🤝 Assist</div>
+  <div class="pred-player"><span class="ptag">BOS</span><b>E. Lindholm</b><div class="pbar"><div class="pfill" style="width:55%"></div></div><span class="ppct ">55%</span><div class="pnote">PP1 centre · 0,72 assist/match</div><div class="ph2h">vs WSH : 8 assists en 11</div></div>
+  <div class="pred-player"><span class="ptag">WSH</span><b>D. Strome</b><div class="pbar"><div class="pfill" style="width:52%"></div></div><span class="ppct ">52%</span><div class="pnote">PP1 RD · 0,68 assist/match</div><div class="ph2h">vs BOS : 0,7pt/match</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">💥 2+ Pts</div>
+  <div class="pred-player"><span class="ptag">BOS</span><b>D. Pastrnak</b><div class="pbar"><div class="pfill" style="width:32%"></div></div><span class="ppct ">32%</span><div class="pnote">BOS PP fort · Pastrnak en feu</div><div class="ph2h">vs WSH : 3 matchs 2+pts</div></div>
+  <div class="pred-player"><span class="ptag">WSH</span><b>A. Ovechkin</b><div class="pbar"><div class="pfill" style="width:26%"></div></div><span class="ppct ">26%</span><div class="pnote">PP1 au complet avec Wilson</div><div class="ph2h">vs BOS : 3 matchs 2+pts</div></div>
+</div><div class="pred-row pred-outsider">
+  <div class="pred-cat">🔥 Outsider</div>
+  <div class="pred-player"><span class="ptag">WSH</span><b>T. Wilson</b><div class="pbar"><div class="pfill" style="width:17%"></div></div><span class="ppct out-pct">17%</span><div class="pnote">Retour blessure · PP1 RW · motivé</div><div class="ph2h">vs BOS : 3 buts en 5</div></div>
+  <div class="pred-player"><span class="ptag">BOS</span><b>C. Mittelstadt</b><div class="pbar"><div class="pfill" style="width:12%"></div></div><span class="ppct out-pct">12%</span><div class="pnote">PP1 LW · 2 buts sur 4 derniers</div><div class="ph2h">vs WSH : 2 buts en 6</div></div>
+</div>
+    <div class="score-block">
+      <div><div class="slabel">Score prédit IA</div><div class="sval">WSH 3 – BOS 2</div></div>
+      <div class="sanalysis">WSH -130 favori à domicile. T.Wilson de retour renforce le PP1 Ovechkin–Dubois. Pastrnak reste la seule vraie réponse de BOS.</div>
+    </div>
+  </div>
+  <div class="toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
+</div>
+<div class="card" id="m-col-wpg" data-bucket="early">
+  <div class="card-header">
+    <div class="teams-row">
+      <div class="tblock"><div class="tcode">COL</div><div class="tfull">Colorado Avalanche</div></div>
+      <div class="vsblock"><span class="vsat">EXT @ DOM</span><span class="vstime">22h00</span></div>
+      <div class="tblock tr"><div class="tcode">WPG</div><div class="tfull">Winnipeg Jets</div></div>
+    </div>
+    <div class="prob-row"><span>65%</span><div class="prob-bar"><div class="prob-away" style="width:65%"></div><div class="prob-home" style="width:35%;right:0;position:absolute;top:0;height:100%;background:#ef5350;border-radius:3px"></div></div><span>35%</span></div>
+    <div class="form-row">
+      <div class="fside"><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div></div><span class="rec">44-11-9</span><span class="streak up">▲ 3W</span></div>
+      <div class="fside fr"><span class="streak up">▲ 1W</span><span class="rec">26-28-10</span><div class="fbadges"><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb l">L</div><div class="fb w">W</div></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="two-col">
+      <div class="kcol"><div class="klabel">COL · GARDIEN</div><div class="kname">M. Blackwood</div><div class="kstats"><span class="chip good">SV% .908</span><span class="chip avg">GAA 2.77</span><span class="chip">PP1: MacKinnon · Makar · Necas · Ka</span></div></div>
+      <div class="kcol"><div class="klabel">WPG · GARDIEN</div><div class="kname">C. Hellebuyck</div><div class="kstats"><span class="chip good">SV% .921</span><span class="chip avg">GAA 2.38</span><span class="chip">PP1: Scheifele · Connor · Vilardi ·</span></div></div>
+    </div>
+    <div class="two-col">
+      <div class="acol"><div class="alabel">Absents COL</div><div class="absent-item"><span class="absent-name">G. Landeskog</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">A. Lehkonen</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">R. Colton</span><span class="badge-dtd">DTD</span><span class="absent-reason"></span></div></div>
+      <div class="acol"><div class="alabel">Absents WPG</div><div class="absent-item"><span class="absent-name">N. Pionk</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">N. Niederreiter</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">V. Namestnikov</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div></div>
+    </div>
+    <div class="pred-header"><div>CATÉGORIE</div><div>COL — VISITEUR</div><div>WPG — DOMICILE</div></div>
+    <div class="pred-row">
+  <div class="pred-cat">🎯 But</div>
+  <div class="pred-player"><span class="ptag">COL</span><b>N. MacKinnon</b><div class="pbar"><div class="pfill" style="width:68%"></div></div><span class="ppct ">68%</span><div class="pnote">PP1 · 0,91 but/match · 7B sur 8</div><div class="ph2h">vs WPG : 1,1 but/match carrière</div></div>
+  <div class="pred-player"><span class="ptag">WPG</span><b>K. Connor</b><div class="pbar"><div class="pfill" style="width:38%"></div></div><span class="ppct ">38%</span><div class="pnote">PP1 RD · 0,54 but/match dom</div><div class="ph2h">vs COL : 7 buts en 14</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">⭐ Point</div>
+  <div class="pred-player"><span class="ptag">COL</span><b>N. MacKinnon</b><div class="pbar"><div class="pfill" style="width:85%"></div></div><span class="ppct ">85%</span><div class="pnote">1,82 pt/match sur 10 derniers</div><div class="ph2h">vs WPG : 1,9pt/match</div></div>
+  <div class="pred-player"><span class="ptag">WPG</span><b>M. Scheifele</b><div class="pbar"><div class="pfill" style="width:52%"></div></div><span class="ppct ">52%</span><div class="pnote">PP1 centre · 0,88 pt/match</div><div class="ph2h">vs COL : 0,9pt/match</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">🤝 Assist</div>
+  <div class="pred-player"><span class="ptag">COL</span><b>C. Makar</b><div class="pbar"><div class="pfill" style="width:72%"></div></div><span class="ppct ">72%</span><div class="pnote">PP1 RD · 0,94 assist/match</div><div class="ph2h">vs WPG : 14 assists en 16</div></div>
+  <div class="pred-player"><span class="ptag">WPG</span><b>J. Morrissey</b><div class="pbar"><div class="pfill" style="width:49%"></div></div><span class="ppct ">49%</span><div class="pnote">PP1 QB · 0,78 assist/match</div><div class="ph2h">vs COL : 0,7pt/match</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">💥 2+ Pts</div>
+  <div class="pred-player"><span class="ptag">COL</span><b>N. MacKinnon</b><div class="pbar"><div class="pfill" style="width:54%"></div></div><span class="ppct ">54%</span><div class="pnote">COL -185 · WPG très affaibli</div><div class="ph2h">vs WPG : 5 matchs 2+pts</div></div>
+  <div class="pred-player"><span class="ptag">WPG</span><b>M. Scheifele</b><div class="pbar"><div class="pfill" style="width:22%"></div></div><span class="ppct ">22%</span><div class="pnote">Hellebuyck tient WPG mais limité</div><div class="ph2h">vs COL : 1 match 2+pts</div></div>
+</div><div class="pred-row pred-outsider">
+  <div class="pred-cat">🔥 Outsider</div>
+  <div class="pred-player"><span class="ptag">COL</span><b>M. Necas</b><div class="pbar"><div class="pfill" style="width:18%"></div></div><span class="ppct out-pct">18%</span><div class="pnote">PP1 RW · 3 buts sur 5 derniers</div><div class="ph2h">vs WPG : 4 buts en 7</div></div>
+  <div class="pred-player"><span class="ptag">WPG</span><b>G. Vilardi</b><div class="pbar"><div class="pfill" style="width:13%"></div></div><span class="ppct out-pct">13%</span><div class="pnote">PP1 RW · 0,44 but/match</div><div class="ph2h">vs COL : 2 buts en 5</div></div>
+</div>
+    <div class="score-block">
+      <div><div class="slabel">Score prédit IA</div><div class="sval">COL 5 – WPG 2</div></div>
+      <div class="sanalysis">COL -185. ATTENTION: Hellebuyck (.921) mais COL a MacKinnon·Makar. WPG très affaibli (Pionk, Niederreiter, Namestnikov OUT).</div>
+    </div>
+  </div>
+  <div class="toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
+</div>
+<div class="card" id="m-nyr-min" data-bucket="mid">
+  <div class="card-header">
+    <div class="teams-row">
+      <div class="tblock"><div class="tcode">NYR</div><div class="tfull">New York Rangers</div></div>
+      <div class="vsblock"><span class="vsat">EXT @ DOM</span><span class="vstime">00h00</span></div>
+      <div class="tblock tr"><div class="tcode">MIN</div><div class="tfull">Minnesota Wild</div></div>
+    </div>
+    <div class="prob-row"><span>30%</span><div class="prob-bar"><div class="prob-away" style="width:30%"></div><div class="prob-home" style="width:70%;right:0;position:absolute;top:0;height:100%;background:#ef5350;border-radius:3px"></div></div><span>70%</span></div>
+    <div class="form-row">
+      <div class="fside"><div class="fbadges"><div class="fb l">L</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb l">L</div></div><span class="rec">27-30-8</span><span class="streak down">▼ 2L</span></div>
+      <div class="fside fr"><span class="streak up">▲ 2W</span><span class="rec">38-16-12</span><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="two-col">
+      <div class="kcol"><div class="klabel">NYR · GARDIEN</div><div class="kname">I. Shesterkin</div><div class="kstats"><span class="chip good">SV% .920</span><span class="chip avg">GAA 2.52</span><span class="chip">PP1: Trocheck · Lafreniere · Zibane</span></div></div>
+      <div class="kcol"><div class="klabel">MIN · GARDIEN</div><div class="kname">F. Gustavsson</div><div class="kstats"><span class="chip good">SV% .918</span><span class="chip avg">GAA 2.61</span><span class="chip">PP1: Eriksson Ek · Kaprizov · Boldy</span></div></div>
+    </div>
+    <div class="two-col">
+      <div class="acol"><div class="alabel">Absents NYR</div><div class="absent-item"><span class="absent-name">J.T. Miller</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">M. Rempe</span><span class="badge-inj">OUT/IR</span><span class="absent-reason">pouce</span></div></div>
+      <div class="acol"><div class="alabel">Absents MIN</div><div class="absent-item"><span class="absent-name">M. Foligno</span><span class="badge-inj">OUT/IR</span><span class="absent-reason">bas du corps</span></div></div>
+    </div>
+    <div class="pred-header"><div>CATÉGORIE</div><div>NYR — VISITEUR</div><div>MIN — DOMICILE</div></div>
+    <div class="pred-row">
+  <div class="pred-cat">🎯 But</div>
+  <div class="pred-player"><span class="ptag">NYR</span><b>A. Lafreniere</b><div class="pbar"><div class="pfill" style="width:38%"></div></div><span class="ppct ">38%</span><div class="pnote">PP1 RW · 0,52 but/match · 3B récents</div><div class="ph2h">vs MIN : 5 buts en 10</div></div>
+  <div class="pred-player"><span class="ptag">MIN</span><b>K. Kaprizov</b><div class="pbar"><div class="pfill" style="width:58%"></div></div><span class="ppct ">58%</span><div class="pnote">PP1 LW · 0,74 but/match dom</div><div class="ph2h">vs NYR : 9 buts en 12</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">⭐ Point</div>
+  <div class="pred-player"><span class="ptag">NYR</span><b>A. Lafreniere</b><div class="pbar"><div class="pfill" style="width:48%"></div></div><span class="ppct ">48%</span><div class="pnote">PP1 · Miller absent = liberté</div><div class="ph2h">vs MIN : 0,8pt/match</div></div>
+  <div class="pred-player"><span class="ptag">MIN</span><b>K. Kaprizov</b><div class="pbar"><div class="pfill" style="width:74%"></div></div><span class="ppct ">74%</span><div class="pnote">1,22 pt/match dom · Gustavsson confirmé</div><div class="ph2h">vs NYR : 1,3pt/match</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">🤝 Assist</div>
+  <div class="pred-player"><span class="ptag">NYR</span><b>A. Fox</b><div class="pbar"><div class="pfill" style="width:56%"></div></div><span class="ppct ">56%</span><div class="pnote">PP1 RD · 0,81 assist/match</div><div class="ph2h">vs MIN : 11 assists en 14</div></div>
+  <div class="pred-player"><span class="ptag">MIN</span><b>M. Zuccarello</b><div class="pbar"><div class="pfill" style="width:55%"></div></div><span class="ppct ">55%</span><div class="pnote">PP1 · 0,69 assist/match</div><div class="ph2h">vs NYR : 8 assists en 11</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">💥 2+ Pts</div>
+  <div class="pred-player"><span class="ptag">MIN</span><b>K. Kaprizov</b><div class="pbar"><div class="pfill" style="width:36%"></div></div><span class="ppct ">36%</span><div class="pnote">MIN -235 · NYR très affaibli</div><div class="ph2h">vs NYR : 3 matchs 2+pts</div></div>
+  <div class="pred-player"><span class="ptag">NYR</span><b>A. Lafreniere</b><div class="pbar"><div class="pfill" style="width:18%"></div></div><span class="ppct ">18%</span><div class="pnote">Seul capable gros match NYR</div><div class="ph2h">vs MIN : 1 match 2+pts</div></div>
+</div><div class="pred-row pred-outsider">
+  <div class="pred-cat">🔥 Outsider</div>
+  <div class="pred-player"><span class="ptag">MIN</span><b>M. Boldy</b><div class="pbar"><div class="pfill" style="width:16%"></div></div><span class="ppct out-pct">16%</span><div class="pnote">PP1 RW · finisseur discret</div><div class="ph2h">vs NYR : 3 buts en 7</div></div>
+  <div class="pred-player"><span class="ptag">NYR</span><b>V. Trocheck</b><div class="pbar"><div class="pfill" style="width:12%"></div></div><span class="ppct out-pct">12%</span><div class="pnote">PP1 centre · 0,44 but/match</div><div class="ph2h">vs MIN : 2 buts en 8</div></div>
+</div>
+    <div class="score-block">
+      <div><div class="slabel">Score prédit IA</div><div class="sval">MIN 4 – NYR 1</div></div>
+      <div class="sanalysis">MIN -235. Rangers 27-30-8 en chute vs Wild 38-16-12 dominant. Miller + Rempe absents. Kaprizov–ErikssonEk–Boldy en feu.</div>
+    </div>
+  </div>
+  <div class="toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
+</div>
+<div class="card" id="m-tor-buf" data-bucket="mid" data-tight="1">
+  <div class="card-header">
+    <div class="teams-row">
+      <div class="tblock"><div class="tcode">TOR</div><div class="tfull">Toronto Maple Leafs</div></div>
+      <div class="vsblock"><span class="vsat">EXT @ DOM</span><span class="vstime">01h00</span></div>
+      <div class="tblock tr"><div class="tcode">BUF</div><div class="tfull">Buffalo Sabres</div></div>
+    </div>
+    <div class="prob-row"><span>30%</span><div class="prob-bar"><div class="prob-away" style="width:30%"></div><div class="prob-home" style="width:70%;right:0;position:absolute;top:0;height:100%;background:#ef5350;border-radius:3px"></div></div><span>70%</span></div>
+    <div class="form-row">
+      <div class="fside"><div class="fbadges"><div class="fb l">L</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb l">L</div></div><span class="rec">28-27-11</span><span class="streak down">▼ 2L</span></div>
+      <div class="fside fr"><span class="streak up">▲ 2W</span><span class="rec">40-20-6</span><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb w">W</div></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="two-col">
+      <div class="kcol"><div class="klabel">TOR · GARDIEN</div><div class="kname">J. Woll</div><div class="kstats"><span class="chip good">SV% .913</span><span class="chip avg">GAA 2.65</span><span class="chip">PP1: J.Tavares · Knies · Nylander</span></div></div>
+      <div class="kcol"><div class="klabel">BUF · GARDIEN</div><div class="kname">A. Lyon</div><div class="kstats"><span class="chip good">SV% .901</span><span class="chip avg">GAA 2.94</span><span class="chip">PP1: Norris · Zucker · Doan · T.Tho</span></div></div>
+    </div>
+    <div class="two-col">
+      <div class="acol"><div class="alabel">Absents TOR</div><div class="absent-item"><span class="absent-name">A. Matthews</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">C. Tanev</span><span class="badge-irs">IR-LT</span><span class="absent-reason"></span></div></div>
+      <div class="acol"><div class="alabel">Absents BUF</div><div class="absent-item"><span class="absent-name">A. Tuch</span><span class="badge-dtd">DTD</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">T. Pearson</span><span class="badge-dtd">DTD</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">J. Greenway</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">J. Kulich</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div></div>
+    </div>
+    <div class="pred-header"><div>CATÉGORIE</div><div>TOR — VISITEUR</div><div>BUF — DOMICILE</div></div>
+    <div class="pred-row">
+  <div class="pred-cat">🎯 But</div>
+  <div class="pred-player"><span class="ptag">TOR</span><b>W. Nylander</b><div class="pbar"><div class="pfill" style="width:41%"></div></div><span class="ppct ">41%</span><div class="pnote">PP1 · hérite PP1 sans Matthews</div><div class="ph2h">vs BUF : 11 buts en 14</div></div>
+  <div class="pred-player"><span class="ptag">BUF</span><b>T. Thompson</b><div class="pbar"><div class="pfill" style="width:42%"></div></div><span class="ppct ">42%</span><div class="pnote">PP1 · 0,58 but/match dom</div><div class="ph2h">vs TOR : 7 buts en 10</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">⭐ Point</div>
+  <div class="pred-player"><span class="ptag">TOR</span><b>W. Nylander</b><div class="pbar"><div class="pfill" style="width:62%"></div></div><span class="ppct ">62%</span><div class="pnote">1,01 pt/match · leader TOR sans Matthews</div><div class="ph2h">vs BUF : 1,1pt/match</div></div>
+  <div class="pred-player"><span class="ptag">BUF</span><b>R. Dahlin</b><div class="pbar"><div class="pfill" style="width:58%"></div></div><span class="ppct ">58%</span><div class="pnote">PP1 QB · 0,71 pt/match dom</div><div class="ph2h">vs TOR : 0,8pt/match</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">🤝 Assist</div>
+  <div class="pred-player"><span class="ptag">TOR</span><b>J. Tavares</b><div class="pbar"><div class="pfill" style="width:51%"></div></div><span class="ppct ">51%</span><div class="pnote">PP1 centre · 0,62 assist/match</div><div class="ph2h">vs BUF : 8 assists en 11</div></div>
+  <div class="pred-player"><span class="ptag">BUF</span><b>R. Dahlin</b><div class="pbar"><div class="pfill" style="width:62%"></div></div><span class="ppct ">62%</span><div class="pnote">PP1 RD · 3A sur 4 derniers</div><div class="ph2h">vs TOR : 10 assists en 12</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">💥 2+ Pts</div>
+  <div class="pred-player"><span class="ptag">TOR</span><b>W. Nylander</b><div class="pbar"><div class="pfill" style="width:28%"></div></div><span class="ppct ">28%</span><div class="pnote">Nylander forced à prendre le lead</div><div class="ph2h">vs BUF : 2 matchs 2+pts</div></div>
+  <div class="pred-player"><span class="ptag">BUF</span><b>R. Dahlin</b><div class="pbar"><div class="pfill" style="width:32%"></div></div><span class="ppct ">32%</span><div class="pnote">BUF dom -235 · Lyon titulaire</div><div class="ph2h">vs TOR : 2 matchs 2+pts</div></div>
+</div><div class="pred-row pred-outsider">
+  <div class="pred-cat">🔥 Outsider</div>
+  <div class="pred-player"><span class="ptag">TOR</span><b>M. Knies</b><div class="pbar"><div class="pfill" style="width:15%"></div></div><span class="ppct out-pct">15%</span><div class="pnote">PP1 LW · 2 buts sur 4 derniers</div><div class="ph2h">vs BUF : 3 buts en 6</div></div>
+  <div class="pred-player"><span class="ptag">BUF</span><b>J. Norris</b><div class="pbar"><div class="pfill" style="width:13%"></div></div><span class="ppct out-pct">13%</span><div class="pnote">PP1 centre · remplace Tuch blessé</div><div class="ph2h">vs TOR : 2 buts en 5</div></div>
+</div>
+    <div class="score-block">
+      <div><div class="slabel">Score prédit IA</div><div class="sval">BUF 4 – TOR 1</div></div>
+      <div class="sanalysis">🚨 Matthews OUT = absence majeure. BUF -235 favori (40-20-6). Lyon titulaire (Ellis DTD). Dahlin–Thompson PP1 dominant.</div>
+    </div>
+  </div>
+  <div class="toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
+</div>
+<div class="card" id="m-sjs-mtl" data-bucket="mid">
+  <div class="card-header">
+    <div class="teams-row">
+      <div class="tblock"><div class="tcode">SJS</div><div class="tfull">San Jose Sharks</div></div>
+      <div class="vsblock"><span class="vsat">EXT @ DOM</span><span class="vstime">01h00</span></div>
+      <div class="tblock tr"><div class="tcode">MTL</div><div class="tfull">Montréal Canadiens</div></div>
+    </div>
+    <div class="prob-row"><span>38%</span><div class="prob-bar"><div class="prob-away" style="width:38%"></div><div class="prob-home" style="width:62%;right:0;position:absolute;top:0;height:100%;background:#ef5350;border-radius:3px"></div></div><span>62%</span></div>
+    <div class="form-row">
+      <div class="fside"><div class="fbadges"><div class="fb w">W</div><div class="fb l">L</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div></div><span class="rec">31-26-6</span><span class="streak down">▼ 1L</span></div>
+      <div class="fside fr"><span class="streak up">▲ 3W</span><span class="rec">36-18-10</span><div class="fbadges"><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="two-col">
+      <div class="kcol"><div class="klabel">SJS · GARDIEN</div><div class="kname">A. Nedeljkovic</div><div class="kstats"><span class="chip good">SV% .903</span><span class="chip avg">GAA 2.98</span><span class="chip">PP1: Celebrini · Wennberg · W.Smith</span></div></div>
+      <div class="kcol"><div class="klabel">MTL · GARDIEN</div><div class="kname">J. Dobes</div><div class="kstats"><span class="chip good">SV% .912</span><span class="chip avg">GAA 2.71</span><span class="chip">PP1: Suzuki · Demidov · Slafkovsky </span></div></div>
+    </div>
+    <div class="two-col">
+      <div class="acol"><div class="alabel">Absents SJS</div><div class="absent-item"><span class="absent-name">L. Couture</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">T. Dellandrea</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div></div>
+      <div class="acol"><div class="alabel">Absents MTL</div><div class="absent-item"><span class="absent-name">C. Caufield</span><span class="badge-dtd">DTD</span><span class="absent-reason">maladie</span></div><div class="absent-item"><span class="absent-name">P. Laine</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div></div>
+    </div>
+    <div class="pred-header"><div>CATÉGORIE</div><div>SJS — VISITEUR</div><div>MTL — DOMICILE</div></div>
+    <div class="pred-row">
+  <div class="pred-cat">🎯 But</div>
+  <div class="pred-player"><span class="ptag">SJS</span><b>M. Celebrini</b><div class="pbar"><div class="pfill" style="width:38%"></div></div><span class="ppct ">38%</span><div class="pnote">PP1 centre rookie élite · 0,56 but/m</div><div class="ph2h">vs MTL : 4 buts en 7</div></div>
+  <div class="pred-player"><span class="ptag">MTL</span><b>N. Suzuki</b><div class="pbar"><div class="pfill" style="width:52%"></div></div><span class="ppct ">52%</span><div class="pnote">PP1 · 0,71 but/match dom · 5B récents</div><div class="ph2h">vs SJS : 8 buts en 10</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">⭐ Point</div>
+  <div class="pred-player"><span class="ptag">SJS</span><b>M. Celebrini</b><div class="pbar"><div class="pfill" style="width:52%"></div></div><span class="ppct ">52%</span><div class="pnote">PP1 pivot · déjà dominant</div><div class="ph2h">vs MTL : 0,8pt/match</div></div>
+  <div class="pred-player"><span class="ptag">MTL</span><b>N. Suzuki</b><div class="pbar"><div class="pfill" style="width:68%"></div></div><span class="ppct ">68%</span><div class="pnote">1,11 pt/match · Dobes confirmé</div><div class="ph2h">vs SJS : 1,3pt/match</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">🤝 Assist</div>
+  <div class="pred-player"><span class="ptag">SJS</span><b>T. Toffoli</b><div class="pbar"><div class="pfill" style="width:44%"></div></div><span class="ppct ">44%</span><div class="pnote">PP1 · 0,59 assist/match</div><div class="ph2h">vs MTL : son ancienne équipe</div></div>
+  <div class="pred-player"><span class="ptag">MTL</span><b>J. Slafkovsky</b><div class="pbar"><div class="pfill" style="width:58%"></div></div><span class="ppct ">58%</span><div class="pnote">PP1 RW · 0,71 assist/match</div><div class="ph2h">vs SJS : 6 assists en 7</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">💥 2+ Pts</div>
+  <div class="pred-player"><span class="ptag">MTL</span><b>N. Suzuki</b><div class="pbar"><div class="pfill" style="width:32%"></div></div><span class="ppct ">32%</span><div class="pnote">MTL dom 3W · SJS défense perméable</div><div class="ph2h">vs SJS : 2 matchs 2+pts</div></div>
+  <div class="pred-player"><span class="ptag">SJS</span><b>M. Celebrini</b><div class="pbar"><div class="pfill" style="width:19%"></div></div><span class="ppct ">19%</span><div class="pnote">Rookie niveau élite</div><div class="ph2h">vs MTL : 1 match 2+pts</div></div>
+</div><div class="pred-row pred-outsider">
+  <div class="pred-cat">🔥 Outsider</div>
+  <div class="pred-player"><span class="ptag">MTL</span><b>I. Demidov</b><div class="pbar"><div class="pfill" style="width:18%"></div></div><span class="ppct out-pct">18%</span><div class="pnote">PP1 LW · prospect russe · 3B récents</div><div class="ph2h">vs SJS : 2 buts en 4</div></div>
+  <div class="pred-player"><span class="ptag">SJS</span><b>W. Smith</b><div class="pbar"><div class="pfill" style="width:13%"></div></div><span class="ppct out-pct">13%</span><div class="pnote">PP1 RW · compère de Celebrini</div><div class="ph2h">vs MTL : 1 but en 5</div></div>
+</div>
+    <div class="score-block">
+      <div><div class="slabel">Score prédit IA</div><div class="sval">MTL 4 – SJS 2</div></div>
+      <div class="sanalysis">MTL -165. Dobes confirmé. Caufield DTD maladie mais Suzuki–Demidov–Slafkovsky explosifs. Celebrini seul danger SJS.</div>
+    </div>
+  </div>
+  <div class="toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
+</div>
+<div class="card" id="m-cgy-nyi" data-bucket="mid" data-tight="1">
+  <div class="card-header">
+    <div class="teams-row">
+      <div class="tblock"><div class="tcode">CGY</div><div class="tfull">Calgary Flames</div></div>
+      <div class="vsblock"><span class="vsat">EXT @ DOM</span><span class="vstime">01h00</span></div>
+      <div class="tblock tr"><div class="tcode">NYI</div><div class="tfull">NY Islanders</div></div>
+    </div>
+    <div class="prob-row"><span>40%</span><div class="prob-bar"><div class="prob-away" style="width:40%"></div><div class="prob-home" style="width:60%;right:0;position:absolute;top:0;height:100%;background:#ef5350;border-radius:3px"></div></div><span>60%</span></div>
+    <div class="form-row">
+      <div class="fside"><div class="fbadges"><div class="fb w">W</div><div class="fb l">L</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div></div><span class="rec">26-32-7</span><span class="streak down">▼ 1L</span></div>
+      <div class="fside fr"><span class="streak up">▲ 2W</span><span class="rec">37-24-5</span><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="two-col">
+      <div class="kcol"><div class="klabel">CGY · GARDIEN</div><div class="kname">D. Wolf</div><div class="kstats"><span class="chip good">SV% .912</span><span class="chip avg">GAA 2.68</span><span class="chip">PP1: Frost · Gridin · Coronato · Sh</span></div></div>
+      <div class="kcol"><div class="klabel">NYI · GARDIEN</div><div class="kname">D. Rittich</div><div class="kstats"><span class="chip good">SV% .908</span><span class="chip avg">GAA 2.81</span><span class="chip">PP1: Horvat · Schenn · Barzal · Sch</span></div></div>
+    </div>
+    <div class="two-col">
+      <div class="acol"><div class="alabel">Absents CGY</div><div class="absent-item"><span class="absent-name">J. Huberdeau</span><span class="badge-irs">IR-LT</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">Z. Whitecloud</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">S. Honzek</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div></div>
+      <div class="acol"><div class="alabel">Absents NYI</div><div class="absent-item"><span class="absent-name">A. Romanov</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">S. Varlamov</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div></div>
+    </div>
+    <div class="pred-header"><div>CATÉGORIE</div><div>CGY — VISITEUR</div><div>NYI — DOMICILE</div></div>
+    <div class="pred-row">
+  <div class="pred-cat">🎯 But</div>
+  <div class="pred-player"><span class="ptag">CGY</span><b>M. Coronato</b><div class="pbar"><div class="pfill" style="width:38%"></div></div><span class="ppct ">38%</span><div class="pnote">PP1 RW · vitesse · 0,52 but/match</div><div class="ph2h">vs NYI : 2 buts en 5</div></div>
+  <div class="pred-player"><span class="ptag">NYI</span><b>M. Barzal</b><div class="pbar"><div class="pfill" style="width:48%"></div></div><span class="ppct ">48%</span><div class="pnote">PP1 · 0,68 but/match dom · 3B récents</div><div class="ph2h">vs CGY : 8 buts en 12</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">⭐ Point</div>
+  <div class="pred-player"><span class="ptag">CGY</span><b>M. Coronato</b><div class="pbar"><div class="pfill" style="width:52%"></div></div><span class="ppct ">52%</span><div class="pnote">Meilleur dynamisme CGY sans Huberdeau</div><div class="ph2h">vs NYI : 0,7pt/match</div></div>
+  <div class="pred-player"><span class="ptag">NYI</span><b>M. Barzal</b><div class="pbar"><div class="pfill" style="width:62%"></div></div><span class="ppct ">62%</span><div class="pnote">1,11 pt/match dom · PP dominant</div><div class="ph2h">vs CGY : 1,2pt/match</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">🤝 Assist</div>
+  <div class="pred-player"><span class="ptag">CGY</span><b>M. Frost</b><div class="pbar"><div class="pfill" style="width:44%"></div></div><span class="ppct ">44%</span><div class="pnote">PP1 centre · 0,61 assist/match</div><div class="ph2h">vs NYI : 5 assists en 8</div></div>
+  <div class="pred-player"><span class="ptag">NYI</span><b>B. Horvat</b><div class="pbar"><div class="pfill" style="width:55%"></div></div><span class="ppct ">55%</span><div class="pnote">PP1 · 0,68 assist/match</div><div class="ph2h">vs CGY : 7 assists en 10</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">💥 2+ Pts</div>
+  <div class="pred-player"><span class="ptag">NYI</span><b>M. Barzal</b><div class="pbar"><div class="pfill" style="width:28%"></div></div><span class="ppct ">28%</span><div class="pnote">NYI -150 · Rittich titulaire</div><div class="ph2h">vs CGY : 2 matchs 2+pts</div></div>
+  <div class="pred-player"><span class="ptag">CGY</span><b>M. Coronato</b><div class="pbar"><div class="pfill" style="width:18%"></div></div><span class="ppct ">18%</span><div class="pnote">Seul espoir gros match CGY</div><div class="ph2h">vs NYI : 1 match 2+pts</div></div>
+</div><div class="pred-row pred-outsider">
+  <div class="pred-cat">🔥 Outsider</div>
+  <div class="pred-player"><span class="ptag">CGY</span><b>Y. Sharangovich</b><div class="pbar"><div class="pfill" style="width:14%"></div></div><span class="ppct out-pct">14%</span><div class="pnote">PP1 · 2 buts sur 5 derniers</div><div class="ph2h">vs NYI : 2 buts en 5</div></div>
+  <div class="pred-player"><span class="ptag">NYI</span><b>B. Schenn</b><div class="pbar"><div class="pfill" style="width:14%"></div></div><span class="ppct out-pct">14%</span><div class="pnote">PP1 LW vétéran · 2 buts récents</div><div class="ph2h">vs CGY : 3 buts en 7</div></div>
+</div>
+    <div class="score-block">
+      <div><div class="slabel">Score prédit IA</div><div class="sval">NYI 3 – CGY 2</div></div>
+      <div class="sanalysis">NYI -150. Rittich (confirmé, Varlamov IR saison). CGY très affaibli sans Huberdeau (IR-LT). Barzal–Horvat–Schenn PP1 dominant.</div>
+    </div>
+  </div>
+  <div class="toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
+</div>
+<div class="card" id="m-lak-njd" data-bucket="mid">
+  <div class="card-header">
+    <div class="teams-row">
+      <div class="tblock"><div class="tcode">LAK</div><div class="tfull">Los Angeles Kings</div></div>
+      <div class="vsblock"><span class="vsat">EXT @ DOM</span><span class="vstime">01h00</span></div>
+      <div class="tblock tr"><div class="tcode">NJD</div><div class="tfull">New Jersey Devils</div></div>
+    </div>
+    <div class="prob-row"><span>41%</span><div class="prob-bar"><div class="prob-away" style="width:41%"></div><div class="prob-home" style="width:59%;right:0;position:absolute;top:0;height:100%;background:#ef5350;border-radius:3px"></div></div><span>59%</span></div>
+    <div class="form-row">
+      <div class="fside"><div class="fbadges"><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div></div><span class="rec">27-23-15</span><span class="streak down">▼ 1L</span></div>
+      <div class="fside fr"><span class="streak up">▲ 2W</span><span class="rec">32-31-2</span><div class="fbadges"><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb w">W</div></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="two-col">
+      <div class="kcol"><div class="klabel">LAK · GARDIEN</div><div class="kname">A. Forsberg</div><div class="kstats"><span class="chip good">SV% .907</span><span class="chip avg">GAA 2.84</span><span class="chip">PP1: A.Kopitar · Panarin · A.Kempe </span></div></div>
+      <div class="kcol"><div class="klabel">NJD · GARDIEN</div><div class="kname">J. Markstrom</div><div class="kstats"><span class="chip good">SV% .909</span><span class="chip avg">GAA 2.78</span><span class="chip">PP1: J.Hughes · Bratt · C.Brown · L</span></div></div>
+    </div>
+    <div class="two-col">
+      <div class="acol"><div class="alabel">Absents LAK</div><div class="absent-item"><span class="absent-name">K. Fiala</span><span class="badge-irs">IR-LT</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">A. Kuzmenko</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">J. Armia</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div></div>
+      <div class="acol"><div class="alabel">Absents NJD</div><div class="absent-item"><span class="absent-name">B. Pesce</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">Z. MacEwen</span><span class="badge-irs">IR-LT</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">S. Noesen</span><span class="badge-irs">IR-LT</span><span class="absent-reason"></span></div></div>
+    </div>
+    <div class="pred-header"><div>CATÉGORIE</div><div>LAK — VISITEUR</div><div>NJD — DOMICILE</div></div>
+    <div class="pred-row">
+  <div class="pred-cat">🎯 But</div>
+  <div class="pred-player"><span class="ptag">LAK</span><b>A. Kopitar</b><div class="pbar"><div class="pfill" style="width:42%"></div></div><span class="ppct ">42%</span><div class="pnote">PP1 centre · 0,44 but/match</div><div class="ph2h">vs NJD : 8 buts en 12</div></div>
+  <div class="pred-player"><span class="ptag">NJD</span><b>J. Hughes</b><div class="pbar"><div class="pfill" style="width:54%"></div></div><span class="ppct ">54%</span><div class="pnote">PP1 · 0,72 but/match dom · 4B récents</div><div class="ph2h">vs LAK : 10 buts en 14</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">⭐ Point</div>
+  <div class="pred-player"><span class="ptag">LAK</span><b>A. Kopitar</b><div class="pbar"><div class="pfill" style="width:58%"></div></div><span class="ppct ">58%</span><div class="pnote">Fiala absent = Kopitar porte tout</div><div class="ph2h">vs NJD : 0,9pt/match</div></div>
+  <div class="pred-player"><span class="ptag">NJD</span><b>J. Hughes</b><div class="pbar"><div class="pfill" style="width:72%"></div></div><span class="ppct ">72%</span><div class="pnote">1,22 pt/match · PP1 QB</div><div class="ph2h">vs LAK : 1,4pt/match</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">🤝 Assist</div>
+  <div class="pred-player"><span class="ptag">LAK</span><b>A. Panarin</b><div class="pbar"><div class="pfill" style="width:48%"></div></div><span class="ppct ">48%</span><div class="pnote">PP1 LW · 0,71 assist/match</div><div class="ph2h">vs NJD : 6 assists en 8</div></div>
+  <div class="pred-player"><span class="ptag">NJD</span><b>L. Hughes</b><div class="pbar"><div class="pfill" style="width:58%"></div></div><span class="ppct ">58%</span><div class="pnote">PP1 RD · frère de Jack</div><div class="ph2h">vs LAK : 8 assists en 10</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">💥 2+ Pts</div>
+  <div class="pred-player"><span class="ptag">NJD</span><b>J. Hughes</b><div class="pbar"><div class="pfill" style="width:34%"></div></div><span class="ppct ">34%</span><div class="pnote">NJD -145 · PP fort même sans Pesce</div><div class="ph2h">vs LAK : 4 matchs 2+pts</div></div>
+  <div class="pred-player"><span class="ptag">LAK</span><b>A. Kopitar</b><div class="pbar"><div class="pfill" style="width:19%"></div></div><span class="ppct ">19%</span><div class="pnote">Seul capable gros match LAK</div><div class="ph2h">vs NJD : 1 match 2+pts</div></div>
+</div><div class="pred-row pred-outsider">
+  <div class="pred-cat">🔥 Outsider</div>
+  <div class="pred-player"><span class="ptag">LAK</span><b>A. Kempe</b><div class="pbar"><div class="pfill" style="width:16%"></div></div><span class="ppct out-pct">16%</span><div class="pnote">PP1 RW · 3 buts sur 5 derniers</div><div class="ph2h">vs NJD : 3 buts en 6</div></div>
+  <div class="pred-player"><span class="ptag">NJD</span><b>J. Bratt</b><div class="pbar"><div class="pfill" style="width:16%"></div></div><span class="ppct out-pct">16%</span><div class="pnote">PP1 LW · finisseur discret</div><div class="ph2h">vs LAK : 4 buts en 8</div></div>
+</div>
+    <div class="score-block">
+      <div><div class="slabel">Score prédit IA</div><div class="sval">NJD 3 – LAK 2</div></div>
+      <div class="sanalysis">NJD -145. Markstrom vs Forsberg. LAK très affaibli: Fiala (IR-LT fin saison), Kuzmenko et Armia IR. Jack Hughes PP1 dominant.</div>
+    </div>
+  </div>
+  <div class="toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
+</div>
+<div class="card" id="m-car-tbl" data-bucket="mid">
+  <div class="card-header">
+    <div class="teams-row">
+      <div class="tblock"><div class="tcode">CAR</div><div class="tfull">Carolina Hurricanes</div></div>
+      <div class="vsblock"><span class="vsat">EXT @ DOM</span><span class="vstime">01h00</span></div>
+      <div class="tblock tr"><div class="tcode">TBL</div><div class="tfull">Tampa Bay Lightning</div></div>
+    </div>
+    <div class="prob-row"><span>43%</span><div class="prob-bar"><div class="prob-away" style="width:43%"></div><div class="prob-home" style="width:57%;right:0;position:absolute;top:0;height:100%;background:#ef5350;border-radius:3px"></div></div><span>57%</span></div>
+    <div class="form-row">
+      <div class="fside"><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div></div><span class="rec">41-18-6</span><span class="streak up">▲ 3W</span></div>
+      <div class="fside fr"><span class="streak up">▲ 3W</span><span class="rec">40-20-4</span><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb w">W</div></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="two-col">
+      <div class="kcol"><div class="klabel">CAR · GARDIEN</div><div class="kname">B. Bussi</div><div class="kstats"><span class="chip good">SV% .914</span><span class="chip avg">GAA 2.62</span><span class="chip">PP1: Stankoven · Ehlers · Blake · H</span></div></div>
+      <div class="kcol"><div class="klabel">TBL · GARDIEN</div><div class="kname">A. Vasilevskiy</div><div class="kstats"><span class="chip good">SV% .919</span><span class="chip avg">GAA 2.48</span><span class="chip">PP1: B.Point · C.Perry · Kucherov ·</span></div></div>
+    </div>
+    <div class="two-col">
+      <div class="acol"><div class="alabel">Absents CAR</div><div class="absent-item"><span class="absent-name">S. Gostisbehere</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div></div>
+      <div class="acol"><div class="alabel">Absents TBL</div><div class="absent-item"><span class="absent-name">N. Paul</span><span class="badge-irs">IR-LT</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">E. Lilleberg</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div></div>
+    </div>
+    <div class="pred-header"><div>CATÉGORIE</div><div>CAR — VISITEUR</div><div>TBL — DOMICILE</div></div>
+    <div class="pred-row">
+  <div class="pred-cat">🎯 But</div>
+  <div class="pred-player"><span class="ptag">CAR</span><b>N. Ehlers</b><div class="pbar"><div class="pfill" style="width:46%"></div></div><span class="ppct ">46%</span><div class="pnote">PP1 LW · 0,62 but/match · 4B récents</div><div class="ph2h">vs TBL : 7 buts en 10</div></div>
+  <div class="pred-player"><span class="ptag">TBL</span><b>N. Kucherov</b><div class="pbar"><div class="pfill" style="width:52%"></div></div><span class="ppct ">52%</span><div class="pnote">PP1 RW · 0,82 but/match dom</div><div class="ph2h">vs CAR : 1,0 but/match</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">⭐ Point</div>
+  <div class="pred-player"><span class="ptag">CAR</span><b>S. Aho</b><div class="pbar"><div class="pfill" style="width:62%"></div></div><span class="ppct ">62%</span><div class="pnote">PP2 · 0,98 pt/match · série 6m</div><div class="ph2h">vs TBL : 1,0pt/match</div></div>
+  <div class="pred-player"><span class="ptag">TBL</span><b>N. Kucherov</b><div class="pbar"><div class="pfill" style="width:72%"></div></div><span class="ppct ">72%</span><div class="pnote">1,58 pt/match dom · combo Vasy</div><div class="ph2h">vs CAR : 1,3pt/match</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">🤝 Assist</div>
+  <div class="pred-player"><span class="ptag">CAR</span><b>T. Hall</b><div class="pbar"><div class="pfill" style="width:52%"></div></div><span class="ppct ">52%</span><div class="pnote">PP1 · 0,68 assist/match</div><div class="ph2h">vs TBL : 8 assists en 11</div></div>
+  <div class="pred-player"><span class="ptag">TBL</span><b>B. Point</b><div class="pbar"><div class="pfill" style="width:61%"></div></div><span class="ppct ">61%</span><div class="pnote">PP1 centre · vision élite</div><div class="ph2h">vs CAR : 12 assists en 15</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">💥 2+ Pts</div>
+  <div class="pred-player"><span class="ptag">TBL</span><b>N. Kucherov</b><div class="pbar"><div class="pfill" style="width:38%"></div></div><span class="ppct ">38%</span><div class="pnote">TBL dom + Vasilevskiy .919</div><div class="ph2h">vs CAR : 4 matchs 2+pts</div></div>
+  <div class="pred-player"><span class="ptag">CAR</span><b>N. Ehlers</b><div class="pbar"><div class="pfill" style="width:26%"></div></div><span class="ppct ">26%</span><div class="pnote">CAR sur 3W · très en forme</div><div class="ph2h">vs TBL : 2 matchs 2+pts</div></div>
+</div><div class="pred-row pred-outsider">
+  <div class="pred-cat">🔥 Outsider</div>
+  <div class="pred-player"><span class="ptag">CAR</span><b>L. Stankoven</b><div class="pbar"><div class="pfill" style="width:16%"></div></div><span class="ppct out-pct">16%</span><div class="pnote">PP1 centre · 2 buts récents</div><div class="ph2h">vs TBL : 3 buts en 6</div></div>
+  <div class="pred-player"><span class="ptag">TBL</span><b>B. Hagel</b><div class="pbar"><div class="pfill" style="width:15%"></div></div><span class="ppct out-pct">15%</span><div class="pnote">PP2 · 3 buts sur 5 derniers</div><div class="ph2h">vs CAR : 4 buts en 7</div></div>
+</div>
+    <div class="score-block">
+      <div><div class="slabel">Score prédit IA</div><div class="sval">TBL 3 – CAR 2</div></div>
+      <div class="sanalysis">TBL -135. Vasilevskiy (.919) vs Bussi. Match de prestige entre 2 prétendants. Kucherov–Point PP1 dominant. Ehlers et Aho dangereux.</div>
+    </div>
+  </div>
+  <div class="toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
+</div>
+<div class="card" id="m-cbj-phi" data-bucket="mid">
+  <div class="card-header">
+    <div class="teams-row">
+      <div class="tblock"><div class="tcode">CBJ</div><div class="tfull">Columbus Blue Jackets</div></div>
+      <div class="vsblock"><span class="vsat">EXT @ DOM</span><span class="vstime">01h30</span></div>
+      <div class="tblock tr"><div class="tcode">PHI</div><div class="tfull">Philadelphia Flyers</div></div>
+    </div>
+    <div class="prob-row"><span>52%</span><div class="prob-bar"><div class="prob-away" style="width:52%"></div><div class="prob-home" style="width:48%;right:0;position:absolute;top:0;height:100%;background:#ef5350;border-radius:3px"></div></div><span>48%</span></div>
+    <div class="form-row">
+      <div class="fside"><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb w">W</div></div><span class="rec">33-21-11</span><span class="streak up">▲ 3W</span></div>
+      <div class="fside fr"><span class="streak down">▼ 1L</span><span class="rec">31-23-11</span><div class="fbadges"><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="two-col">
+      <div class="kcol"><div class="klabel">CBJ · GARDIEN</div><div class="kname">J. Greaves</div><div class="kstats"><span class="chip good">SV% .911</span><span class="chip avg">GAA 2.73</span><span class="chip">PP1: Fantilli · Marchment · Marchen</span></div></div>
+      <div class="kcol"><div class="klabel">PHI · GARDIEN</div><div class="kname">D. Vladar</div><div class="kstats"><span class="chip good">SV% .908</span><span class="chip avg">GAA 2.82</span><span class="chip">PP1: Zegras · Michkov · Konecny · D</span></div></div>
+    </div>
+    <div class="two-col">
+      <div class="acol"><div class="alabel">Absents CBJ</div><div class="absent-item"><span class="absent-name">B. Smith</span><span class="badge-inj">OUT/IR</span><span class="absent-reason">ménisque</span></div></div>
+      <div class="acol"><div class="alabel">Absents PHI</div><div class="absent-item"><span class="absent-name">T. Foerster</span><span class="badge-inj">OUT/IR</span><span class="absent-reason">bras</span></div><div class="absent-item"><span class="absent-name">R. Abols</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div></div>
+    </div>
+    <div class="pred-header"><div>CATÉGORIE</div><div>CBJ — VISITEUR</div><div>PHI — DOMICILE</div></div>
+    <div class="pred-row">
+  <div class="pred-cat">🎯 But</div>
+  <div class="pred-player"><span class="ptag">CBJ</span><b>A. Fantilli</b><div class="pbar"><div class="pfill" style="width:48%"></div></div><span class="ppct ">48%</span><div class="pnote">PP1 centre rookie dominant · 4B récents</div><div class="ph2h">vs PHI : 6 buts en 8</div></div>
+  <div class="pred-player"><span class="ptag">PHI</span><b>M. Michkov</b><div class="pbar"><div class="pfill" style="width:46%"></div></div><span class="ppct ">46%</span><div class="pnote">PP1 LW · talent russe explosif</div><div class="ph2h">vs CBJ : 5 buts en 7</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">⭐ Point</div>
+  <div class="pred-player"><span class="ptag">CBJ</span><b>A. Fantilli</b><div class="pbar"><div class="pfill" style="width:62%"></div></div><span class="ppct ">62%</span><div class="pnote">1,01 pt/match · meilleur espoir NHL</div><div class="ph2h">vs PHI : 0,9pt/match</div></div>
+  <div class="pred-player"><span class="ptag">PHI</span><b>T. Zegras</b><div class="pbar"><div class="pfill" style="width:58%"></div></div><span class="ppct ">58%</span><div class="pnote">PP1 centre · revenu blessure</div><div class="ph2h">vs CBJ : 0,8pt/match</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">🤝 Assist</div>
+  <div class="pred-player"><span class="ptag">CBJ</span><b>Z. Werenski</b><div class="pbar"><div class="pfill" style="width:55%"></div></div><span class="ppct ">55%</span><div class="pnote">PP1 QB · 0,71 assist/match</div><div class="ph2h">vs PHI : 8 assists en 9</div></div>
+  <div class="pred-player"><span class="ptag">PHI</span><b>J. Drysdale</b><div class="pbar"><div class="pfill" style="width:51%"></div></div><span class="ppct ">51%</span><div class="pnote">PP1 RD · passeur depuis la bleue</div><div class="ph2h">vs CBJ : 6 assists en 8</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">💥 2+ Pts</div>
+  <div class="pred-player"><span class="ptag">CBJ</span><b>A. Fantilli</b><div class="pbar"><div class="pfill" style="width:32%"></div></div><span class="ppct ">32%</span><div class="pnote">CBJ sur 3W · favori -130</div><div class="ph2h">vs PHI : 3 matchs 2+pts</div></div>
+  <div class="pred-player"><span class="ptag">PHI</span><b>M. Michkov</b><div class="pbar"><div class="pfill" style="width:26%"></div></div><span class="ppct ">26%</span><div class="pnote">Talent brut peut exploser</div><div class="ph2h">vs CBJ : 2 matchs 2+pts</div></div>
+</div><div class="pred-row pred-outsider">
+  <div class="pred-cat">🔥 Outsider</div>
+  <div class="pred-player"><span class="ptag">CBJ</span><b>K. Marchenko</b><div class="pbar"><div class="pfill" style="width:16%"></div></div><span class="ppct out-pct">16%</span><div class="pnote">PP1 RW · 2 buts récents</div><div class="ph2h">vs PHI : 3 buts en 5</div></div>
+  <div class="pred-player"><span class="ptag">PHI</span><b>T. Konecny</b><div class="pbar"><div class="pfill" style="width:15%"></div></div><span class="ppct out-pct">15%</span><div class="pnote">PP1 RW · en méforme récente</div><div class="ph2h">vs CBJ : 4 buts en 8</div></div>
+</div>
+    <div class="score-block">
+      <div><div class="slabel">Score prédit IA</div><div class="sval">CBJ 3 – PHI 2</div></div>
+      <div class="sanalysis">CBJ -130 FAVORI (surprise!). Columbus 33-21-11 sur 3W vs PHI en baisse. Fantilli est le meilleur rookie NHL cette saison.</div>
+    </div>
+  </div>
+  <div class="toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
+</div>
+<div class="card" id="m-det-dal" data-bucket="late">
+  <div class="card-header">
+    <div class="teams-row">
+      <div class="tblock"><div class="tcode">DET</div><div class="tfull">Detroit Red Wings</div></div>
+      <div class="vsblock"><span class="vsat">EXT @ DOM</span><span class="vstime">02h00</span></div>
+      <div class="tblock tr"><div class="tcode">DAL</div><div class="tfull">Dallas Stars</div></div>
+    </div>
+    <div class="prob-row"><span>26%</span><div class="prob-bar"><div class="prob-away" style="width:26%"></div><div class="prob-home" style="width:74%;right:0;position:absolute;top:0;height:100%;background:#ef5350;border-radius:3px"></div></div><span>74%</span></div>
+    <div class="form-row">
+      <div class="fside"><div class="fbadges"><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb l">L</div><div class="fb l">L</div></div><span class="rec">36-23-7</span><span class="streak down">▼ 3L</span></div>
+      <div class="fside fr"><span class="streak up">▲ 5W</span><span class="rec">41-14-10</span><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="two-col">
+      <div class="kcol"><div class="klabel">DET · GARDIEN</div><div class="kname">J. Gibson</div><div class="kstats"><span class="chip good">SV% .907</span><span class="chip avg">GAA 2.86</span><span class="chip">PP1: J.T.Compher · DeBrincat · P.Ka</span></div></div>
+      <div class="kcol"><div class="klabel">DAL · GARDIEN</div><div class="kname">J. Oettinger</div><div class="kstats"><span class="chip good">SV% .911</span><span class="chip avg">GAA 2.60</span><span class="chip">PP1: Johnston · Robertson · Benn · </span></div></div>
+    </div>
+    <div class="two-col">
+      <div class="acol"><div class="alabel">Absents DET</div><div class="absent-item"><span class="absent-name">D. Larkin</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">A. Copp</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">D. Perron</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div></div>
+      <div class="acol"><div class="alabel">Absents DAL</div><div class="absent-item"><span class="absent-name">R. Hintz</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">T. Seguin</span><span class="badge-irs">IR-LT</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">M. Rantanen</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div></div>
+    </div>
+    <div class="pred-header"><div>CATÉGORIE</div><div>DET — VISITEUR</div><div>DAL — DOMICILE</div></div>
+    <div class="pred-row">
+  <div class="pred-cat">🎯 But</div>
+  <div class="pred-player"><span class="ptag">DET</span><b>A. DeBrincat</b><div class="pbar"><div class="pfill" style="width:38%"></div></div><span class="ppct ">38%</span><div class="pnote">PP1 · 0,66 but/match · meilleur DET dispo</div><div class="ph2h">vs DAL : 5 buts en 9</div></div>
+  <div class="pred-player"><span class="ptag">DAL</span><b>J. Robertson</b><div class="pbar"><div class="pfill" style="width:54%"></div></div><span class="ppct ">54%</span><div class="pnote">PP1 LW · 0,65 but/match · 4B récents</div><div class="ph2h">vs DET : 10 buts en 13</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">⭐ Point</div>
+  <div class="pred-player"><span class="ptag">DET</span><b>A. DeBrincat</b><div class="pbar"><div class="pfill" style="width:52%"></div></div><span class="ppct ">52%</span><div class="pnote">Larkin absent = DeBrincat porte tout</div><div class="ph2h">vs DAL : 0,9pt/match</div></div>
+  <div class="pred-player"><span class="ptag">DAL</span><b>W. Johnston</b><div class="pbar"><div class="pfill" style="width:68%"></div></div><span class="ppct ">68%</span><div class="pnote">PP1 · hérite rôle Hintz</div><div class="ph2h">vs DET : 1,0pt/match</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">🤝 Assist</div>
+  <div class="pred-player"><span class="ptag">DET</span><b>M. Seider</b><div class="pbar"><div class="pfill" style="width:48%"></div></div><span class="ppct ">48%</span><div class="pnote">PP1 QB · 0,68 assist/match</div><div class="ph2h">vs DAL : 6 assists en 9</div></div>
+  <div class="pred-player"><span class="ptag">DAL</span><b>M. Heiskanen</b><div class="pbar"><div class="pfill" style="width:62%"></div></div><span class="ppct ">62%</span><div class="pnote">PP1 QB · 0,84 assist/match</div><div class="ph2h">vs DET : 10 assists en 12</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">💥 2+ Pts</div>
+  <div class="pred-player"><span class="ptag">DAL</span><b>W. Johnston</b><div class="pbar"><div class="pfill" style="width:38%"></div></div><span class="ppct ">38%</span><div class="pnote">DAL sur 5W · DET sans Larkin+Copp</div><div class="ph2h">vs DET : 3 matchs 2+pts</div></div>
+  <div class="pred-player"><span class="ptag">DET</span><b>A. DeBrincat</b><div class="pbar"><div class="pfill" style="width:18%"></div></div><span class="ppct ">18%</span><div class="pnote">Seul capable gros match DET</div><div class="ph2h">vs DAL : 1 match 2+pts</div></div>
+</div><div class="pred-row pred-outsider">
+  <div class="pred-cat">🔥 Outsider</div>
+  <div class="pred-player"><span class="ptag">DET</span><b>P. Kane</b><div class="pbar"><div class="pfill" style="width:15%"></div></div><span class="ppct out-pct">15%</span><div class="pnote">PP1 vétéran · 2 buts récents</div><div class="ph2h">vs DAL : 3 buts en 7</div></div>
+  <div class="pred-player"><span class="ptag">DAL</span><b>J. Benn</b><div class="pbar"><div class="pfill" style="width:14%"></div></div><span class="ppct out-pct">14%</span><div class="pnote">PP1 RW capitaine motivé</div><div class="ph2h">vs DET : 2 buts en 5</div></div>
+</div>
+    <div class="score-block">
+      <div><div class="slabel">Score prédit IA</div><div class="sval">DAL 5 – DET 1</div></div>
+      <div class="sanalysis">🚨 DET sans Larkin + Copp (tous deux OUT jambe). DAL -180 sur 5W. Johnston et Robertson en feu. Mismatch total.</div>
+    </div>
+  </div>
+  <div class="toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
+</div>
+<div class="card" id="m-pit-uta" data-bucket="late" data-tight="1">
+  <div class="card-header">
+    <div class="teams-row">
+      <div class="tblock"><div class="tcode">PIT</div><div class="tfull">Pittsburgh Penguins</div></div>
+      <div class="vsblock"><span class="vsat">EXT @ DOM</span><span class="vstime">03h00</span></div>
+      <div class="tblock tr"><div class="tcode">UTA</div><div class="tfull">Utah Mammoth</div></div>
+    </div>
+    <div class="prob-row"><span>41%</span><div class="prob-bar"><div class="prob-away" style="width:41%"></div><div class="prob-home" style="width:59%;right:0;position:absolute;top:0;height:100%;background:#ef5350;border-radius:3px"></div></div><span>59%</span></div>
+    <div class="form-row">
+      <div class="fside"><div class="fbadges"><div class="fb w">W</div><div class="fb l">L</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div></div><span class="rec">32-18-15</span><span class="streak down">▼ 1L</span></div>
+      <div class="fside fr"><span class="streak up">▲ 2W</span><span class="rec">34-26-6</span><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="two-col">
+      <div class="kcol"><div class="klabel">PIT · GARDIEN</div><div class="kname">S. Skinner</div><div class="kstats"><span class="chip good">SV% .910</span><span class="chip avg">GAA 2.76</span><span class="chip">PP1: Rakell · Chinakhov · Rust · Le</span></div></div>
+      <div class="kcol"><div class="klabel">UTA · GARDIEN</div><div class="kname">K. Vejmelka</div><div class="kstats"><span class="chip good">SV% .914</span><span class="chip avg">GAA 2.58</span><span class="chip">PP1: Hayton · C.Keller · Guenther ·</span></div></div>
+    </div>
+    <div class="two-col">
+      <div class="acol"><div class="alabel">Absents PIT</div><div class="absent-item"><span class="absent-name">S. Crosby</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">E. Malkin</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">K. Hayes</span><span class="badge-dtd">DTD</span><span class="absent-reason"></span></div></div>
+      <div class="acol"><div class="alabel">Absents UTA</div><div class="no-absent">Aucun absent confirmé</div></div>
+    </div>
+    <div class="pred-header"><div>CATÉGORIE</div><div>PIT — VISITEUR</div><div>UTA — DOMICILE</div></div>
+    <div class="pred-row">
+  <div class="pred-cat">🎯 But</div>
+  <div class="pred-player"><span class="ptag">PIT</span><b>R. Rakell</b><div class="pbar"><div class="pfill" style="width:42%"></div></div><span class="ppct ">42%</span><div class="pnote">PP1 centre · seul vrai centre PP1 dispo</div><div class="ph2h">vs UTA : 5 buts en 8</div></div>
+  <div class="pred-player"><span class="ptag">UTA</span><b>C. Keller</b><div class="pbar"><div class="pfill" style="width:54%"></div></div><span class="ppct ">54%</span><div class="pnote">PP1 LW · 0,58 but/match · 3B récents</div><div class="ph2h">vs PIT : 6 buts en 9</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">⭐ Point</div>
+  <div class="pred-player"><span class="ptag">PIT</span><b>R. Rakell</b><div class="pbar"><div class="pfill" style="width:56%"></div></div><span class="ppct ">56%</span><div class="pnote">Lourde charge sans Crosby/Malkin</div><div class="ph2h">vs UTA : 0,8pt/match</div></div>
+  <div class="pred-player"><span class="ptag">UTA</span><b>B. Hayton</b><div class="pbar"><div class="pfill" style="width:64%"></div></div><span class="ppct ">64%</span><div class="pnote">PP1 centre · 0,78 pt/match dom</div><div class="ph2h">vs PIT : 0,9pt/match</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">🤝 Assist</div>
+  <div class="pred-player"><span class="ptag">PIT</span><b>E. Karlsson</b><div class="pbar"><div class="pfill" style="width:52%"></div></div><span class="ppct ">52%</span><div class="pnote">PP1 QB · 0,72 assist/match</div><div class="ph2h">vs UTA : 9 assists en 11</div></div>
+  <div class="pred-player"><span class="ptag">UTA</span><b>M. Sergachev</b><div class="pbar"><div class="pfill" style="width:58%"></div></div><span class="ppct ">58%</span><div class="pnote">PP1 QB · 0,74 assist/match</div><div class="ph2h">vs PIT : 8 assists en 10</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">💥 2+ Pts</div>
+  <div class="pred-player"><span class="ptag">UTA</span><b>C. Keller</b><div class="pbar"><div class="pfill" style="width:32%"></div></div><span class="ppct ">32%</span><div class="pnote">UTA -145 · PIT sans Crosby ET Malkin</div><div class="ph2h">vs PIT : 2 matchs 2+pts</div></div>
+  <div class="pred-player"><span class="ptag">PIT</span><b>R. Rakell</b><div class="pbar"><div class="pfill" style="width:18%"></div></div><span class="ppct ">18%</span><div class="pnote">Meilleur espoir dans contexte difficile</div><div class="ph2h">vs UTA : 1 match 2+pts</div></div>
+</div><div class="pred-row pred-outsider">
+  <div class="pred-cat">🔥 Outsider</div>
+  <div class="pred-player"><span class="ptag">PIT</span><b>Y. Chinakhov</b><div class="pbar"><div class="pfill" style="width:17%"></div></div><span class="ppct out-pct">17%</span><div class="pnote">PP1 LW · 2 buts sur 5 derniers</div><div class="ph2h">vs UTA : 2 buts en 5</div></div>
+  <div class="pred-player"><span class="ptag">UTA</span><b>N. Schmaltz</b><div class="pbar"><div class="pfill" style="width:15%"></div></div><span class="ppct out-pct">15%</span><div class="pnote">PP1 · discret mais efficace</div><div class="ph2h">vs PIT : 3 buts en 7</div></div>
+</div>
+    <div class="score-block">
+      <div><div class="slabel">Score prédit IA</div><div class="sval">UTA 4 – PIT 1</div></div>
+      <div class="sanalysis">🚨 PIT SANS Crosby (IR) ET Malkin (OUT) simultanément. UTA -145, effectif au complet. Vejmelka (.914) solide.</div>
+    </div>
+  </div>
+  <div class="toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
+</div>
+<div class="card" id="m-sea-van" data-bucket="late">
+  <div class="card-header">
+    <div class="teams-row">
+      <div class="tblock"><div class="tcode">SEA</div><div class="tfull">Seattle Kraken</div></div>
+      <div class="vsblock"><span class="vsat">EXT @ DOM</span><span class="vstime">04h00</span></div>
+      <div class="tblock tr"><div class="tcode">VAN</div><div class="tfull">Vancouver Canucks</div></div>
+    </div>
+    <div class="prob-row"><span>56%</span><div class="prob-bar"><div class="prob-away" style="width:56%"></div><div class="prob-home" style="width:44%;right:0;position:absolute;top:0;height:100%;background:#ef5350;border-radius:3px"></div></div><span>44%</span></div>
+    <div class="form-row">
+      <div class="fside"><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div></div><span class="rec">29-26-9</span><span class="streak up">▲ 3W</span></div>
+      <div class="fside fr"><span class="streak down">▼ 3L</span><span class="rec">20-37-8</span><div class="fbadges"><div class="fb l">L</div><div class="fb l">L</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="two-col">
+      <div class="kcol"><div class="klabel">SEA · GARDIEN</div><div class="kname">P. Grubauer</div><div class="kstats"><span class="chip good">SV% .909</span><span class="chip avg">GAA 2.74</span><span class="chip">PP1: Stephenson · McCann · Tolvanen</span></div></div>
+      <div class="kcol"><div class="klabel">VAN · GARDIEN</div><div class="kname">K. Lankinen</div><div class="kstats"><span class="chip good">SV% .906</span><span class="chip avg">GAA 2.88</span><span class="chip">PP1: Sasson · E.Kane · Hronek · Bui</span></div></div>
+    </div>
+    <div class="two-col">
+      <div class="acol"><div class="alabel">Absents SEA</div><div class="absent-item"><span class="absent-name">J. Schwartz</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">M. McCormick</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div></div>
+      <div class="acol"><div class="alabel">Absents VAN</div><div class="absent-item"><span class="absent-name">T. Demko</span><span class="badge-irs">IR-LT</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">F. Chytil</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">J. Lekkerimaki</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div></div>
+    </div>
+    <div class="pred-header"><div>CATÉGORIE</div><div>SEA — VISITEUR</div><div>VAN — DOMICILE</div></div>
+    <div class="pred-row">
+  <div class="pred-cat">🎯 But</div>
+  <div class="pred-player"><span class="ptag">SEA</span><b>J. McCann</b><div class="pbar"><div class="pfill" style="width:54%"></div></div><span class="ppct ">54%</span><div class="pnote">PP1 LW · 0,62 but/match · 4B récents</div><div class="ph2h">vs VAN : 8 buts en 11</div></div>
+  <div class="pred-player"><span class="ptag">VAN</span><b>E. Kane</b><div class="pbar"><div class="pfill" style="width:38%"></div></div><span class="ppct ">38%</span><div class="pnote">PP1 · 0,52 but/match · seul finisseur</div><div class="ph2h">vs SEA : 5 buts en 9</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">⭐ Point</div>
+  <div class="pred-player"><span class="ptag">SEA</span><b>J. McCann</b><div class="pbar"><div class="pfill" style="width:68%"></div></div><span class="ppct ">68%</span><div class="pnote">1,04 pt/match · SEA sur 3W · VAN décimé</div><div class="ph2h">vs VAN : 1,0pt/match</div></div>
+  <div class="pred-player"><span class="ptag">VAN</span><b>E. Pettersson</b><div class="pbar"><div class="pfill" style="width:52%"></div></div><span class="ppct ">52%</span><div class="pnote">PP2 · 0,88 pt/match si à 100%</div><div class="ph2h">vs SEA : 1,0pt/match</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">🤝 Assist</div>
+  <div class="pred-player"><span class="ptag">SEA</span><b>C. Stephenson</b><div class="pbar"><div class="pfill" style="width:58%"></div></div><span class="ppct ">58%</span><div class="pnote">PP1 centre · 0,72 assist/match</div><div class="ph2h">vs VAN : 9 assists en 12</div></div>
+  <div class="pred-player"><span class="ptag">VAN</span><b>F. Hronek</b><div class="pbar"><div class="pfill" style="width:48%"></div></div><span class="ppct ">48%</span><div class="pnote">PP1 QB · meilleur défenseur VAN restant</div><div class="ph2h">vs SEA : 7 assists en 10</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">💥 2+ Pts</div>
+  <div class="pred-player"><span class="ptag">SEA</span><b>J. McCann</b><div class="pbar"><div class="pfill" style="width:38%"></div></div><span class="ppct ">38%</span><div class="pnote">SEA -130 · VAN 20-37-8 en ruines</div><div class="ph2h">vs VAN : 3 matchs 2+pts</div></div>
+  <div class="pred-player"><span class="ptag">SEA</span><b>C. Stephenson</b><div class="pbar"><div class="pfill" style="width:24%"></div></div><span class="ppct ">24%</span><div class="pnote">PP dominant vs PK VAN catastrophique</div><div class="ph2h">vs VAN : 2 matchs 2+pts</div></div>
+</div><div class="pred-row pred-outsider">
+  <div class="pred-cat">🔥 Outsider</div>
+  <div class="pred-player"><span class="ptag">SEA</span><b>M. Beniers</b><div class="pbar"><div class="pfill" style="width:17%"></div></div><span class="ppct out-pct">17%</span><div class="pnote">PP1 · 2 buts sur 5 derniers</div><div class="ph2h">vs VAN : 3 buts en 7</div></div>
+  <div class="pred-player"><span class="ptag">VAN</span><b>E. Kane</b><div class="pbar"><div class="pfill" style="width:13%"></div></div><span class="ppct out-pct">13%</span><div class="pnote">VAN a besoin d'un héros · mode survie</div><div class="ph2h">vs SEA : 2 buts en 4</div></div>
+</div>
+    <div class="score-block">
+      <div><div class="slabel">Score prédit IA</div><div class="sval">SEA 4 – VAN 1</div></div>
+      <div class="sanalysis">SEA -130. VAN 20-37-8 pire équipe de la ligue. Demko IR-LT, Lankinen titulaire par défaut. McCann–Stephenson PP1 dominant.</div>
+    </div>
+  </div>
+  <div class="toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
+</div>
+<div class="card" id="m-chi-vgk" data-bucket="late">
+  <div class="card-header">
+    <div class="teams-row">
+      <div class="tblock"><div class="tcode">CHI</div><div class="tfull">Chicago Blackhawks</div></div>
+      <div class="vsblock"><span class="vsat">EXT @ DOM</span><span class="vstime">04h00</span></div>
+      <div class="tblock tr"><div class="tcode">VGK</div><div class="tfull">Vegas Golden Knights</div></div>
+    </div>
+    <div class="prob-row"><span>29%</span><div class="prob-bar"><div class="prob-away" style="width:29%"></div><div class="prob-home" style="width:71%;right:0;position:absolute;top:0;height:100%;background:#ef5350;border-radius:3px"></div></div><span>71%</span></div>
+    <div class="form-row">
+      <div class="fside"><div class="fbadges"><div class="fb l">L</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb l">L</div><div class="fb w">W</div></div><span class="rec">25-29-11</span><span class="streak up">▲ 1W</span></div>
+      <div class="fside fr"><span class="streak up">▲ 2W</span><span class="rec">30-22-14</span><div class="fbadges"><div class="fb w">W</div><div class="fb w">W</div><div class="fb l">L</div><div class="fb w">W</div><div class="fb w">W</div></div></div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="two-col">
+      <div class="kcol"><div class="klabel">CHI · GARDIEN</div><div class="kname">S. Knight</div><div class="kstats"><span class="chip good">SV% .905</span><span class="chip avg">GAA 2.91</span><span class="chip">PP1: C.Bedard · Bertuzzi · Teravain</span></div></div>
+      <div class="kcol"><div class="klabel">VGK · GARDIEN</div><div class="kname">A. Schmid</div><div class="kstats"><span class="chip good">SV% .914</span><span class="chip avg">GAA 2.62</span><span class="chip">PP1: T.Hertl · Dorofeyev · M.Marner</span></div></div>
+    </div>
+    <div class="two-col">
+      <div class="acol"><div class="alabel">Absents CHI</div><div class="absent-item"><span class="absent-name">O. Moore</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">R. Ellis</span><span class="badge-inj">OUT/IR</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">S. Weber</span><span class="badge-irs">IR-LT</span><span class="absent-reason"></span></div></div>
+      <div class="acol"><div class="alabel">Absents VGK</div><div class="absent-item"><span class="absent-name">A. Pietrangelo</span><span class="badge-irs">IR-LT</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">W. Karlsson</span><span class="badge-irs">IR-LT</span><span class="absent-reason"></span></div><div class="absent-item"><span class="absent-name">C. Hart</span><span class="badge-irs">IR-LT</span><span class="absent-reason"></span></div></div>
+    </div>
+    <div class="pred-header"><div>CATÉGORIE</div><div>CHI — VISITEUR</div><div>VGK — DOMICILE</div></div>
+    <div class="pred-row">
+  <div class="pred-cat">🎯 But</div>
+  <div class="pred-player"><span class="ptag">CHI</span><b>C. Bedard</b><div class="pbar"><div class="pfill" style="width:42%"></div></div><span class="ppct ">42%</span><div class="pnote">PP1 · 0,64 but/match · 3B récents</div><div class="ph2h">vs VGK : 4 buts en 8</div></div>
+  <div class="pred-player"><span class="ptag">VGK</span><b>J. Eichel</b><div class="pbar"><div class="pfill" style="width:54%"></div></div><span class="ppct ">54%</span><div class="pnote">PP1 · 0,71 but/match · 5B récents</div><div class="ph2h">vs CHI : 11 buts en 14</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">⭐ Point</div>
+  <div class="pred-player"><span class="ptag">CHI</span><b>C. Bedard</b><div class="pbar"><div class="pfill" style="width:58%"></div></div><span class="ppct ">58%</span><div class="pnote">1,01 pt/match · seul pour tenir tête</div><div class="ph2h">vs VGK : 1,1pt/match</div></div>
+  <div class="pred-player"><span class="ptag">VGK</span><b>M. Marner</b><div class="pbar"><div class="pfill" style="width:68%"></div></div><span class="ppct ">68%</span><div class="pnote">PP1 RW · 1,18 pt/match dom</div><div class="ph2h">vs CHI : 0,9pt/match depuis transfert</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">🤝 Assist</div>
+  <div class="pred-player"><span class="ptag">CHI</span><b>T. Teravainen</b><div class="pbar"><div class="pfill" style="width:51%"></div></div><span class="ppct ">51%</span><div class="pnote">PP1 · 0,68 assist/match</div><div class="ph2h">vs VGK : 7 assists en 10</div></div>
+  <div class="pred-player"><span class="ptag">VGK</span><b>M. Stone</b><div class="pbar"><div class="pfill" style="width:58%"></div></div><span class="ppct ">58%</span><div class="pnote">PP1 LD · 0,74 assist/match</div><div class="ph2h">vs CHI : 10 assists en 12</div></div>
+</div><div class="pred-row">
+  <div class="pred-cat">💥 2+ Pts</div>
+  <div class="pred-player"><span class="ptag">VGK</span><b>M. Marner</b><div class="pbar"><div class="pfill" style="width:38%"></div></div><span class="ppct ">38%</span><div class="pnote">VGK -245 · CHI défense perméable</div><div class="ph2h">vs CHI : 3 matchs 2+pts</div></div>
+  <div class="pred-player"><span class="ptag">CHI</span><b>C. Bedard</b><div class="pbar"><div class="pfill" style="width:24%"></div></div><span class="ppct ">24%</span><div class="pnote">Si CHI reste dans le match</div><div class="ph2h">vs VGK : 2 matchs 2+pts</div></div>
+</div><div class="pred-row pred-outsider">
+  <div class="pred-cat">🔥 Outsider</div>
+  <div class="pred-player"><span class="ptag">CHI</span><b>A. Levshunov</b><div class="pbar"><div class="pfill" style="width:16%"></div></div><span class="ppct out-pct">16%</span><div class="pnote">PP1 rookie · 2 buts sur 5 derniers</div><div class="ph2h">vs VGK : 2 buts en 4</div></div>
+  <div class="pred-player"><span class="ptag">VGK</span><b>P. Dorofeyev</b><div class="pbar"><div class="pfill" style="width:16%"></div></div><span class="ppct out-pct">16%</span><div class="pnote">PP1 LW · finisseur discret</div><div class="ph2h">vs CHI : 3 buts en 7</div></div>
+</div>
+    <div class="score-block">
+      <div><div class="slabel">Score prédit IA</div><div class="sval">VGK 5 – CHI 2</div></div>
+      <div class="sanalysis">VGK -245 favori massif. Marner+Eichel+Hertl+Stone PP1 redoutable. Pietrangelo IR mais VGK très fort. Bedard seul rayon de lumière CHI.</div>
+    </div>
+  </div>
+  <div class="toggle" onclick="var b=this.previousElementSibling;b.classList.toggle('col');this.textContent=b.classList.contains('col')?'▶ Développer':'▼ Réduire'">▼ Réduire</div>
+</div></div>
+<script>
+let af='all';
+function setF(f,btn){af=f;document.querySelectorAll('.chip-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');filterAll();}
+function filterAll(){
+  const q=document.getElementById('si').value.toLowerCase();
+  document.querySelectorAll('.card').forEach(c=>{
+    const t=(c.id+' '+c.querySelector('.tfull')?.textContent+' '+c.querySelector('.tcode')?.textContent).toLowerCase();
+    const ms=!q||t.includes(q);
+    let mf=af==='all'||c.dataset.bucket===af||(af==='tight'&&c.dataset.tight==='1');
+    c.style.display=(ms&&mf)?'':'none';
+  });
+}
+</script>
+</body>
 </html>
