@@ -1,0 +1,24 @@
+name: NHL Oracle – Update every 30min
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install requests
+      - run: python scraper.py
+      - run: python generate.py
+      - run: |
+          git config user.name "nhl-oracle-bot"
+          git config user.email "bot@nhloracle.fr"
+          git add public/index.html data/nhl_data.json
+          git diff --staged --quiet || git commit -m "update: $(date -u +'%Y-%m-%d %H:%M UTC')"
+          git push
