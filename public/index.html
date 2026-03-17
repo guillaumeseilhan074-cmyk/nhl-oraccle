@@ -124,11 +124,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 </style></head>
 <body>
 <div class="topbar">
-  <div style="display:flex;align-items:center;gap:8px">
+  <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
     <span class="brand">NHL <span>Oracle</span></span>
     <span class="badge gray">17 Mars 2026</span>
-    <span class="badge green">✓ Rosters vérifiés 23h00 CET</span>
-    <span class="badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">🚨 Draisaitl OUT fin saison</span>
+    <span class="badge green">✓ Lineups NHL.com 23h20 CET</span>
+    <span class="badge" style="background:#ffebee;border-color:#ffcdd2;color:#c62828">🚨 Draisaitl OUT saison</span>
+    <span class="badge" style="background:#fff8e1;border-color:#ffe082;color:#e65100">⚠️ Wennberg · Tolvanen · Tuch GTD</span>
   </div>
   <div class="topright"><div class="search">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -138,7 +139,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div class="filters">
   <button class="chip on" onclick="setF('all',this)">Tous (9)</button>
   <button class="chip" onclick="setF('tight',this)">🔥 Serrés</button>
-  <button class="chip" onclick="setF('early',this)">01h–01h (3)</button>
+  <button class="chip" onclick="setF('early',this)">01h (3)</button>
   <button class="chip" onclick="setF('mid',this)">01h30–03h (3)</button>
   <button class="chip" onclick="setF('late',this)">04h (3)</button>
 </div>
@@ -152,118 +153,172 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
   <div class="lb-group"><span class="lb-title">Picks</span><span class="lb-desc">⏱ Temps de jeu moyen · 🎯 Tirs/match · 🔑 xAssist/match · <b>X/10</b> Score de confiance IA</span></div>
 </div></div>
 <div style="padding:8px 16px 0;max-width:1000px;margin:0 auto"><div class="top3-bar">
-  <div class="t3-title">⭐ Top Picks — 17 Mars 2026</div>
+  <div class="t3-title">⭐ Top Picks du soir — 17 Mars 2026</div>
   <div class="trc-grid">
-    <div class="t3-col"><div class="t3-col-title">🎯 But</div><div class="t3-row">
-              <span class="t3-medal">🥇</span>
-              <div class="t3-info">
-                <span class="t3-name">N. Kucherov <span class="t3-team">TBL</span></span>
-                <span class="t3-match">TBL@SEA · 54B·65M·série 5M🔥</span>
-              </div>
-              <span class="t3-score" style="background:#16a34a">7.4</span>
-            </div><div class="t3-row">
-              <span class="t3-medal">🥈</span>
-              <div class="t3-info">
-                <span class="t3-name">S. Aho <span class="t3-team">CAR</span></span>
-                <span class="t3-match">CAR@CBJ · 44B·66M·série 4M🔥</span>
-              </div>
-              <span class="t3-score" style="background:#16a34a">7.2</span>
-            </div><div class="t3-row">
-              <span class="t3-medal">🥉</span>
-              <div class="t3-info">
-                <span class="t3-name">K. Kaprizov <span class="t3-team">MIN</span></span>
-                <span class="t3-match">MIN@CHI · 50B·65M·série 5M🔥</span>
-              </div>
-              <span class="t3-score" style="background:#16a34a">7.2</span>
-            </div><div class="t3-row">
-              <span class="t3-medal">4️⃣</span>
-              <div class="t3-info">
-                <span class="t3-name">C. McDavid <span class="t3-team">EDM</span></span>
-                <span class="t3-match">SJS@EDM · 54B·65M·série 6M🔥</span>
-              </div>
-              <span class="t3-score" style="background:#16a34a">7.2</span>
-            </div><div class="t3-row">
-              <span class="t3-medal">5️⃣</span>
-              <div class="t3-info">
-                <span class="t3-name">D. Pastrnak <span class="t3-team">BOS</span></span>
-                <span class="t3-match">BOS@MTL · 48B·67M·série 5M🔥</span>
-              </div>
-              <span class="t3-score" style="background:#16a34a">7.0</span>
-            </div></div>
+    <div class="trc-col">
+  <div class="trc-head">🎯 But</div>
+  <div class="tr-row" onclick="document.getElementById('m-sjs-edm').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">C. McDavid</span>
+    <span class="ptag" style="font-size:10px">EDM</span>
+    <span class='tp-serie'>série 6M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">SJS@EDM · 03h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">7.4/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-car-cbj').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">S. Aho</span>
+    <span class="ptag" style="font-size:10px">CAR</span>
+    <span class='tp-serie'>série 4M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">CAR@CBJ · 01h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">7.2/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-min-chi').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">K. Kaprizov</span>
+    <span class="ptag" style="font-size:10px">MIN</span>
+    <span class='tp-serie'>série 5M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">MIN@CHI · 01h30</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">7.2/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-bos-mtl').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">D. Pastrnak</span>
+    <span class="ptag" style="font-size:10px">BOS</span>
+    <span class='tp-serie'>série 5M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">BOS@MTL · 01h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">7.0/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-bos-mtl').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">C. Caufield</span>
+    <span class="ptag" style="font-size:10px">MTL</span>
+    <span class='tp-serie'>série 5M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">BOS@MTL · 01h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">6.8/10</span>
+  </div>
+</div>
+</div>
     <div class="t3-sep"></div>
-    <div class="t3-col"><div class="t3-col-title">⭐ Point</div><div class="t3-row">
-              <span class="t3-medal">🥇</span>
-              <div class="t3-info">
-                <span class="t3-name">N. Kucherov <span class="t3-team">TBL</span></span>
-                <span class="t3-match">TBL@SEA · 106Pts·65M·série 7M🔥</span>
-              </div>
-              <span class="t3-score" style="background:#16a34a">8.6</span>
-            </div><div class="t3-row">
-              <span class="t3-medal">🥈</span>
-              <div class="t3-info">
-                <span class="t3-name">C. McDavid <span class="t3-team">EDM</span></span>
-                <span class="t3-match">SJS@EDM · 88Pts·65M·série 8M🔥</span>
-              </div>
-              <span class="t3-score" style="background:#16a34a">8.4</span>
-            </div><div class="t3-row">
-              <span class="t3-medal">🥉</span>
-              <div class="t3-info">
-                <span class="t3-name">S. Aho <span class="t3-team">CAR</span></span>
-                <span class="t3-match">CAR@CBJ · 76Pts·66M·série 6M🔥</span>
-              </div>
-              <span class="t3-score" style="background:#16a34a">8.2</span>
-            </div><div class="t3-row">
-              <span class="t3-medal">4️⃣</span>
-              <div class="t3-info">
-                <span class="t3-name">K. Kaprizov <span class="t3-team">MIN</span></span>
-                <span class="t3-match">MIN@CHI · 74Pts·65M·série 6M🔥</span>
-              </div>
-              <span class="t3-score" style="background:#16a34a">8.0</span>
-            </div><div class="t3-row">
-              <span class="t3-medal">5️⃣</span>
-              <div class="t3-info">
-                <span class="t3-name">D. Pastrnak <span class="t3-team">BOS</span></span>
-                <span class="t3-match">BOS@MTL · 76Pts·67M·série 7M🔥</span>
-              </div>
-              <span class="t3-score" style="background:#16a34a">7.8</span>
-            </div></div>
+    <div class="trc-col">
+  <div class="trc-head">⭐ Point</div>
+  <div class="tr-row" onclick="document.getElementById('m-tbl-sea').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">N. Kucherov</span>
+    <span class="ptag" style="font-size:10px">TBL</span>
+    <span class='tp-serie'>série 7M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">TBL@SEA · 04h00</span>
+    <span class="conf-badge" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32;font-size:11px;padding:2px 7px">8.6/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-sjs-edm').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">C. McDavid</span>
+    <span class="ptag" style="font-size:10px">EDM</span>
+    <span class='tp-serie'>série 8M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">SJS@EDM · 03h00</span>
+    <span class="conf-badge" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32;font-size:11px;padding:2px 7px">8.6/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-car-cbj').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">S. Aho</span>
+    <span class="ptag" style="font-size:10px">CAR</span>
+    <span class='tp-serie'>série 6M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">CAR@CBJ · 01h00</span>
+    <span class="conf-badge" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32;font-size:11px;padding:2px 7px">8.2/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-min-chi').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">K. Kaprizov</span>
+    <span class="ptag" style="font-size:10px">MIN</span>
+    <span class='tp-serie'>série 6M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">MIN@CHI · 01h30</span>
+    <span class="conf-badge" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32;font-size:11px;padding:2px 7px">8.0/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-bos-mtl').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">D. Pastrnak</span>
+    <span class="ptag" style="font-size:10px">BOS</span>
+    <span class='tp-serie'>série 7M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">BOS@MTL · 01h00</span>
+    <span class="conf-badge" style="background:#e8f5e9;border-color:#a5d6a7;color:#2e7d32;font-size:11px;padding:2px 7px">8.0/10</span>
+  </div>
+</div>
+</div>
     <div class="t3-sep"></div>
-    <div class="t3-col"><div class="t3-col-title">🤝 Assist</div><div class="t3-row">
-              <span class="t3-medal">🥇</span>
-              <div class="t3-info">
-                <span class="t3-name">N. Suzuki <span class="t3-team">MTL</span></span>
-                <span class="t3-match">BOS@MTL · 56A·66M·série 8M🔥</span>
-              </div>
-              <span class="t3-score" style="background:#16a34a">7.2</span>
-            </div><div class="t3-row">
-              <span class="t3-medal">🥈</span>
-              <div class="t3-info">
-                <span class="t3-name">A. Svechnikov <span class="t3-team">CAR</span></span>
-                <span class="t3-match">CAR@CBJ · 54A·66M·série 5M🔥</span>
-              </div>
-              <span class="t3-score" style="background:#2563eb">6.8</span>
-            </div><div class="t3-row">
-              <span class="t3-medal">🥉</span>
-              <div class="t3-info">
-                <span class="t3-name">M. Marner <span class="t3-team">TOR</span></span>
-                <span class="t3-match">NYI@TOR · 52A·66M·série 4M🔥</span>
-              </div>
-              <span class="t3-score" style="background:#2563eb">6.4</span>
-            </div><div class="t3-row">
-              <span class="t3-medal">4️⃣</span>
-              <div class="t3-info">
-                <span class="t3-name">E. Bouchard <span class="t3-team">EDM</span></span>
-                <span class="t3-match">SJS@EDM · 58A·65M·série 5M🔥</span>
-              </div>
-              <span class="t3-score" style="background:#2563eb">6.4</span>
-            </div><div class="t3-row">
-              <span class="t3-medal">5️⃣</span>
-              <div class="t3-info">
-                <span class="t3-name">J. Morrissey <span class="t3-team">WPG</span></span>
-                <span class="t3-match">NSH@WPG · 50A·66M·série 5M🔥</span>
-              </div>
-              <span class="t3-score" style="background:#2563eb">6.2</span>
-            </div></div>
+    <div class="trc-col">
+  <div class="trc-head">🤝 Assist</div>
+  <div class="tr-row" onclick="document.getElementById('m-tbl-sea').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">N. Kucherov</span>
+    <span class="ptag" style="font-size:10px">TBL</span>
+    <span class='tp-serie'>série 7M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">TBL@SEA · 04h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">7.4/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-bos-mtl').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">N. Suzuki</span>
+    <span class="ptag" style="font-size:10px">MTL</span>
+    <span class='tp-serie'>série 8M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">BOS@MTL · 01h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">7.2/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-sjs-edm').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">E. Bouchard</span>
+    <span class="ptag" style="font-size:10px">EDM</span>
+    <span class='tp-serie'>série 5M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">SJS@EDM · 03h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">6.6/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-car-cbj').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">A. Svechnikov</span>
+    <span class="ptag" style="font-size:10px">CAR</span>
+    <span class='tp-serie'>série 5M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">CAR@CBJ · 01h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">6.6/10</span>
+  </div>
+</div><div class="tr-row" onclick="document.getElementById('m-nsh-wpg').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">J. Morrissey</span>
+    <span class="ptag" style="font-size:10px">WPG</span>
+    <span class='tp-serie'>série 5M🔥</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">NSH@WPG · 02h00</span>
+    <span class="conf-badge" style="background:#fffde7;border-color:#ffe082;color:#f57f17;font-size:11px;padding:2px 7px">6.2/10</span>
+  </div>
+</div>
+</div>
   </div>
 </div></div>
 <div class="content"><div class="card" data-time="early" data-teams="CBJ CAR">
@@ -297,19 +352,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <div class="info-cell">
         <div class="info-label">Gardien CAR</div>
         <div class="kstats"><span class="kchip">F. Andersen</span><span class="kchip sv">SV% .918</span><span class="kchip gaa">GAA 2.21</span></div>
-        <div class="pp-line">PP1: <span>PP1: Aho · Svechnikov · Jarvis · Orlov · Slavin</span></div>
+        <div class="pp-line">PP1: <span>PP1: Aho · Svechnikov · Jarvis · Slavin · K. Miller</span></div>
       </div>
       <div class="info-cell">
         <div class="info-label">Gardien CBJ</div>
-        <div class="kstats"><span class="kchip">E. Merzlikins</span><span class="kchip sv">SV% .904</span><span class="kchip gaa">GAA 2.98</span></div>
-        <div class="pp-line">PP1: <span>PP1: Laine · Marchetti · Jenner · Provorov · Bean</span></div>
+        <div class="kstats"><span class="kchip">J. Greaves</span><span class="kchip sv">SV% .906</span><span class="kchip gaa">GAA 2.94</span></div>
+        <div class="pp-line">PP1: <span>PP1: Fantilli · Marchenko · Monahan · Werenski · Severson</span></div>
       </div>
     </div>
     <div class="ab-row">
-      <div class="ab-item"><span class="ab-team">CAR</span><span class="ab-txt">Aucun absent majeur ✅</span></div>
-      <div class="ab-item"><span class="ab-team">CBJ</span><span class="ab-txt">B. Smith (IR genou)</span></div>
+      <div class="ab-item"><span class="ab-team">CAR</span><span class="ab-txt">Gostisbehere D (lower body — 5e match consécutif 🚨), Kochetkov G (lower body)</span></div>
+      <div class="ab-item"><span class="ab-team">CBJ</span><span class="ab-txt">AUCUN absent 🟢</span></div>
     </div>
-    <div class="card-analysis">CAR #3 ligue (42W) · Andersen .918 · CBJ joue bien à domicile mais outclassé. Aho/Svechnikov/Jarvis PP1 élite vs Merzlikins .904. CAR favori clair.</div>
+    <div class="card-analysis">CAR #3 ligue (42W) · Andersen .918 · CBJ SANS blessé (0 absent!). Marchment-Fantilli-Marchenko L1 active. Aho/Svechnikov PP1 élite vs Greaves .906. Gudbranson retour en D3.</div>
   </div>
   <div class="pred-header-row"><span>Catégorie</span><span>CAR</span><span>CBJ</span></div>
   <div style="padding:0 14px 10px"><div style="border-bottom:1px solid #f0f0f0;padding:10px 0">
@@ -317,7 +372,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">S. Aho <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CAR</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,68 but/m · CAR dominant vs CBJ faible</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · L1 avec Svechnikov+Jarvis · 0,68 but/m · Greaves .906</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CBJ : 9B/11M · 44B·66M·série 4M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:720%;height:100%;background:#16a34a"></div></div>
@@ -326,9 +381,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">P. Laine <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CBJ</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 LW · 0,52 but/m · CBJ outsider</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CAR : 5B/10M · 28B·66M·actif 2M</div>
+  <div style="font-size:13px;font-weight:700;color:#111">A. Fantilli <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CBJ</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 C · Marchment-Fantilli-Marchenko · 0,44 but/m · domicile</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CAR : 4B/9M · 26B·65M·actif 3M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:380%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">3.8/10</b>
@@ -341,7 +396,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">S. Aho <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CAR</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 1,12 pt/m · meilleur pointeur CAR</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 1,12 pt/m · série 6M🔥 · Greaves .906 = cible</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CBJ : 1,4pt/m · 76Pts·66M·série 6M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:820%;height:100%;background:#16a34a"></div></div>
@@ -350,12 +405,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">B. Marchetti <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CBJ</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,72 pt/m · CBJ joue bien à dom</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CAR : 0,8pt/m · 48Pts·64M·actif 3M</div>
+  <div style="font-size:13px;font-weight:700;color:#111">A. Fantilli <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CBJ</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,72 pt/m · jeune talent · CBJ complet (0 blessé!)</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CAR : 0,8pt/m · 46Pts·65M·actif 4M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:440%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">4.4/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:480%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">4.8/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -365,21 +420,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">A. Svechnikov <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CAR</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 LW · 0,78 ast/m · distribue pour Aho</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 LW · L1 avec Aho · 0,78 ast/m · série 5M🔥</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CBJ : 8A/11M · 54A·66M·série 5M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:680%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.8/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:660%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.6/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">Z. Werenski <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CBJ</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 QB · 0,62 ast/m · tirs de la bleue</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CAR : 4A/9M · 38A·64M·actif 2M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 QB D · 0,62 ast/m · tirs de bleue réguliers</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CAR : 4A/9M · 40A·65M·actif 3M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:400%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">4.0/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:420%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">4.2/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -389,7 +444,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">S. Aho <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CAR</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">CAR favori clair · série 6M · CBJ gardien moyen (.904)</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">Série 6M · CAR favori · Greaves .906</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CBJ : 4×2+pts · 4/7 derniers🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:480%;height:100%;background:#16a34a"></div></div>
@@ -398,12 +453,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">P. Laine <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CBJ</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">À domicile · outsider mais motivé</div>
+  <div style="font-size:13px;font-weight:700;color:#111">K. Marchenko <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CBJ</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 RW · domicile motivé · Andersen peut fléchir</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CAR : 1×2+pts · 1/6 derniers</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:220%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.2/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:240%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.4/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -413,21 +468,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">S. Jarvis <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CAR</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 RW · coup de poker · 4 matchs avec point</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CBJ : 2B/5M · 22B·62M·discret</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 avec Aho · 4M avec point · finisseur</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CBJ : 2B/5M · 24B·64M·en forme</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:220%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.2/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:240%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.4/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">J. Gauthier <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CBJ</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">Physique · peut surprendre · énergie dom</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CAR : 1B/4M · 14B·58M·régulier</div>
+  <div style="font-size:13px;font-weight:700;color:#111">M. Marchment <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CBJ</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 LW · physique · énergie dom · peut surprendre Andersen</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CAR : 1B/4M · 14B·62M·irrégulier</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:160%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">1.6/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:180%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">1.8/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -438,7 +493,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
     <div class="teams-row">
       <div class="tblock">
         <span class="tcode">NYI</span><span class="tfull">NY Islanders</span>
-        <span class="trole">28-30-8 · ▼ 1L</span>
+        <span class="trole">38-24-5 · ▼ 2L</span>
       </div>
       <div class="vsblock">
         <span class="vstime">01h00</span>
@@ -448,7 +503,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       </div>
       <div class="tblock tright">
         <span class="tcode">TOR</span><span class="tfull">Toronto Maple Leafs</span>
-        <span class="trole">33-25-8 · ▼ 1L</span>
+        <span class="trole">29-27-12 · ▼ 2L</span>
       </div>
     </div>
     <div class="prob-row">
@@ -464,19 +519,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <div class="info-cell">
         <div class="info-label">Gardien NYI</div>
         <div class="kstats"><span class="kchip">I. Sorokin</span><span class="kchip sv">SV% .908</span><span class="kchip gaa">GAA 2.82</span></div>
-        <div class="pp-line">PP1: <span>PP1: Barzal · Bailey · Lee · Dobson · Pulock</span></div>
+        <div class="pp-line">PP1: <span>PP1: Barzal · Horvat · Heineman · Schaefer · Pulock</span></div>
       </div>
       <div class="info-cell">
         <div class="info-label">Gardien TOR</div>
-        <div class="kstats"><span class="kchip">J. Murray</span><span class="kchip sv">SV% .912</span><span class="kchip gaa">GAA 2.64</span></div>
-        <div class="pp-line">PP1: <span>PP1: Nylander · Marner · Tavares · Knies · Rielly (Matthews OUT fin saison)</span></div>
+        <div class="kstats"><span class="kchip">J. Woll</span><span class="kchip sv">SV% .912</span><span class="kchip gaa">GAA 2.64</span></div>
+        <div class="pp-line">PP1: <span>PP1: Nylander · Tavares · Maccelli · Rielly · McCabe (Matthews OUT)</span></div>
       </div>
     </div>
     <div class="ab-row">
-      <div class="ab-item"><span class="ab-team">NYI</span><span class="ab-txt">Aucun absent majeur ✅</span></div>
-      <div class="ab-item"><span class="ab-team">TOR</span><span class="ab-txt">A. Matthews (OUT fin saison 🚨), M. Foligno (OUT)</span></div>
+      <div class="ab-item"><span class="ab-team">NYI</span><span class="ab-txt">K. Palmieri (ACL 🚨), A. Romanov (upper body 🚨), S. Varlamov G (2 genoux — fin saison 🚨)</span></div>
+      <div class="ab-item"><span class="ab-team">TOR</span><span class="ab-txt">A. Matthews (MCL grade 3 — fin saison 🚨), C. Tanev (groin — fin saison 🚨) · O. Ekman-Larsson GTD⚠️ (naissance)</span></div>
     </div>
-    <div class="card-analysis">TOR sans Matthews (OUT fin saison 🚨). Nylander/Marner portent l'attaque. NYI Sorokin .908 solide. Match serré, TOR à domicile avantage léger.</div>
+    <div class="card-analysis">TOR sans Matthews (MCL fin saison 🚨) + Tanev · NYI même 18 que vs CGY sam. Maccelli-Tavares-Nylander L1 TOR · Sorokin .908 solide. Ekman-Larsson GTD (naissance enfant).</div>
   </div>
   <div class="pred-header-row"><span>Catégorie</span><span>NYI</span><span>TOR</span></div>
   <div style="padding:0 14px 10px"><div style="border-bottom:1px solid #f0f0f0;padding:10px 0">
@@ -484,18 +539,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">M. Barzal <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">NYI</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,44 but/m · TOR sans Matthews</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs TOR : 4B/9M · 28B·66M·actif 2M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 RW Heineman-Horvat-Barzal · PP1 · TOR sans Matthews</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs TOR : 4B/9M · 30B·67M·actif 3M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:420%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">4.2/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:460%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">4.6/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">W. Nylander <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">TOR</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 RW · 0,62 but/m · leader post-Matthews</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs NYI : 6B/9M · 38B·66M·série 3M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 RW Maccelli-Tavares-Nylander · PP1 · leader post-Matthews</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs NYI : 6B/9M · 40B·67M·série 3M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:580%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.8/10</b>
@@ -508,18 +563,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">M. Barzal <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">NYI</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,82 pt/m · distributeur élite</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs TOR : 0,9pt/m · 56Pts·66M·actif 4M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,82 pt/m · playmaker élite</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs TOR : 0,9pt/m · 58Pts·67M·actif 4M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:540%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.4/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:560%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.6/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">M. Marner <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">TOR</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,91 pt/m · leader TOR</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs NYI : 1,0pt/m · 64Pts·66M·série 4M🔥</div>
+  <div style="font-size:13px;font-weight:700;color:#111">W. Nylander <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">TOR</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,86 pt/m · assume leadership TOR</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs NYI : 1,0pt/m · 62Pts·67M·série 4M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:660%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.6/10</b>
@@ -531,22 +586,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#6b7280;letter-spacing:.5px;margin-bottom:6px">🤝 Assist</div>
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">M. Barzal <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">NYI</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,61 ast/m · playmaker naturel</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs TOR : 5A/9M · 44A·66M·actif 3M</div>
+  <div style="font-size:13px;font-weight:700;color:#111">B. Horvat <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">NYI</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 C · 0,54 ast/m · distribue pour Barzal</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs TOR : 5A/9M · 42A·67M·actif 3M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:520%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.2/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:500%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.0/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">M. Marner <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">TOR</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · meilleur passeur TOR</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs NYI : 7A/9M · 52A·66M·série 4M🔥</div>
+  <div style="font-size:13px;font-weight:700;color:#111">J. Tavares <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">TOR</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 C · 0,62 ast/m · vétéran clutch</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs NYI : 6A/9M · 46A·67M·actif 4M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:640%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.4/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:520%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.2/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -555,8 +610,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#6b7280;letter-spacing:.5px;margin-bottom:6px">💥 2+Pts</div>
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">M. Marner <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">TOR</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">À domicile · PP1 · leadership post-Matthews</div>
+  <div style="font-size:13px;font-weight:700;color:#111">W. Nylander <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">TOR</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">Dom · PP1 · leadership · Sorokin solide</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs NYI : 2×2+pts · 2/6 derniers</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:360%;height:100%;background:#16a34a"></div></div>
@@ -566,11 +621,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">M. Barzal <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">NYI</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">Sorokin solide · mais Barzal clutch</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">Sorokin solide · Barzal clutch · dom défavorable</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs TOR : 2×2+pts · 2/7 derniers</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:240%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.4/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:260%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.6/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -579,9 +634,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#6b7280;letter-spacing:.5px;margin-bottom:6px">🔥 Outsider</div>
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">B. Pulock <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">NYI</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 QB · tirs de bleue · vs TOR sans Matthews</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs TOR : 2B/5M · 14B·64M·défenseur offensif</div>
+  <div style="font-size:13px;font-weight:700;color:#111">E. Heineman <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">NYI</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 LW · 3pts récents · profite de TOR affaibli</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs TOR : 1B/4M · 18B·62M·en forme</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:180%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">1.8/10</b>
@@ -589,12 +644,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">T. Knies <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">TOR</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 LW · énergie · 3 derniers matchs avec point</div>
+  <div style="font-size:13px;font-weight:700;color:#111">M. Knies <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">TOR</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L2 LW Knies-Domi-Cowan · énergie · dom · peut surprendre</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs NYI : 1B/4M · 18B·62M·jeune talent</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:160%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">1.6/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:180%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">1.8/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -610,7 +665,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <div class="vsblock">
         <span class="vstime">01h00</span>
         <span class="vsat">score prédit</span>
-        <span style="font-size:13px;font-weight:700;color:#333">BOS 3 – MTL 3 (OT)</span>
+        <span style="font-size:13px;font-weight:700;color:#333">BOS 3 – MTL 3 OT</span>
         <span class="ou-badge" style="color:#bf360c;background:#fff3e0;border-color:#ffcc02">🔥 6+ buts?</span>
       </div>
       <div class="tblock tright">
@@ -631,19 +686,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <div class="info-cell">
         <div class="info-label">Gardien BOS</div>
         <div class="kstats"><span class="kchip">J. Swayman</span><span class="kchip sv">SV% .916</span><span class="kchip gaa">GAA 2.48</span></div>
-        <div class="pp-line">PP1: <span>PP1: Pastrnak · Minten · Mittelstadt · McAvoy · Aspirot</span></div>
+        <div class="pp-line">PP1: <span>PP1: Pastrnak · Minten · Mittelstadt · McAvoy · H. Lindholm</span></div>
       </div>
       <div class="info-cell">
         <div class="info-label">Gardien MTL</div>
-        <div class="kstats"><span class="kchip">S. Montembeault</span><span class="kchip sv">SV% .914</span><span class="kchip gaa">GAA 2.52</span></div>
+        <div class="kstats"><span class="kchip">J. Dobes (recrue🔥)</span><span class="kchip sv">SV% .909</span><span class="kchip gaa">GAA 2.71</span></div>
         <div class="pp-line">PP1: <span>PP1: Caufield · Suzuki · Slafkovsky · Hutson · Matheson</span></div>
       </div>
     </div>
     <div class="ab-row">
-      <div class="ab-item"><span class="ab-team">BOS</span><span class="ab-txt">Aucun absent majeur ✅</span></div>
-      <div class="ab-item"><span class="ab-team">MTL</span><span class="ab-txt">Aucun absent majeur ✅</span></div>
+      <div class="ab-item"><span class="ab-team">BOS</span><span class="ab-txt">AUCUN absent 🟢</span></div>
+      <div class="ab-item"><span class="ab-team">MTL</span><span class="ab-txt">K. Dach (upper body 2-4 sem 🚨), P. Laine (abdomen IR jusqu'au 31 mar 🚨) · Montembeault G scratché</span></div>
     </div>
-    <div class="card-analysis">🔥 CHOC DE LA SOIRÉE · BOS (37W) vs MTL (36W) · deux équipes de playoffs en forme. Pastrnak série 7M vs Suzuki série 8M. Match très ouvert.</div>
+    <div class="card-analysis">🔥 CHOC Atlantic · Dobes G (recrue!) partant MTL — Montembeault scratché! Dach OUT 2-4 sem. Pastrnak série 7M vs Suzuki série 8M. BOS 0 blessé. Match très ouvert.</div>
   </div>
   <div class="pred-header-row"><span>Catégorie</span><span>BOS</span><span>MTL</span></div>
   <div style="padding:0 14px 10px"><div style="border-bottom:1px solid #f0f0f0;padding:10px 0">
@@ -651,8 +706,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">D. Pastrnak <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">BOS</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 RW · 0,74 but/m · ace BOS · vs Montembeault .914</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MTL : 8B/10M · 48B·67M·série 5M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 Pastrnak-Minten-Khusnutdinov · PP1 · 0,74 but/m · Dobes recrue!</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MTL : 8B/10M · 50B·67M·série 5M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:700%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">7.0/10</b>
@@ -661,8 +716,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">C. Caufield <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">MTL</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 RW · 0,72 but/m · à domicile dominant</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BOS : 7B/10M · 44B·64M·série 5M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 Caufield-Suzuki-Slafkovsky · PP1 · 0,72 but/m · domicile</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BOS : 7B/10M · 46B·65M·série 5M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:680%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.8/10</b>
@@ -675,21 +730,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">D. Pastrnak <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">BOS</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 1,08 pt/m · meilleur pointeur BOS</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MTL : 1,2pt/m · 76Pts·67M·série 7M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 1,08 pt/m · TOP BOS · Dobes G recrue = cible</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MTL : 1,2pt/m · 81Pts·67M·série 7M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:780%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">7.8/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:800%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">8.0/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">N. Suzuki <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">MTL</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,96 pt/m · capitaine MTL en feu</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BOS : 1,1pt/m · 68Pts·66M·série 8M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,96 pt/m · série 8M🔥 · capitaine MTL</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BOS : 1,1pt/m · 70Pts·66M·série 8M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:760%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">7.6/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:780%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">7.8/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -699,8 +754,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">C. Mittelstadt <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">BOS</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,74 ast/m · en grande forme</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MTL : 7A/10M · 52A·67M·série 5M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L2 C · PP1 · 0,74 ast/m · en grande forme</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MTL : 7A/10M · 54A·67M·série 5M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:620%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.2/10</b>
@@ -709,8 +764,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">N. Suzuki <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">MTL</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · distributeur · série 8M</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BOS : 9A/10M · 56A·66M·série 8M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · distributeur · série 8M🔥</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BOS : 9A/10M · 58A·66M·série 8M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:720%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">7.2/10</b>
@@ -722,22 +777,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#6b7280;letter-spacing:.5px;margin-bottom:6px">💥 2+Pts</div>
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">D. Pastrnak <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">BOS</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">Série 7M🔥 · BOS PP1 dominant · Montembeault peut fléchir</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MTL : 3×2+pts · 3/7 derniers🔥</div>
-  <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:440%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">4.4/10</b>
-  </div>
-</td>
-<td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
-<td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">N. Suzuki <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">MTL</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">Série 8M🔥 · à domicile · meilleur match de la soirée?</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">Série 8M🔥 · capitaine · dom · Dobes peut fléchir</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BOS : 4×2+pts · 4/7 derniers🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:460%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">4.6/10</b>
+  </div>
+</td>
+<td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
+<td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
+  <div style="font-size:13px;font-weight:700;color:#111">D. Pastrnak <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">BOS</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">Série 7M🔥 · PP1 · Dobes recrue = cible</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MTL : 3×2+pts · 3/7 derniers🔥</div>
+  <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:440%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">4.4/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -746,22 +801,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#6b7280;letter-spacing:.5px;margin-bottom:6px">🔥 Outsider</div>
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">C. McAvoy <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">BOS</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 QB D · série 4pts/4M · tir puissant</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MTL : 3B/7M · 22B·67M·défenseur offensif</div>
+  <div style="font-size:13px;font-weight:700;color:#111">I. Demidov <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">MTL</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L2 RW · rookie sensation · 3pts récents · domicile🔥</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BOS : 2B/4M · 20B·52M·talent🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:200%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.0/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:260%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.6/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">J. Slafkovsky <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">MTL</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 LW · physique · 3B sur 5 derniers</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BOS : 2B/5M · 34B·64M·série 3M🔥</div>
+  <div style="font-size:13px;font-weight:700;color:#111">C. McAvoy <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">BOS</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 QB D · 4pts/4M récents · tir puissant</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MTL : 3B/7M · 24B·67M·D offensif</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:220%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.2/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:200%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.0/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -772,7 +827,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
     <div class="teams-row">
       <div class="tblock">
         <span class="tcode">MIN</span><span class="tfull">Minnesota Wild</span>
-        <span class="trole">38-21-7 · ▲ 2W</span>
+        <span class="trole">38-18-12 · ▲ 2W</span>
       </div>
       <div class="vsblock">
         <span class="vstime">01h30</span>
@@ -782,7 +837,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       </div>
       <div class="tblock tright">
         <span class="tcode">CHI</span><span class="tfull">Chicago Blackhawks</span>
-        <span class="trole">21-36-9 · ▲ 2W</span>
+        <span class="trole">25-30-11 · ▲ 2W</span>
       </div>
     </div>
     <div class="prob-row">
@@ -797,20 +852,20 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
     <div class="info-grid">
       <div class="info-cell">
         <div class="info-label">Gardien MIN</div>
-        <div class="kstats"><span class="kchip">F. Fleury</span><span class="kchip sv">SV% .911</span><span class="kchip gaa">GAA 2.68</span></div>
-        <div class="pp-line">PP1: <span>PP1: Kaprizov · Zuccarello · Hartman · Spurgeon · Middleton</span></div>
+        <div class="kstats"><span class="kchip">F. Gustavsson</span><span class="kchip sv">SV% .913</span><span class="kchip gaa">GAA 2.58</span></div>
+        <div class="pp-line">PP1: <span>PP1: Kaprizov · Zuccarello · Hartman · Q.Hughes · Faber</span></div>
       </div>
       <div class="info-cell">
         <div class="info-label">Gardien CHI</div>
-        <div class="kstats"><span class="kchip">P. Blackwood</span><span class="kchip sv">SV% .901</span><span class="kchip gaa">GAA 3.12</span></div>
-        <div class="pp-line">PP1: <span>PP1: Bedard · Foligno · Donato · Jones · Murphy</span></div>
+        <div class="kstats"><span class="kchip">S. Knight</span><span class="kchip sv">SV% .901</span><span class="kchip gaa">GAA 3.12</span></div>
+        <div class="pp-line">PP1: <span>PP1: Bedard · Greene · Burakovsky · Levshunov · Vlasic</span></div>
       </div>
     </div>
     <div class="ab-row">
-      <div class="ab-item"><span class="ab-team">MIN</span><span class="ab-txt">Aucun absent majeur ✅</span></div>
-      <div class="ab-item"><span class="ab-team">CHI</span><span class="ab-txt">Aucun absent majeur ✅</span></div>
+      <div class="ab-item"><span class="ab-team">MIN</span><span class="ab-txt">M. Foligno LW (IR lower body mar 24 🚨), J. Eriksson Ek C (lower body DTD🚨), B. Brink RW (DTD)</span></div>
+      <div class="ab-item"><span class="ab-team">CHI</span><span class="ab-txt">O. Moore C (lower body 🚨)</span></div>
     </div>
-    <div class="card-analysis">MIN dominant (38W) · Kaprizov en feu série 6M · Bedard seul espoir CHI. Blackwood .901 vs Fleury .911. MIN confortablement favori.</div>
+    <div class="card-analysis">MIN avec Q.Hughes-Faber D1 · Kaprizov série 6M · Eriksson Ek OUT 🚨. CHI : Bedard-Greene-Burakovsky L1 · Knight .901. Gustavsson .913 vs Knight .901 = avantage MIN.</div>
   </div>
   <div class="pred-header-row"><span>Catégorie</span><span>MIN</span><span>CHI</span></div>
   <div style="padding:0 14px 10px"><div style="border-bottom:1px solid #f0f0f0;padding:10px 0">
@@ -818,18 +873,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">C. Bedard <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CHI</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,58 but/m · à domicile 0,66 · talent brut</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MIN : 5B/9M · 36B·66M·actif 3M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 C Greene-Bedard-Burakovsky · PP1 · dom 0,66 but/m</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MIN : 5B/9M · 38B·66M·actif 4M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:540%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.4/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:560%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.6/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">K. Kaprizov <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">MIN</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 LW · 0,72 but/m · MIN #1 attaque</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CHI : 8B/10M · 50B·65M·série 5M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 LW Kaprizov-Hartman-Zuccarello · PP1 · série 5M🔥</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CHI : 8B/10M · 52B·65M·série 5M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:720%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">7.2/10</b>
@@ -842,18 +897,18 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">C. Bedard <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CHI</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,84 pt/m dom · joue les playmakers</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MIN : 0,9pt/m · 56Pts·66M·actif 4M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,84 pt/m dom · Gustavsson .913 face à lui</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MIN : 0,9pt/m · 58Pts·66M·actif 4M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:620%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.2/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:640%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.4/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">K. Kaprizov <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">MIN</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">1,06 pt/m · série 6M🔥 · CHI Blackwood .901</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CHI : 1,1pt/m · 74Pts·65M·série 6M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 1,06 pt/m · série 6M🔥 · Knight .901 = cible</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CHI : 1,1pt/m · 76Pts·65M·série 6M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:800%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">8.0/10</b>
@@ -866,8 +921,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">C. Bedard <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CHI</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,64 ast/m · distribue aussi bien</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MIN : 6A/9M · 46A·66M·série 4M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,64 ast/m · distribue naturellement</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MIN : 6A/9M · 48A·66M·actif 4M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:580%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.8/10</b>
@@ -876,8 +931,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">M. Zuccarello <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">MIN</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 LW · 0,68 ast/m · vétéran distribueur</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CHI : 7A/10M · 48A·64M·série 4M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 RW · PP1 · 0,68 ast/m · vétéran distribueur</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CHI : 7A/10M · 50A·64M·série 4M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:600%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.0/10</b>
@@ -890,7 +945,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">K. Kaprizov <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">MIN</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">MIN #1 attaque · CHI gardien moyen · série 6M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">MIN #1 attaque · Knight .901 · série 6M</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CHI : 4×2+pts · 4/7 derniers🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:480%;height:100%;background:#16a34a"></div></div>
@@ -900,11 +955,11 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">C. Bedard <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CHI</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">À domicile · talent · mais MIN défense solide</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">Domicile · talent · face à Gustavsson .913</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MIN : 2×2+pts · 2/6 derniers</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:340%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">3.4/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:360%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">3.6/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -913,9 +968,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#6b7280;letter-spacing:.5px;margin-bottom:6px">🔥 Outsider</div>
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">T. Hall <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">MIN</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP2 · 0,44 pt/m · clutch · profite de CHI faible</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CHI : 2B/5M · 20B·60M·régulier</div>
+  <div style="font-size:13px;font-weight:700;color:#111">A. Burakovsky <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CHI</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 RW avec Bedard · 0,44 pt/m · peut exploser</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MIN : 2B/5M · 22B·62M·régulier</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:180%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">1.8/10</b>
@@ -923,12 +978,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">K. Donato <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">CHI</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · LW · imprévisible · peut surprendre MIN</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs MIN : 2B/6M · 18B·62M·actif 2M</div>
+  <div style="font-size:13px;font-weight:700;color:#111">M. Boldy <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">MIN</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L2 LW · 0,48 but/m · Eriksson Ek OUT = plus de rôle</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs CHI : 2B/5M · 22B·62M·en forme</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:160%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">1.6/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:200%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.0/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -939,7 +994,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
     <div class="teams-row">
       <div class="tblock">
         <span class="tcode">NSH</span><span class="tfull">Nashville Predators</span>
-        <span class="trole">24-35-7 · ▼ 1L</span>
+        <span class="trole">29-28-9 · ▼ 2L</span>
       </div>
       <div class="vsblock">
         <span class="vstime">02h00</span>
@@ -949,7 +1004,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       </div>
       <div class="tblock tright">
         <span class="tcode">WPG</span><span class="tfull">Winnipeg Jets</span>
-        <span class="trole">34-26-6 · ▲ 2W</span>
+        <span class="trole">28-28-10 · ▲ 2W</span>
       </div>
     </div>
     <div class="prob-row">
@@ -965,38 +1020,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <div class="info-cell">
         <div class="info-label">Gardien NSH</div>
         <div class="kstats"><span class="kchip">J. Saros</span><span class="kchip sv">SV% .909</span><span class="kchip gaa">GAA 2.74</span></div>
-        <div class="pp-line">PP1: <span>PP1: Stamkos · Forsberg · Johansen · Carrier · Fabbro</span></div>
+        <div class="pp-line">PP1: <span>PP1: Forsberg · O'Reilly · Marchessault · Josi · Skjei</span></div>
       </div>
       <div class="info-cell">
         <div class="info-label">Gardien WPG</div>
         <div class="kstats"><span class="kchip">C. Hellebuyck</span><span class="kchip sv">SV% .921</span><span class="kchip gaa">GAA 2.31</span></div>
-        <div class="pp-line">PP1: <span>PP1: Scheifele · Connor · Morrissey · Perfetti · Vilardi</span></div>
+        <div class="pp-line">PP1: <span>PP1: Connor · Scheifele · Morrissey · Perfetti · Vilardi</span></div>
       </div>
     </div>
     <div class="ab-row">
-      <div class="ab-item"><span class="ab-team">NSH</span><span class="ab-txt">A. Wilsby D (OUT)</span></div>
-      <div class="ab-item"><span class="ab-team">WPG</span><span class="ab-txt">Niederreiter (IR), Namestnikov (OUT), C. Miller (IR), N. Pionk (IR)</span></div>
+      <div class="ab-item"><span class="ab-team">NSH</span><span class="ab-txt">A. Wilsby D (lower body — 8e match 🚨) · J. Kemell scratché</span></div>
+      <div class="ab-item"><span class="ab-team">WPG</span><span class="ab-txt">N. Niederreiter (knee IR 🚨), N. Pionk (undisclosed — reprend contact), C. Miller (knee IR 🚨), V. Namestnikov (lower body 🚨)</span></div>
     </div>
-    <div class="card-analysis">WPG Hellebuyck .921 = atout #1 ce soir. NSH en galère (24W). Scheifele/Connor dominants à domicile. NSH Saros peut tenir mais attaque trop faible.</div>
+    <div class="card-analysis">Forsberg-O'Reilly-Marchessault L1 NSH (Kemell scratché). WPG Hellebuyck .921 + 4 absents adverses = dom confortable. Toews L3 WPG. Match fermé attendu.</div>
   </div>
   <div class="pred-header-row"><span>Catégorie</span><span>NSH</span><span>WPG</span></div>
   <div style="padding:0 14px 10px"><div style="border-bottom:1px solid #f0f0f0;padding:10px 0">
 <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#6b7280;letter-spacing:.5px;margin-bottom:6px">🎯 But</div>
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">P. Forsberg <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">NSH</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 LW · 0,52 but/m · face à Hellebuyck .921</div>
+  <div style="font-size:13px;font-weight:700;color:#111">F. Forsberg <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">NSH</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 LW Forsberg-O'Reilly-Marchessault · 0,52 but/m · Hellebuyck .921</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs WPG : 4B/9M · 28B·66M·actif 2M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:420%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">4.2/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:440%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">4.4/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">K. Connor <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">WPG</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 LW · 0,62 but/m · à domicile dominant</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs NSH : 7B/10M · 38B·66M·série 3M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 LW Connor-Scheifele-Iafallo · PP1 · dom dominant</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs NSH : 7B/10M · 40B·66M·série 3M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:620%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.2/10</b>
@@ -1008,9 +1063,9 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#6b7280;letter-spacing:.5px;margin-bottom:6px">⭐ Point</div>
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">S. Stamkos <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">NSH</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,74 pt/m · vétéran clutch</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs WPG : 0,8pt/m · 46Pts·63M·actif 3M</div>
+  <div style="font-size:13px;font-weight:700;color:#111">J. Marchessault <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">NSH</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 RW · PP1 · 0,74 pt/m · ex-VGK clutch</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs WPG : 0,7pt/m · 46Pts·64M·actif 3M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:520%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.2/10</b>
@@ -1019,8 +1074,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">M. Scheifele <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">WPG</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,82 pt/m · Hellebuyck rassure</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs NSH : 0,9pt/m · 56Pts·66M·série 4M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 C · PP1 · 0,82 pt/m · Hellebuyck protège · dom</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs NSH : 0,9pt/m · 58Pts·66M·série 4M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:640%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.4/10</b>
@@ -1032,19 +1087,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#6b7280;letter-spacing:.5px;margin-bottom:6px">🤝 Assist</div>
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">R. Johansen <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">NSH</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,54 ast/m · distributeur</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs WPG : 4A/9M · 32A·65M·actif 2M</div>
+  <div style="font-size:13px;font-weight:700;color:#111">R. O'Reilly <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">NSH</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 C · PP1 C · 0,54 ast/m · vétéran distribueur</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs WPG : 4A/9M · 34A·64M·actif 2M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:400%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">4.0/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:420%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">4.2/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">J. Morrissey <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">WPG</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 QB · 0,76 ast/m · meilleur D offensif WPG</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs NSH : 8A/11M · 50A·66M·série 5M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 QB D · 0,76 ast/m · dominant dom</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs NSH : 8A/11M · 52A·66M·série 5M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:620%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.2/10</b>
@@ -1057,7 +1112,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">M. Scheifele <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">WPG</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">Hellebuyck · domicile · Saros vs offense moyenne NSH</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">Hellebuyck · dom · Saros vs NSH offense moyenne</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs NSH : 2×2+pts · 2/6 derniers</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:340%;height:100%;background:#16a34a"></div></div>
@@ -1066,12 +1121,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">S. Stamkos <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">NSH</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">Outsider mais vétéran · peut surprendre</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs WPG : 1×2+pts · 1/6 derniers</div>
+  <div style="font-size:13px;font-weight:700;color:#111">J. Marchessault <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">NSH</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">Ex-VGK · clutch · motivation vs WPG</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs WPG : 1×2+pts · 1/5 derniers</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:180%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">1.8/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:200%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.0/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -1081,21 +1136,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">G. Vilardi <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">WPG</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · LW · finisseur · 3B récents</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs NSH : 2B/5M · 22B·62M·régulier</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L2 RW · PP1 · finisseur · 3B récents</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs NSH : 2B/5M · 24B·62M·régulier</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:200%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.0/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:220%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.2/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">J. Kemell <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">NSH</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">Talent brut · RW PP1 · coup de poker</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs WPG : 1B/4M · 14B·60M·discret</div>
+  <div style="font-size:13px;font-weight:700;color:#111">S. Stamkos <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">NSH</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L2 C · vétéran clutch · peut surprendre Hellebuyck</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs WPG : 1B/5M · 14B·60M·vétéran</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:140%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">1.4/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:180%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">1.8/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -1136,15 +1191,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       </div>
       <div class="info-cell">
         <div class="info-label">Gardien EDM</div>
-        <div class="kstats"><span class="kchip">S. Skinner</span><span class="kchip sv">SV% .910</span><span class="kchip gaa">GAA 2.78</span></div>
-        <div class="pp-line">PP1: <span>PP1: McDavid · Hyman · Bouchard · Ekholm · RNH (SANS Draisaitl 🚨)</span></div>
+        <div class="kstats"><span class="kchip">C. Ingram</span><span class="kchip sv">SV% .904</span><span class="kchip gaa">GAA 2.92</span></div>
+        <div class="pp-line">PP1: <span>PP1: McDavid · Hyman · Savoie · Bouchard · Ekholm (Draisaitl OUT)</span></div>
       </div>
     </div>
     <div class="ab-row">
-      <div class="ab-item"><span class="ab-team">SJS</span><span class="ab-txt">Askarov G (IR lower body), Chernyshov (concussion), Dellandrea (OUT)</span></div>
-      <div class="ab-item"><span class="ab-team">EDM</span><span class="ab-txt">L. Draisaitl (OUT FIN SAISON 🚨 lower body)</span></div>
+      <div class="ab-item"><span class="ab-team">SJS</span><span class="ab-txt">Y. Askarov G (lower body IR 🚨), I. Chernyshov (concussion 🚨), T. Dellandrea (lower body 🚨), A. Wennberg (upper body GTD⚠️)</span></div>
+      <div class="ab-item"><span class="ab-team">EDM</span><span class="ab-txt">L. Draisaitl (lower body — reste saison régulière 🚨), C. Dach (undisclosed), T. Emberson (undisclosed), M. Janmark (shoulder)</span></div>
     </div>
-    <div class="card-analysis">🚨 BREAKING : Draisaitl OUT fin saison (lower body). McDavid SEUL leader offensif EDM · motivé · peut compenser seul. SJS Celebrini/Smith en grande forme.</div>
+    <div class="card-analysis">🚨 Draisaitl OUT reste saison régulière · McDavid SEUL leader avec Savoie-Hyman. Ingram G (.904). SJS: Wennberg GTD⚠️ (si absent → Kurashev). Celebrini-Smith rookies motivés.</div>
   </div>
   <div class="pred-header-row"><span>Catégorie</span><span>SJS</span><span>EDM</span></div>
   <div style="padding:0 14px 10px"><div style="border-bottom:1px solid #f0f0f0;padding:10px 0">
@@ -1152,21 +1207,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">M. Celebrini <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">SJS</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C rookie sensation · 0,44 but/m · EDM sans Draisaitl</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs EDM : 3B/6M · 26B·65M·actif 3M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 C Graf-Celebrini-Smith · PP1 · rookie 0,44 but/m · Ingram .904</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs EDM : 3B/6M · 28B·65M·actif 3M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:380%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">3.8/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:400%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">4.0/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">C. McDavid <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">EDM</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,84 but/m MÊME sans Draisaitl · porte l'attaque</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs SJS : 10B/12M · 54B·65M·série 6M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 C Savoie-McDavid-Hyman · seul leader · 0,84 but/m</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs SJS : 10B/12M · 56B·65M·série 6M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:720%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">7.2/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:740%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">7.4/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -1176,21 +1231,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">W. Smith <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">SJS</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 RW · 0,58 pt/m · rookie en feu</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs EDM : 0,7pt/m · 38Pts·65M·actif 4M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 RW · PP1 · 0,58 pt/m rookie · EDM sans Draisaitl</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs EDM : 0,7pt/m · 40Pts·65M·actif 3M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:360%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">3.6/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:380%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">3.8/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">C. McDavid <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">EDM</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">1,38 pt/m · SEUL leader offensif EDM · 2x responsabilités</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs SJS : 1,6pt/m · 88Pts·65M·série 8M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 1,38 pt/m · porte TOUT l'attaque EDM · séquence 8M🔥</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs SJS : 1,6pt/m · 90Pts·65M·série 8M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:840%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">8.4/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:860%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">8.6/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -1200,21 +1255,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">M. Celebrini <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">SJS</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,48 ast/m · distribueur naturel</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs EDM : 3A/6M · 30A·65M·actif 3M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,48 ast/m · distribue naturellement</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs EDM : 3A/6M · 32A·65M·actif 3M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:340%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">3.4/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:360%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">3.6/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">E. Bouchard <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">EDM</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 QB D · 0,74 ast/m · prend encore plus de place sans Draisaitl</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs SJS : 8A/12M · 58A·65M·série 5M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 QB D · L1 D avec Ekholm · plus de rôles sans Draisaitl</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs SJS : 8A/12M · 60A·65M·série 5M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:640%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.4/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:660%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.6/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -1224,21 +1279,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">C. McDavid <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">EDM</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">Sans Draisaitl · McDavid doit TOUT faire · motivé</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">DOIT tout faire · Ingram .904 solide · motivation max</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs SJS : 5×2+pts · 5/8 derniers🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:520%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.2/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:540%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.4/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">M. Celebrini <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">SJS</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">Jeune talent · bon matchup vs EDM affaibli</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">Rookie confiant · EDM affaibli · bon matchup</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs EDM : 1×2+pts · 1/5 derniers</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:220%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.2/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:240%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.4/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -1247,22 +1302,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#6b7280;letter-spacing:.5px;margin-bottom:6px">🔥 Outsider</div>
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">R. Nugent-Hopkins <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">EDM</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C backup sans Draisaitl · assume plus de rôle</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs SJS : 2B/6M · 20B·64M·régulier</div>
+  <div style="font-size:13px;font-weight:700;color:#111">M. Savoie <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">EDM</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 LW avec McDavid-Hyman · assume rôle de Draisaitl</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs SJS : 2B/5M · 22B·58M·talent🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:240%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.4/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:260%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.6/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">K. Sherwood <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">SJS</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">4e ligne énergique · peut surprendre Skinner</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs EDM : 1B/4M · 12B·60M·discret</div>
+  <div style="font-size:13px;font-weight:700;color:#111">W. Eklund <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">SJS</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L3 LW Eklund-Misa-Toffoli · 3M avec point</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs EDM : 2B/6M · 16B·62M·en forme</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:140%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">1.4/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:160%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">1.6/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -1299,38 +1354,38 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <div class="info-cell">
         <div class="info-label">Gardien TBL</div>
         <div class="kstats"><span class="kchip">A. Vasilevskiy</span><span class="kchip sv">SV% .918</span><span class="kchip gaa">GAA 2.38</span></div>
-        <div class="pp-line">PP1: <span>PP1: Kucherov · Hagel · Guentzel · Hedman · Raddysh</span></div>
+        <div class="pp-line">PP1: <span>PP1: Kucherov · Cirelli · Point · Hedman · Raddysh</span></div>
       </div>
       <div class="info-cell">
         <div class="info-label">Gardien SEA</div>
-        <div class="kstats"><span class="kchip">J. Daccord</span><span class="kchip sv">SV% .910</span><span class="kchip gaa">GAA 2.81</span></div>
-        <div class="pp-line">PP1: <span>PP1: Beniers · McCann · Stephenson · Tolvanen · Dunn</span></div>
+        <div class="kstats"><span class="kchip">P. Grubauer</span><span class="kchip sv">SV% .908</span><span class="kchip gaa">GAA 2.81</span></div>
+        <div class="pp-line">PP1: <span>PP1: Beniers · McCann · Stephenson · Eberle · Dunn</span></div>
       </div>
     </div>
     <div class="ab-row">
-      <div class="ab-item"><span class="ab-team">TBL</span><span class="ab-txt">Aucun absent majeur ✅</span></div>
-      <div class="ab-item"><span class="ab-team">SEA</span><span class="ab-txt">J. Schwartz (OUT upper body)</span></div>
+      <div class="ab-item"><span class="ab-team">TBL</span><span class="ab-txt">D. James (lower body), M. Crozier (core), E. Lilleberg (facial fracture — progression)</span></div>
+      <div class="ab-item"><span class="ab-team">SEA</span><span class="ab-txt">J. Schwartz (upper body 🚨), E. Tolvanen (undisclosed GTD⚠️ → Gaudreau à sa place)</span></div>
     </div>
-    <div class="card-analysis">TBL #2 ligue (40W) · Kucherov 106Pts TOP 3 ligue · Vasilevskiy .918. SEA 1-6-1 à vie vs TBL. Mismatch notable malgré domicile SEA.</div>
+    <div class="card-analysis">TBL #2 ligue · Hagel-Cirelli-Kucherov L1 (trio complet!) · Vasilevskiy .918. SEA Grubauer .908 partant · Tolvanen GTD⚠️ (Gaudreau à sa place si absent). SEA 1-6-1 à vie vs TBL.</div>
   </div>
   <div class="pred-header-row"><span>Catégorie</span><span>TBL</span><span>SEA</span></div>
   <div style="padding:0 14px 10px"><div style="border-bottom:1px solid #f0f0f0;padding:10px 0">
 <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#6b7280;letter-spacing:.5px;margin-bottom:6px">🎯 But</div>
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">N. Kucherov <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">TBL</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 RW · 0,72 but/m · 106Pts ligue · TBL #1 attaque</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs SEA : 8B/9M · 54B·65M·série 5M🔥</div>
+  <div style="font-size:13px;font-weight:700;color:#111">B. Point <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">TBL</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L2 C Guentzel-Point-Goncalves · PP1 · 0,66 but/m</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs SEA : 6B/9M · 44B·65M·série 4M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:740%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">7.4/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:620%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.2/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">J. McCann <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">SEA</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,52 but/m · à domicile · TBL fort gardien</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs TBL : 4B/8M · 30B·66M·actif 2M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L2 C McCann-Stephenson-Gaudreau · PP1 · dom · 0,52 but/m</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs TBL : 4B/8M · 32B·66M·actif 2M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:480%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">4.8/10</b>
@@ -1343,8 +1398,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">N. Kucherov <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">TBL</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">1,32 pt/m · TOP 3 ligue · contre Daccord .910</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs SEA : 1,5pt/m · 106Pts·65M·série 7M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 RW Hagel-Cirelli-Kucherov · PP1 · 1,32 pt/m · TOP 3 ligue</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs SEA : 1,5pt/m · 108Pts·65M·série 7M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:860%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">8.6/10</b>
@@ -1353,8 +1408,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">C. Stephenson <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">SEA</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,78 pt/m dom · SEA jamais battu TBL ici</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs TBL : 0,9pt/m · 54Pts·66M·actif 3M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L2 C · PP1 · 0,78 pt/m dom · SEA joue bien à dom</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs TBL : 0,9pt/m · 56Pts·66M·actif 3M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:520%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.2/10</b>
@@ -1366,19 +1421,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#6b7280;letter-spacing:.5px;margin-bottom:6px">🤝 Assist</div>
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">B. Hagel <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">TBL</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 LW · 0,66 ast/m · série 5M</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs SEA : 7A/9M · 48A·65M·série 5M🔥</div>
+  <div style="font-size:13px;font-weight:700;color:#111">N. Kucherov <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">TBL</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,96 ast/m · distributeur élite mondial</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs SEA : 8A/9M · 66A·65M·série 7M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:620%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.2/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:740%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">7.4/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">M. Beniers <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">SEA</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,62 ast/m · à domicile fiable</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs TBL : 5A/8M · 44A·66M·actif 4M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 C Beniers-Eberle · PP1 · 0,62 ast/m · dom fiable</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs TBL : 5A/8M · 46A·66M·actif 4M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:540%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.4/10</b>
@@ -1391,7 +1446,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">N. Kucherov <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">TBL</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">TOP 3 ligue · PP1 dominant · série 7M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">TOP 3 ligue · PP1 · série 7M🔥 · Grubauer .908</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs SEA : 4×2+pts · 4/7 derniers🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:540%;height:100%;background:#16a34a"></div></div>
@@ -1401,7 +1456,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">C. Stephenson <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">SEA</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">À domicile · outsider mais peut surprendre</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">Dom · outsider · peut surprendre Vasilevskiy</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs TBL : 2×2+pts · 2/7 derniers</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:260%;height:100%;background:#16a34a"></div></div>
@@ -1415,21 +1470,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">J. Guentzel <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">TBL</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,54 but/m · finisseur · 3B récents</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs SEA : 3B/6M · 26B·64M·régulier</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L2 LW avec Point · finisseur · 3B récents</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs SEA : 3B/6M · 28B·64M·régulier</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:240%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.4/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:260%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.6/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">E. Tolvanen <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">SEA</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 RW · retrouve son meilleur niveau · 2B récents</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs TBL : 2B/6M · 18B·62M·en forme</div>
+  <div style="font-size:13px;font-weight:700;color:#111">J. Eberle <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">SEA</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">L1 RW avec Beniers · vétéran clutch · dom fiable</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs TBL : 2B/6M · 20B·64M·régulier</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:180%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">1.8/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:200%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.0/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -1450,7 +1505,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       </div>
       <div class="tblock tright">
         <span class="tcode">VAN</span><span class="tfull">Vancouver Canucks</span>
-        <span class="trole">20-38-8 · ▼ 1L</span>
+        <span class="trole">20-38-8 · ▼ 2L</span>
       </div>
     </div>
     <div class="prob-row">
@@ -1466,19 +1521,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <div class="info-cell">
         <div class="info-label">Gardien FLA</div>
         <div class="kstats"><span class="kchip">S. Bobrovsky</span><span class="kchip sv">SV% .912</span><span class="kchip gaa">GAA 2.64</span></div>
-        <div class="pp-line">PP1: <span>PP1: Verhaeghe · Tkachuk M · Lundell · Ekblad · Forsling (sans Barkov/Reinhart/Marchand)</span></div>
+        <div class="pp-line">PP1: <span>PP1: Verhaeghe · Tkachuk M. · Lundell · Ekblad · Forsling</span></div>
       </div>
       <div class="info-cell">
         <div class="info-label">Gardien VAN</div>
         <div class="kstats"><span class="kchip">K. Lankinen</span><span class="kchip sv">SV% .903</span><span class="kchip gaa">GAA 3.08</span></div>
-        <div class="pp-line">PP1: <span>PP1: Pettersson · DeBrusk · Boeser · Hronek · Pettersson M</span></div>
+        <div class="pp-line">PP1: <span>PP1: Pettersson · Rossi · Boeser · DeBrusk · Hronek</span></div>
       </div>
     </div>
     <div class="ab-row">
-      <div class="ab-item"><span class="ab-team">FLA</span><span class="ab-txt">Barkov (IR-LT 🚨), Reinhart (OUT mar 24), Marchand (OUT), Jones S. (retour ✅), Bennett (retour ✅)</span></div>
-      <div class="ab-item"><span class="ab-team">VAN</span><span class="ab-txt">P.O. Joseph (upper body), Chytil (facial fracture), Demko G (hip surgery fin saison)</span></div>
+      <div class="ab-item"><span class="ab-team">FLA</span><span class="ab-txt">A. Barkov (ACL/MCL fin saison 🚨), S. Reinhart (undisclosed OUT mar 24 🚨), B. Marchand (lower body OUT mar 29 🚨), J. Gadjovich (upper body IR)</span></div>
+      <div class="ab-item"><span class="ab-team">VAN</span><span class="ab-txt">F. Lekkerimaki RW (OUT 🚨), F. Chytil C (facial fracture 🚨)</span></div>
     </div>
-    <div class="card-analysis">Bennett et Jones de retour FLA ✅ · mais Barkov/Reinhart/Marchand toujours OUT. VAN Lankinen .903 = cible. FLA léger favori malgré absents. VAN dernier ligue (20W).</div>
+    <div class="card-analysis">Barkov+Reinhart+Marchand OUT FLA 🚨 · mais Verhaeghe leader solide. VAN Lankinen .903 · dernier ligue (20W) · Lekkerimaki+Chytil OUT. FLA léger favori malgré absents.</div>
   </div>
   <div class="pred-header-row"><span>Catégorie</span><span>FLA</span><span>VAN</span></div>
   <div style="padding:0 14px 10px"><div style="border-bottom:1px solid #f0f0f0;padding:10px 0">
@@ -1486,8 +1541,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">C. Verhaeghe <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">FLA</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 LW · leader FLA · Bennett de retour renforce l'attaque</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs VAN : 5B/8M · 32B·65M·série 3M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 LW · leader FLA sans Barkov/Reinhart/Marchand · Lankinen .903</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs VAN : 5B/8M · 34B·65M·série 3M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:580%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.8/10</b>
@@ -1496,8 +1551,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">E. Pettersson <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">VAN</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,52 but/m · meilleur VAN · à domicile</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs FLA : 4B/9M · 28B·66M·actif 2M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,52 but/m · meilleur VAN · domicile</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs FLA : 4B/9M · 30B·66M·actif 2M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:460%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">4.6/10</b>
@@ -1510,8 +1565,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">C. Verhaeghe <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">FLA</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,82 pt/m · VAN Lankinen .903 = cible</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs VAN : 0,9pt/m · 54Pts·65M·série 4M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,82 pt/m · Lankinen .903 = cible</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs VAN : 0,9pt/m · 56Pts·65M·série 4M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:640%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.4/10</b>
@@ -1520,8 +1575,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">E. Pettersson <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">VAN</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,74 pt/m · meilleur pointeur VAN</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs FLA : 0,8pt/m · 50Pts·66M·actif 3M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,74 pt/m · distributeur · dom meilleur VAN</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs FLA : 0,8pt/m · 52Pts·66M·actif 3M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:540%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.4/10</b>
@@ -1534,8 +1589,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">M. Tkachuk <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">FLA</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,72 ast/m · distributeur PP1 FLA</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs VAN : 6A/8M · 48A·65M·actif 3M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 LW · 0,72 ast/m · distributeur FLA PP1</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs VAN : 6A/8M · 50A·65M·actif 3M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:560%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.6/10</b>
@@ -1544,8 +1599,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">R. Boeser <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">VAN</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 RW · 0,52 ast/m · profite de Pettersson</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs FLA : 4A/8M · 32A·66M·actif 2M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 RW · 0,52 ast/m · finisseur avec Pettersson</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs FLA : 4A/8M · 34A·66M·actif 2M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:420%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">4.2/10</b>
@@ -1558,7 +1613,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">C. Verhaeghe <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">FLA</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">FLA toujours affaibli mais Bennett de retour renforce</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">FLA affaibli mais Verhaeghe dominant · Lankinen .903</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs VAN : 2×2+pts · 2/6 derniers</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:340%;height:100%;background:#16a34a"></div></div>
@@ -1568,7 +1623,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">E. Pettersson <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">VAN</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">À domicile · face à Bobrovsky .912 · peut exploser</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">Dom · VAN motivation · Bobrovsky .912 fort</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs FLA : 2×2+pts · 2/7 derniers</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:240%;height:100%;background:#16a34a"></div></div>
@@ -1581,22 +1636,22 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <div style="font-size:11px;font-weight:700;text-transform:uppercase;color:#6b7280;letter-spacing:.5px;margin-bottom:6px">🔥 Outsider</div>
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">S. Bennett <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">FLA</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">RETOUR ce soir · motivé · PP1 C · FLA retrouve un pivot</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs VAN : 1B/3M · 28B·60M·retour🔥</div>
+  <div style="font-size:13px;font-weight:700;color:#111">A. Lundell <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">FLA</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C backup Barkov · prend plus de rôle · motivé</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs VAN : 1B/5M · 20B·65M·régulier</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:220%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.2/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:200%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.0/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">B. Boeser <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">VAN</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 RW · finisseur · face à Bobrovsky · coup de poker</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs FLA : 2B/7M · 22B·64M·irrégulier</div>
+  <div style="font-size:13px;font-weight:700;color:#111">M. Rossi <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">VAN</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,44 pt/m · peut exploser face à Bobrovsky</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs FLA : 2B/6M · 22B·64M·en forme</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:180%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">1.8/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:220%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.2/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -1612,12 +1667,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <div class="vsblock">
         <span class="vstime">04h00</span>
         <span class="vsat">score prédit</span>
-        <span style="font-size:13px;font-weight:700;color:#333">BUF 3 – VGK 2</span>
+        <span style="font-size:13px;font-weight:700;color:#333">BUF 3 – VGK 4</span>
         <span class="ou-badge" style="color:#bf360c;background:#fff3e0;border-color:#ffcc02">🔥 6 buts</span>
       </div>
       <div class="tblock tright">
         <span class="tcode">VGK</span><span class="tfull">Vegas Golden Knights</span>
-        <span class="trole">31-22-14 · ▼ 1L</span>
+        <span class="trole">31-22-14 · ▼ 2L</span>
       </div>
     </div>
     <div class="prob-row">
@@ -1633,19 +1688,19 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
       <div class="info-cell">
         <div class="info-label">Gardien BUF</div>
         <div class="kstats"><span class="kchip">U. Luukkonen</span><span class="kchip sv">SV% .915</span><span class="kchip gaa">GAA 2.56</span></div>
-        <div class="pp-line">PP1: <span>PP1: Thompson · Benson · Tuch(GTD) · Power · Samuelsson</span></div>
+        <div class="pp-line">PP1: <span>PP1: Benson · Thompson · Tuch(GTD⚠️) · Dahlin · Samuelsson</span></div>
       </div>
       <div class="info-cell">
         <div class="info-label">Gardien VGK</div>
         <div class="kstats"><span class="kchip">A. Hill</span><span class="kchip sv">SV% .917</span><span class="kchip gaa">GAA 2.44</span></div>
-        <div class="pp-line">PP1: <span>PP1: Eichel · Stone · Barbashev · Pietrangelo · Theodosious</span></div>
+        <div class="pp-line">PP1: <span>PP1: Eichel · Marner · Hertl · Theodore · Hanifin</span></div>
       </div>
     </div>
     <div class="ab-row">
-      <div class="ab-item"><span class="ab-team">BUF</span><span class="ab-txt">J. Kulich (blood clot), J. Greenway (OUT), T. Pearson (OUT), A. Tuch (GTD maladie❓)</span></div>
-      <div class="ab-item"><span class="ab-team">VGK</span><span class="ab-txt">W. Karlsson (lower body OUT), C. Hart G (lower body), M. Rantanen 🚨 (lower body — était à DAL)</span></div>
+      <div class="ab-item"><span class="ab-team">BUF</span><span class="ab-txt">T. Pearson (lower body 🚨), J. Kulich (blood clot 🚨), J. Greenway (lower body 🚨), A. Tuch (GTD maladie⚠️)</span></div>
+      <div class="ab-item"><span class="ab-team">VGK</span><span class="ab-txt">W. Karlsson C (fin saison 🚨), C. Hart G (lower body IR mar 22 🚨), A. Pietrangelo D (hip fin saison 🚨), J. Rondbjerg (lower body IR mar 24)</span></div>
     </div>
-    <div class="card-analysis">BUF surprise de la saison (41W) · Thompson en feu série 6M · Karlsson OUT VGK. VGK Hill .917 · Pietrangelo PP1. Match équilibré, léger avantage BUF.</div>
+    <div class="card-analysis">🔥 BUF surprise saison (41W) · Thompson série 6M · Tuch GTD⚠️. VGK: Marner+Eichel+Hertl PP1 · Pietrangelo+Karlsson OUT 🚨 · Hill .917 G. Match très ouvert.</div>
   </div>
   <div class="pred-header-row"><span>Catégorie</span><span>BUF</span><span>VGK</span></div>
   <div style="padding:0 14px 10px"><div style="border-bottom:1px solid #f0f0f0;padding:10px 0">
@@ -1653,8 +1708,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">T. Thompson <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">BUF</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,72 but/m · meilleur buteur BUF · face à Hill .917</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs VGK : 6B/9M · 48B·67M·série 4M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,72 but/m · meilleur BUF · série 4M🔥 · Hill .917</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs VGK : 6B/9M · 50B·67M·série 4M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:660%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.6/10</b>
@@ -1663,8 +1718,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">J. Eichel <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">VGK</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C · 0,62 but/m · à domicile · vs Luukkonen .915</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BUF : 5B/8M · 38B·67M·actif 3M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 C Eichel-Marner-Hertl · 0,62 but/m · dom · vs Luukkonen</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BUF : 5B/8M · 40B·67M·actif 3M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:580%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.8/10</b>
@@ -1677,8 +1732,8 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">T. Thompson <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">BUF</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,96 pt/m · meilleur BUF · série 6M🔥</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs VGK : 1,0pt/m · 70Pts·67M·série 6M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,96 pt/m · série 6M🔥 · Marner VGK=danger</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs VGK : 1,0pt/m · 72Pts·67M·série 6M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:740%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">7.4/10</b>
@@ -1686,12 +1741,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">J. Eichel <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">VGK</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,82 pt/m · leader VGK · domicile</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BUF : 0,9pt/m · 60Pts·67M·série 4M🔥</div>
+  <div style="font-size:13px;font-weight:700;color:#111">M. Marner <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">VGK</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 LW · 1,02 pt/m · Eichel+Hertl = ligne de feu</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BUF : 0,9pt/m · 68Pts·65M·actif 5M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:640%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.4/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:680%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.8/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -1702,17 +1757,17 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">Z. Benson <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">BUF</span></div>
   <div style="font-size:11px;color:#374151;margin-top:2px">PP1 LW · 0,66 ast/m · distributeur élite jeune</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs VGK : 5A/8M · 46A·67M·série 5M🔥</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs VGK : 5A/8M · 48A·67M·série 5M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:580%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.8/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:600%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">6.0/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">M. Stone <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">VGK</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 0,62 ast/m · vétéran clutch · capitaine</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BUF : 5A/8M · 48A·67M·actif 4M</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · capitaine · 0,62 ast/m · vétéran clutch</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BUF : 5A/8M · 50A·67M·actif 4M</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:540%;height:100%;background:#16a34a"></div></div>
     <b style="font-size:11px;color:#111;min-width:34px;text-align:right">5.4/10</b>
@@ -1725,7 +1780,7 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">T. Thompson <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">BUF</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">Série 6M🔥 · PP1 · match ouvert attendu</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">Série 6M🔥 · match ouvert attendu · PP1 dominant</div>
   <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs VGK : 3×2+pts · 3/7 derniers🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
     <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:420%;height:100%;background:#16a34a"></div></div>
@@ -1734,12 +1789,12 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
-  <div style="font-size:13px;font-weight:700;color:#111">J. Eichel <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">VGK</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">À domicile · PP1 · Hill solide</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BUF : 2×2+pts · 2/6 derniers</div>
+  <div style="font-size:13px;font-weight:700;color:#111">M. Marner <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">VGK</span></div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · Eichel+Hertl · Hill solide · dom</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BUF : 3×2+pts · 3/6 derniers🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:360%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">3.6/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:380%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">3.8/10</b>
   </div>
 </td>
 </tr></tbody></table>
@@ -1749,21 +1804,21 @@ body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;b
 <table style="width:100%;border-collapse:collapse;table-layout:fixed"><tbody><tr>
 <td style="width:46%;vertical-align:top;padding-right:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">Z. Benson <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">BUF</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 LW · young gun · 4B sur 6 derniers</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs VGK : 2B/5M · 28B·65M·en hausse🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 LW · 4B sur 6 derniers · jeune gun</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs VGK : 2B/5M · 30B·65M·en hausse🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:260%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.6/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:280%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.8/10</b>
   </div>
 </td>
 <td style="width:8%;text-align:center;vertical-align:middle;font-size:10px;font-weight:700;color:#9ca3af">VS</td>
 <td style="width:46%;vertical-align:top;padding-left:8px;overflow:hidden">
   <div style="font-size:13px;font-weight:700;color:#111">P. Dorofeyev <span style="font-size:10px;font-weight:700;padding:1px 5px;border-radius:3px;background:#1e3a5f;color:#fff">VGK</span></div>
-  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 2 PP goals samedi · en grande forme</div>
-  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BUF : 2B/4M · 24B·62M·série 3M🔥</div>
+  <div style="font-size:11px;color:#374151;margin-top:2px">PP1 · 2 PP goals récents · série 3M🔥 · dom</div>
+  <div style="font-size:10px;color:#6b7280;margin-top:1px">H2H: vs BUF : 2B/4M · 26B·62M·série 3M🔥</div>
   <div style="display:flex;align-items:center;gap:5px;margin-top:5px">
-    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:220%;height:100%;background:#16a34a"></div></div>
-    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.2/10</b>
+    <div style="flex:1;height:5px;border-radius:3px;background:#e5e7eb;overflow:hidden"><div style="width:240%;height:100%;background:#16a34a"></div></div>
+    <b style="font-size:11px;color:#111;min-width:34px;text-align:right">2.4/10</b>
   </div>
 </td>
 </tr></tbody></table>
