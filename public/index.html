@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>NHL Oracle — 19 Mars 2026</title>
+<title>NHL Oracle — 21 Mars 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -131,17 +131,38 @@ body{font-family:'Inter',-apple-system,sans-serif;background:#f5f5f3;color:#1a1a
 .dtag-pp{background:#eff6ff;color:#1d4ed8;border:1px solid #bfdbfe}
 .dtag-stat{background:#f5f3ff;color:#6d28d9;border:1px solid #ddd6fe}
 .dtag-h2h{background:#f0fdf4;color:#166534;border:1px solid #bbf7d0}
+
+/* FORCE LTR sur tous les grids — anti-inversion */
+.meta-row, .trc-grid {
+  direction: ltr !important;
+}
+.meta-col:first-child { order: 1 }
+.meta-col:last-child  { order: 2 }
+.picks-table { table-layout: fixed; width: 100% }
+.picks-table th:nth-child(2),
+.picks-table td:nth-child(2) { width: 32% }
+.picks-table th:nth-child(4),
+.picks-table td:nth-child(4) { width: 32% }
+.picks-table th:nth-child(1),
+.picks-table td:nth-child(1) { width: 80px }
+.picks-table th:nth-child(3),
+.picks-table td:nth-child(3) { width: 28px; text-align:center }
+.picks-table th:nth-child(5),
+.picks-table td:nth-child(5) { width: 80px }
+/* Header AWAY/HOME clairement labellisé */
+.picks-table th:nth-child(2)::before { content: "← "; color:#9ca3af; font-weight:400 }
+.picks-table th:nth-child(4)::after  { content: " →"; color:#9ca3af; font-weight:400 }
 </style>
 </head>
 <body>
 <div class="topbar">
   <span class="brand">NHL <span>Oracle</span></span>
   <div class="badges">
-    <span class="bdg bdg-gray">19 Mars 2026 · 11 matchs</span>
-    <span class="bdg bdg-grn">✓ Covers.com + PP confirmées 22h00 CET</span>
-    <span class="bdg bdg-red">🚨 Barkov · Reinhart · Marchand · Draisaitl OUT</span>
-    <span class="bdg bdg-red">🚨 Larkin · Copp OUT DET</span>
-    <span class="bdg bdg-yel">⚠ Kempe PROBABLE · Tuch DTD · Askarov DTD</span>
+    <span class="bdg bdg-gray">21 Mars 2026 · 10 matchs</span>
+    <span class="bdg bdg-grn">✓ NHL.com · Covers · NST · MoneyPuck 18h40 CET</span>
+    <span class="bdg bdg-red">🚨 Eriksson Ek OUT · Hintz OUT · Rantanen OUT</span>
+    <span class="bdg bdg-red">🚨 Saros DTD → Annunen · Askarov OUT → Nedeljkovic</span>
+    <span class="bdg bdg-yel">⚠ Kempe PROBABLE · Girard RETOUR PROBABLE · Toffoli OUT🆕</span>
   </div>
   <div class="search-wrap">
     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -149,1558 +170,1474 @@ body{font-family:'Inter',-apple-system,sans-serif;background:#f5f5f3;color:#1a1a
   </div>
 </div>
 <div class="filters">
-  <button class="chip on" onclick="setF('all',this)">Tous (11)</button>
+  <button class="chip on" onclick="setF('all',this)">Tous (10)</button>
   <button class="chip" onclick="setF('tight',this)">🔥 Serrés</button>
-  <button class="chip" onclick="setF('early',this)">23h–23h30 (5)</button>
-  <button class="chip" onclick="setF('mid',this)">00h–01h (2)</button>
-  <button class="chip" onclick="setF('late',this)">02h–02h30 (4)</button>
+  <button class="chip" onclick="setF('early',this)">19h–20h (2)</button>
+  <button class="chip" onclick="setF('mid',this)">22h–23h (4)</button>
+  <button class="chip" onclick="setF('late',this)">01h–02h (4)</button>
 </div>
 <div class="top3-wrap"><div class="legend">
-  <b>Conf. =</b>
-  <span>Score de base</span>
-  <span>× <b>SV% gardien adverse</b> (↑ si < .905, ↓ si > .915)</span>
-  <span>× <b>PP1 confirmé</b> (×1.08 si PP% > 22%)</span>
-  <span>× <b>Domicile/Extérieur</b> (×1.04 / ×0.97)</span>
-  <span>× <b>Série active</b> (×1.12 si 8M+, ×1.07 si 5M+)</span>
-  <span style="margin-left:8px">· SV% = arrêts gardien · GAA = buts encaissés/match · PP = % power play</span>
+  <b>Conf. v2 =</b>
+  <span>Base × <b>SV% gardien</b></span>
+  <span>× <b>PP1 confirmé</b></span>
+  <span>× <b>Dom/Ext</b></span>
+  <span>× <b>Série</b></span>
+  <span>× <b>xG/60</b> (5v5)</span>
+  <span>× <b>SOG/match</b></span>
+  <span>× <b>Corsi%</b> équipe</span>
+  <span style="margin-left:8px;color:#9ca3af">Sources : NHL.com · Covers.com · Natural Stat Trick · MoneyPuck</span>
 </div><div class="top3-bar">
-  <div class="t3-title">⭐ Top Picks — 19 Mars 2026</div>
-  <div class="trc-grid">
+  <div class="t3-title">⭐ Top Picks — 21 Mars 2026</div>
+  <div class="trc-grid" style="grid-template-columns:1fr 1px 1fr 1px 1fr 1px 1fr 1px 1fr">
     <div class="trc-col">
   <div class="trc-head">🎯 But</div>
-  <div class="tr-row" onclick="document.getElementById('c-chi-min') && document.getElementById('c-chi-min').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr" onclick="document.querySelector('[data-search*="tor"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
   <div class="tr-left">
-    <span class="tr-player">K. Kaprizov</span>
-    <span class="ptag">MIN · série 5M🔥</span>
+    <span class="tr-player">A. Matthews</span>
+    <span class="ptag">TOR · TOR@OTT</span>
   </div>
   <div class="tr-right">
-    <span class="tr-matchup">CHI@MIN · 23h30</span>
-    <span class="conf-badge conf-hi">9.9</span>
+    <span class="tr-matchup">TOR@OTT · 01h00</span>
+    <span class="conf-badge conf-hi">7.5</span>
   </div>
-</div><div class="tr-row" onclick="document.getElementById('c-tbl-van') && document.getElementById('c-tbl-van').scrollIntoView({behavior:'smooth',block:'start'})">
+</div><div class="tr" onclick="document.querySelector('[data-search*="bos"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
   <div class="tr-left">
-    <span class="tr-player">N. Kucherov</span>
-    <span class="ptag">TBL · série 7M🔥</span>
+    <span class="tr-player">D. Pastrnak</span>
+    <span class="ptag">BOS · BOS@DET</span>
   </div>
   <div class="tr-right">
-    <span class="tr-matchup">TBL@VAN · 02h00</span>
-    <span class="conf-badge conf-hi">9.2</span>
+    <span class="tr-matchup">BOS@DET · 02h00</span>
+    <span class="conf-badge conf-hi">7.2</span>
   </div>
-</div><div class="tr-row" onclick="document.getElementById('c-buf-sjs') && document.getElementById('c-buf-sjs').scrollIntoView({behavior:'smooth',block:'start'})">
-  <div class="tr-left">
-    <span class="tr-player">T. Thompson</span>
-    <span class="ptag">BUF · série 4M🔥</span>
-  </div>
-  <div class="tr-right">
-    <span class="tr-matchup">BUF@SJS · 02h00</span>
-    <span class="conf-badge conf-hi">8.5</span>
-  </div>
-</div><div class="tr-row" onclick="document.getElementById('c-fla-edm') && document.getElementById('c-fla-edm').scrollIntoView({behavior:'smooth',block:'start'})">
-  <div class="tr-left">
-    <span class="tr-player">C. McDavid</span>
-    <span class="ptag">EDM · série 6M🔥</span>
-  </div>
-  <div class="tr-right">
-    <span class="tr-matchup">FLA@EDM · 01h00</span>
-    <span class="conf-badge conf-hi">8.2</span>
-  </div>
-</div><div class="tr-row" onclick="document.getElementById('c-mtl-det') && document.getElementById('c-mtl-det').scrollIntoView({behavior:'smooth',block:'start'})">
+</div><div class="tr" onclick="document.querySelector('[data-search*="mtl"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
   <div class="tr-left">
     <span class="tr-player">C. Caufield</span>
-    <span class="ptag">MTL · série 5M🔥</span>
+    <span class="ptag">MTL · NYI@MTL</span>
   </div>
   <div class="tr-right">
-    <span class="tr-matchup">MTL@DET · 23h00</span>
-    <span class="conf-badge conf-hi">8.1</span>
+    <span class="tr-matchup">NYI@MTL · 01h00</span>
+    <span class="conf-badge conf-mid">7.0</span>
+  </div>
+</div><div class="tr" onclick="document.querySelector('[data-search*="vgk"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">J. Eichel</span>
+    <span class="ptag">VGK · VGK@NSH</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">VGK@NSH · 20h00</span>
+    <span class="conf-badge conf-mid">6.7</span>
+  </div>
+</div><div class="tr" onclick="document.querySelector('[data-search*="pit"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">S. Crosby</span>
+    <span class="ptag">PIT · WPG@PIT</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">WPG@PIT · 19h00</span>
+    <span class="conf-badge conf-mid">6.3</span>
   </div>
 </div>
 </div>
     <div class="t3-sep"></div>
     <div class="trc-col">
   <div class="trc-head">⭐ Point</div>
-  <div class="tr-row" onclick="document.getElementById('c-tbl-van') && document.getElementById('c-tbl-van').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr" onclick="document.querySelector('[data-search*="tor"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
   <div class="tr-left">
-    <span class="tr-player">N. Kucherov</span>
-    <span class="ptag">TBL · série 7M🔥</span>
+    <span class="tr-player">M. Marner</span>
+    <span class="ptag">TOR · TOR@OTT</span>
   </div>
   <div class="tr-right">
-    <span class="tr-matchup">TBL@VAN · 02h00</span>
-    <span class="conf-badge conf-hi">9.9</span>
+    <span class="tr-matchup">TOR@OTT · 01h00</span>
+    <span class="conf-badge conf-hi">8.8</span>
   </div>
-</div><div class="tr-row" onclick="document.getElementById('c-chi-min') && document.getElementById('c-chi-min').scrollIntoView({behavior:'smooth',block:'start'})">
-  <div class="tr-left">
-    <span class="tr-player">K. Kaprizov</span>
-    <span class="ptag">MIN · série 6M🔥</span>
-  </div>
-  <div class="tr-right">
-    <span class="tr-matchup">CHI@MIN · 23h30</span>
-    <span class="conf-badge conf-hi">9.9</span>
-  </div>
-</div><div class="tr-row" onclick="document.getElementById('c-fla-edm') && document.getElementById('c-fla-edm').scrollIntoView({behavior:'smooth',block:'start'})">
-  <div class="tr-left">
-    <span class="tr-player">C. McDavid</span>
-    <span class="ptag">EDM · série 8M🔥</span>
-  </div>
-  <div class="tr-right">
-    <span class="tr-matchup">FLA@EDM · 01h00</span>
-    <span class="conf-badge conf-hi">9.9</span>
-  </div>
-</div><div class="tr-row" onclick="document.getElementById('c-buf-sjs') && document.getElementById('c-buf-sjs').scrollIntoView({behavior:'smooth',block:'start'})">
-  <div class="tr-left">
-    <span class="tr-player">T. Thompson</span>
-    <span class="ptag">BUF · série 6M🔥</span>
-  </div>
-  <div class="tr-right">
-    <span class="tr-matchup">BUF@SJS · 02h00</span>
-    <span class="conf-badge conf-hi">9.6</span>
-  </div>
-</div><div class="tr-row" onclick="document.getElementById('c-mtl-det') && document.getElementById('c-mtl-det').scrollIntoView({behavior:'smooth',block:'start'})">
+</div><div class="tr" onclick="document.querySelector('[data-search*="mtl"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
   <div class="tr-left">
     <span class="tr-player">N. Suzuki</span>
-    <span class="ptag">MTL · série 8M🔥</span>
+    <span class="ptag">MTL · NYI@MTL</span>
   </div>
   <div class="tr-right">
-    <span class="tr-matchup">MTL@DET · 23h00</span>
-    <span class="conf-badge conf-hi">9.4</span>
+    <span class="tr-matchup">NYI@MTL · 01h00</span>
+    <span class="conf-badge conf-hi">8.4</span>
+  </div>
+</div><div class="tr" onclick="document.querySelector('[data-search*="bos"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">D. Pastrnak</span>
+    <span class="ptag">BOS · BOS@DET</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">BOS@DET · 02h00</span>
+    <span class="conf-badge conf-hi">8.3</span>
+  </div>
+</div><div class="tr" onclick="document.querySelector('[data-search*="buf"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">T. Thompson</span>
+    <span class="ptag">BUF · BUF@LA</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">BUF@LA · 22h00</span>
+    <span class="conf-badge conf-hi">7.3</span>
+  </div>
+</div><div class="tr" onclick="document.querySelector('[data-search*="dal"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">J. Robertson</span>
+    <span class="ptag">DAL · DAL@MIN</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">DAL@MIN · 22h00</span>
+    <span class="conf-badge conf-hi">7.3</span>
   </div>
 </div>
 </div>
     <div class="t3-sep"></div>
     <div class="trc-col">
   <div class="trc-head">🤝 Assist</div>
-  <div class="tr-row" onclick="document.getElementById('c-tbl-van') && document.getElementById('c-tbl-van').scrollIntoView({behavior:'smooth',block:'start'})">
-  <div class="tr-left">
-    <span class="tr-player">N. Kucherov</span>
-    <span class="ptag">TBL · série 7M🔥</span>
-  </div>
-  <div class="tr-right">
-    <span class="tr-matchup">TBL@VAN · 02h00</span>
-    <span class="conf-badge conf-hi">8.7</span>
-  </div>
-</div><div class="tr-row" onclick="document.getElementById('c-mtl-det') && document.getElementById('c-mtl-det').scrollIntoView({behavior:'smooth',block:'start'})">
-  <div class="tr-left">
-    <span class="tr-player">N. Suzuki</span>
-    <span class="ptag">MTL · série 8M🔥</span>
-  </div>
-  <div class="tr-right">
-    <span class="tr-matchup">MTL@DET · 23h00</span>
-    <span class="conf-badge conf-hi">8.4</span>
-  </div>
-</div><div class="tr-row" onclick="document.getElementById('c-buf-sjs') && document.getElementById('c-buf-sjs').scrollIntoView({behavior:'smooth',block:'start'})">
-  <div class="tr-left">
-    <span class="tr-player">Z. Benson</span>
-    <span class="ptag">BUF · série 5M🔥</span>
-  </div>
-  <div class="tr-right">
-    <span class="tr-matchup">BUF@SJS · 02h00</span>
-    <span class="conf-badge conf-hi">8.1</span>
-  </div>
-</div><div class="tr-row" onclick="document.getElementById('c-uta-vgk') && document.getElementById('c-uta-vgk').scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr" onclick="document.querySelector('[data-search*="tor"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
   <div class="tr-left">
     <span class="tr-player">M. Marner</span>
-    <span class="ptag">VGK · série 5M🔥</span>
+    <span class="ptag">TOR · TOR@OTT</span>
   </div>
   <div class="tr-right">
-    <span class="tr-matchup">UTA@VGK · 02h00</span>
-    <span class="conf-badge conf-hi">7.5</span>
+    <span class="tr-matchup">TOR@OTT · 01h00</span>
+    <span class="conf-badge conf-hi">7.9</span>
   </div>
-</div><div class="tr-row" onclick="document.getElementById('c-chi-min') && document.getElementById('c-chi-min').scrollIntoView({behavior:'smooth',block:'start'})">
+</div><div class="tr" onclick="document.querySelector('[data-search*="mtl"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
   <div class="tr-left">
-    <span class="tr-player">M. Zuccarello</span>
-    <span class="ptag">MIN · série 4M🔥</span>
+    <span class="tr-player">N. Suzuki</span>
+    <span class="ptag">MTL · NYI@MTL</span>
   </div>
   <div class="tr-right">
-    <span class="tr-matchup">CHI@MIN · 23h30</span>
-    <span class="conf-badge conf-hi">7.4</span>
+    <span class="tr-matchup">NYI@MTL · 01h00</span>
+    <span class="conf-badge conf-hi">7.6</span>
+  </div>
+</div><div class="tr" onclick="document.querySelector('[data-search*="bos"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">C. Mittelstadt</span>
+    <span class="ptag">BOS · BOS@DET</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">BOS@DET · 02h00</span>
+    <span class="conf-badge conf-mid">6.9</span>
+  </div>
+</div><div class="tr" onclick="document.querySelector('[data-search*="dal"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">J. Robertson</span>
+    <span class="ptag">DAL · DAL@MIN</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">DAL@MIN · 22h00</span>
+    <span class="conf-badge conf-mid">6.6</span>
+  </div>
+</div><div class="tr" onclick="document.querySelector('[data-search*="pit"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">S. Crosby</span>
+    <span class="ptag">PIT · WPG@PIT</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">WPG@PIT · 19h00</span>
+    <span class="conf-badge conf-mid">6.5</span>
+  </div>
+</div>
+</div>
+    <div class="t3-sep"></div>
+    <div class="trc-col">
+  <div class="trc-head">💥 2+ Pts</div>
+  <div class="tr" onclick="document.querySelector('[data-search*="tor"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">M. Marner</span>
+    <span class="ptag">TOR · TOR@OTT</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">TOR@OTT · 01h00</span>
+    <span class="conf-badge conf-mid">6.1</span>
+  </div>
+</div><div class="tr" onclick="document.querySelector('[data-search*="mtl"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">N. Suzuki</span>
+    <span class="ptag">MTL · NYI@MTL</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">NYI@MTL · 01h00</span>
+    <span class="conf-badge conf-mid">5.9</span>
+  </div>
+</div><div class="tr" onclick="document.querySelector('[data-search*="vgk"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">M. Marner</span>
+    <span class="ptag">VGK · VGK@NSH</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">VGK@NSH · 20h00</span>
+    <span class="conf-badge conf-mid">5.8</span>
+  </div>
+</div><div class="tr" onclick="document.querySelector('[data-search*="bos"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">D. Pastrnak</span>
+    <span class="ptag">BOS · BOS@DET</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">BOS@DET · 02h00</span>
+    <span class="conf-badge conf-mid">5.8</span>
+  </div>
+</div><div class="tr" onclick="document.querySelector('[data-search*="dal"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">J. Robertson</span>
+    <span class="ptag">DAL · DAL@MIN</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">DAL@MIN · 22h00</span>
+    <span class="conf-badge conf-mid">5.1</span>
+  </div>
+</div>
+</div>
+    <div class="t3-sep"></div>
+    <div class="trc-col">
+  <div class="trc-head">🎯🎯 2 Buts+</div>
+  <div class="tr" onclick="document.querySelector('[data-search*="tor"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">A. Matthews</span>
+    <span class="ptag">TOR · TOR@OTT</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">TOR@OTT · 01h00</span>
+    <span class="conf-badge conf-lo">3.5</span>
+  </div>
+</div><div class="tr" onclick="document.querySelector('[data-search*="bos"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">D. Pastrnak</span>
+    <span class="ptag">BOS · BOS@DET</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">BOS@DET · 02h00</span>
+    <span class="conf-badge conf-lo">3.3</span>
+  </div>
+</div><div class="tr" onclick="document.querySelector('[data-search*="vgk"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">J. Eichel</span>
+    <span class="ptag">VGK · VGK@NSH</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">VGK@NSH · 20h00</span>
+    <span class="conf-badge conf-lo">3.1</span>
+  </div>
+</div><div class="tr" onclick="document.querySelector('[data-search*="mtl"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">C. Caufield</span>
+    <span class="ptag">MTL · NYI@MTL</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">NYI@MTL · 01h00</span>
+    <span class="conf-badge conf-lo">3.0</span>
+  </div>
+</div><div class="tr" onclick="document.querySelector('[data-search*="pit"]')?.scrollIntoView({behavior:'smooth',block:'start'})">
+  <div class="tr-left">
+    <span class="tr-player">S. Crosby</span>
+    <span class="ptag">PIT · WPG@PIT</span>
+  </div>
+  <div class="tr-right">
+    <span class="tr-matchup">WPG@PIT · 19h00</span>
+    <span class="conf-badge conf-lo">3.0</span>
   </div>
 </div>
 </div>
   </div>
 </div></div>
-<div class="content"><div class="card" data-bucket="early" data-tight="1" data-hide="0" data-search="nyi ott ny islanders ottawa senators m. barzal b. tkachuk m. barzal t. stutzle b. horvat t. stutzle t. stutzle m. barzal d. batherson j. lee">
+<div class="content"><div class="card" data-bucket="early" data-tight="0" data-hide="0" data-search="wpg pit winnipeg jets pittsburgh penguins k. connor s. crosby m. scheifele s. crosby j. morrissey s. crosby k. connor s. crosby j. morrissey r. rakell">
   <div class="ch">
-    <span class="ch-time">23h00</span>
+    <span class="ch-time">19h00</span>
     <div class="ch-teams">
-      <div class="ch-matchup">NY Islanders <span style="color:#d1d5db;font-weight:400">@</span> Ottawa Senators</div>
-      <div class="ch-records">39-24-5 &nbsp;·&nbsp; 34-24-9</div>
+      <div class="ch-matchup">Winnipeg Jets <span style="color:#d1d5db;font-weight:400">@</span> Pittsburgh Penguins</div>
+      <div class="ch-records">28-29-11 &nbsp;·&nbsp; 34-18-16</div>
     </div>
-    <div class="ch-prob">
-      <div>
-        <div class="prob-bar"><div class="prob-fill" style="width:44%"></div></div>
-        <div class="prob-labels"><span>NYI 44%</span><span>56% OTT</span></div>
-      </div>
-    </div>
-    <span class="ch-ou" style="background:#e8f5e9;border:1px solid #a5d6a7;color:#2e7d32">🔒 5 buts</span>
-    <span class="ch-score">OTT 3 – NYI 2</span>
+    <div class="ch-prob"><div>
+      <div class="prob-bar"><div class="prob-fill" style="width:38%"></div></div>
+      <div class="prob-labels"><span>WPG 38%</span><span>62% PIT</span></div>
+    </div></div>
+    <span class="ch-ou" style="background:#fffbea;border:1px solid #fde68a;color:#b45309">O/U 6.5</span>
+    <span class="ch-score">3-4 PIT</span>
   </div>
   <div class="cb">
     <div class="meta-row">
       <div class="meta-col">
-        <div class="meta-team">NYI · 39-24-5</div>
-        <div class="meta-gk">I. Sorokin <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.908</b></span><span>GAA <b>2.42</b></span><span>PP <b>22.4%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span></div>
-        <div class="absent-list"><span class="ab-tag ab-out">✕ Palmieri OUT (knee)</span><span class="ab-tag ab-out">✕ Romanov OUT (shoulder)</span><span class="ab-tag ab-out">✕ Varlamov OUT saison (knee)</span><span class="ab-tag ab-out">✕ Engvall OUT saison (ankle)</span><span class="ab-tag ab-dtd">⚠ Shabanov DTD (lower body)</span></div>
-      </div>
-      <div class="meta-col">
-        <div class="meta-team">OTT · 34-24-9</div>
-        <div class="meta-gk">J. Reimer <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.893</b></span><span>GAA <b>3.01</b></span><span>PP <b>21.8%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span></div>
-        <div class="absent-list"><span class="ab-tag ab-out">✕ Sanderson OUT (upper body sem.)</span><span class="ab-tag ab-out">✕ Jensen OUT 6 sem. (meniscus)</span></div>
-      </div>
-    </div>
-    <table class="picks-table">
-      <thead><tr>
-        <th>Catégorie</th>
-        <th>NYI (visiteur)</th>
-        <th></th>
-        <th>OTT (domicile)</th>
-        <th style="text-align:right">Conf.</th>
-      </tr></thead>
-      <tbody><tr>
-  <td><span class="cat-badge cat-but">🎯 But</span></td>
-  <td>
-    <div class="p-name">M. Barzal <span class="p-team">NYI</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs OTT : 3B/8M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">B. Tkachuk <span class="p-team">OTT</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs NYI : 5B/9M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-mid">5.8</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-mid">6.8</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
-  <td>
-    <div class="p-name">M. Barzal <span class="p-team">NYI</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs OTT : 0.9pt</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">T. Stutzle <span class="p-team">OTT</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs NYI : 1.1pt</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-mid">6.5</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-hi">8.2</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
-  <td>
-    <div class="p-name">B. Horvat <span class="p-team">NYI</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs OTT : 5A/9M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">T. Stutzle <span class="p-team">OTT</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs NYI : 7A/9M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-mid">5.3</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-hi">7.3</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
-  <td>
-    <div class="p-name">M. Barzal <span class="p-team">NYI</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs OTT : 2×2pts</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">T. Stutzle <span class="p-team">OTT</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs NYI : 3×2pts</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">2.9</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">4.5</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
-  <td>
-    <div class="p-name">J. Lee <span class="p-team">NYI</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs OTT : 1B/4M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">D. Batherson <span class="p-team">OTT</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs NYI : 2B/5M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">1.8</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">2.3</span>
-  </td>
-</tr></tbody>
-    </table>
-    <div class="analyse">NYI solid avec Sorokin .908 — mais OTT à domicile avec Stutzle+Tkachuk PP1 vs Reimer. Sanderson absent = D affaibli mais Chabot tient.</div>
-  </div>
-</div>
-<div class="card" data-bucket="early" data-tight="0" data-hide="0" data-search="nyr cbj ny rangers columbus blue jackets m. zibanejad a. fantilli m. zibanejad a. fantilli a. lafreniere z. werenski a. fantilli k. marchenko k. johnson g. perreault">
-  <div class="ch">
-    <span class="ch-time">23h00</span>
-    <div class="ch-teams">
-      <div class="ch-matchup">NY Rangers <span style="color:#d1d5db;font-weight:400">@</span> Columbus Blue Jackets</div>
-      <div class="ch-records">28-32-8 &nbsp;·&nbsp; 35-21-11</div>
-    </div>
-    <div class="ch-prob">
-      <div>
-        <div class="prob-bar"><div class="prob-fill" style="width:32%"></div></div>
-        <div class="prob-labels"><span>NYR 32%</span><span>68% CBJ</span></div>
-      </div>
-    </div>
-    <span class="ch-ou" style="background:#e3f2fd;border:1px solid #90caf9;color:#1565c0">🏒 5-6 buts</span>
-    <span class="ch-score">CBJ 4 – NYR 2</span>
-  </div>
-  <div class="cb">
-    <div class="meta-row">
-      <div class="meta-col">
-        <div class="meta-team">NYR · 28-32-8</div>
-        <div class="meta-gk">I. Shesterkin <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.912</b></span><span>GAA <b>2.48</b></span><span>PP <b>18.2%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-l"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-l"></span></div>
-        <div class="absent-list"><span class="ab-tag ab-out">✕ Rempe OUT (thumb)</span><span class="ab-tag ab-dtd">⚠ Vaakanainen DTD (upper body)</span><span class="ab-tag ab-dtd">⚠ Laba DTD (lower body)</span></div>
-      </div>
-      <div class="meta-col">
-        <div class="meta-team">CBJ · 35-21-11</div>
-        <div class="meta-gk">J. Greaves <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.906</b></span><span>GAA <b>2.78</b></span><span>PP <b>21.6%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-w"></span></div>
-        <div class="absent-list"><span class="ab-tag ab-out">✕ B.Smith OUT (knee)</span></div>
-      </div>
-    </div>
-    <table class="picks-table">
-      <thead><tr>
-        <th>Catégorie</th>
-        <th>NYR (visiteur)</th>
-        <th></th>
-        <th>CBJ (domicile)</th>
-        <th style="text-align:right">Conf.</th>
-      </tr></thead>
-      <tbody><tr>
-  <td><span class="cat-badge cat-but">🎯 But</span></td>
-  <td>
-    <div class="p-name">M. Zibanejad <span class="p-team">NYR</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs CBJ : 4B/9M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">A. Fantilli <span class="p-team">CBJ</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 3M🔥</span><span class="dtag dtag-h2h">H2H vs NYR : 5B/8M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">4.5</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-hi">7.1</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
-  <td>
-    <div class="p-name">M. Zibanejad <span class="p-team">NYR</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs CBJ : 0.8pt</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">A. Fantilli <span class="p-team">CBJ</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs NYR : 0.9pt</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">5.0</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-hi">7.5</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
-  <td>
-    <div class="p-name">A. Lafreniere <span class="p-team">NYR</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs CBJ : 4A/8M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">Z. Werenski <span class="p-team">CBJ</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 4M🔥</span><span class="dtag dtag-h2h">H2H vs NYR : 8A/11M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">4.5</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-mid">6.9</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
-  <td>
-    <div class="p-name">A. Fantilli <span class="p-team">CBJ</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs NYR : 3×2pts</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">K. Marchenko <span class="p-team">CBJ</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs NYR : 2B/5M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">4.8</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">2.4</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
-  <td>
-    <div class="p-name">G. Perreault <span class="p-team">NYR</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs CBJ : 3A/8M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">K. Johnson <span class="p-team">CBJ</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs NYR : 2B/5M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">1.8</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">2.2</span>
-  </td>
-</tr></tbody>
-    </table>
-    <div class="analyse">CBJ en pleine forme (5-1 vs CAR mardi), lineup complet, domicile fort. NYR en reconstruction — Shesterkin seul atout. Fantilli/Werenski PP1 dangereux.</div>
-  </div>
-</div>
-<div class="card" data-bucket="early" data-tight="1" data-hide="0" data-search="wpg bos winnipeg jets boston bruins k. connor d. pastrnak m. scheifele d. pastrnak j. morrissey c. mittelstadt d. pastrnak m. scheifele g. vilardi c. mittelstadt">
-  <div class="ch">
-    <span class="ch-time">23h00</span>
-    <div class="ch-teams">
-      <div class="ch-matchup">Winnipeg Jets <span style="color:#d1d5db;font-weight:400">@</span> Boston Bruins</div>
-      <div class="ch-records">28-28-11 &nbsp;·&nbsp; 37-23-8</div>
-    </div>
-    <div class="ch-prob">
-      <div>
-        <div class="prob-bar"><div class="prob-fill" style="width:42%"></div></div>
-        <div class="prob-labels"><span>WPG 42%</span><span>58% BOS</span></div>
-      </div>
-    </div>
-    <span class="ch-ou" style="background:#e3f2fd;border:1px solid #90caf9;color:#1565c0">🏒 4-5 buts</span>
-    <span class="ch-score">BOS 3 – WPG 2 OT</span>
-  </div>
-  <div class="cb">
-    <div class="meta-row">
-      <div class="meta-col">
-        <div class="meta-team">WPG · 28-28-11</div>
+        <div class="meta-team">WPG · visiteur</div>
         <div class="meta-gk">C. Hellebuyck <span>G</span></div>
         <div class="meta-stats"><span>SV% <b>.921</b></span><span>GAA <b>2.18</b></span><span>PP <b>24.1%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-l"></span><span class="fd fd-l"></span></div>
-        <div class="absent-list"><span class="ab-tag ab-out">✕ Niederreiter OUT (knee)</span><span class="ab-tag ab-out">✕ Pionk OUT</span><span class="ab-tag ab-out">✕ Miller OUT (lower body)</span><span class="ab-tag ab-out">✕ Namestnikov OUT</span></div>
-      </div>
-      <div class="meta-col">
-        <div class="meta-team">BOS · 37-23-8</div>
-        <div class="meta-gk">J. Swayman <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.910</b></span><span>GAA <b>2.52</b></span><span>PP <b>22.8%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span></div>
-        <div class="absent-list"><span class="ab-ok">✓ Aucun absent</span></div>
-      </div>
-    </div>
-    <table class="picks-table">
-      <thead><tr>
-        <th>Catégorie</th>
-        <th>WPG (visiteur)</th>
-        <th></th>
-        <th>BOS (domicile)</th>
-        <th style="text-align:right">Conf.</th>
-      </tr></thead>
-      <tbody><tr>
-  <td><span class="cat-badge cat-but">🎯 But</span></td>
-  <td>
-    <div class="p-name">K. Connor <span class="p-team">WPG</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs BOS : 5B/9M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">D. Pastrnak <span class="p-team">BOS</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 7M🔥</span><span class="dtag dtag-h2h">H2H vs WPG : 7B/10M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-mid">5.1</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-hi">7.8</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
-  <td>
-    <div class="p-name">M. Scheifele <span class="p-team">WPG</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 4M🔥</span><span class="dtag dtag-h2h">H2H vs BOS : 0.9pt</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">D. Pastrnak <span class="p-team">BOS</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 7M🔥</span><span class="dtag dtag-h2h">H2H vs WPG : 1.2pt</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-mid">5.4</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-hi">8.6</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
-  <td>
-    <div class="p-name">J. Morrissey <span class="p-team">WPG</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs BOS : 7A/10M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">C. Mittelstadt <span class="p-team">BOS</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs WPG : 6A/9M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-mid">5.8</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-mid">6.3</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
-  <td>
-    <div class="p-name">M. Scheifele <span class="p-team">WPG</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs BOS : 2×2pts</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">D. Pastrnak <span class="p-team">BOS</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs WPG : 4×2pts</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">3.0</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-mid">5.2</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
-  <td>
-    <div class="p-name">G. Vilardi <span class="p-team">WPG</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs BOS : 2B/5M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">C. Mittelstadt <span class="p-team">BOS</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs WPG : 3pts/4M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">2.3</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">2.1</span>
-  </td>
-</tr></tbody>
-    </table>
-    <div class="analyse">BOS COMPLET (0 absent) face à WPG privé de 4 joueurs. Pastrnak PP1 vs WPG PK 75.9% = combo explosif. Hellebuyck .921 garde WPG dans le match.</div>
-  </div>
-</div>
-<div class="card" data-bucket="early" data-tight="1" data-hide="0" data-search="mtl det montréal canadiens detroit red wings c. caufield a. debrincat n. suzuki a. debrincat n. suzuki l. raymond n. suzuki a. debrincat i. demidov p. kane">
-  <div class="ch">
-    <span class="ch-time">23h00</span>
-    <div class="ch-teams">
-      <div class="ch-matchup">Montréal Canadiens <span style="color:#d1d5db;font-weight:400">@</span> Detroit Red Wings</div>
-      <div class="ch-records">37-20-10 &nbsp;·&nbsp; 37-23-8</div>
-    </div>
-    <div class="ch-prob">
-      <div>
-        <div class="prob-bar"><div class="prob-fill" style="width:54%"></div></div>
-        <div class="prob-labels"><span>MTL 54%</span><span>46% DET</span></div>
-      </div>
-    </div>
-    <span class="ch-ou" style="background:#fff3e0;border:1px solid #ffcc02;color:#bf360c">🔥 6+ buts</span>
-    <span class="ch-score">MTL 4 – DET 3</span>
-  </div>
-  <div class="cb">
-    <div class="meta-row">
-      <div class="meta-col">
-        <div class="meta-team">MTL · 37-20-10</div>
-        <div class="meta-gk">J. Dobes <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.906</b></span><span>GAA <b>2.62</b></span><span>PP <b>23.4%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-w"></span></div>
-        <div class="absent-list"><span class="ab-tag ab-out">✕ K.Dach OUT 2-4 sem. (upper body)</span><span class="ab-tag ab-out">✕ Laine OUT (lower body)</span></div>
-      </div>
-      <div class="meta-col">
-        <div class="meta-team">DET · 37-23-8</div>
-        <div class="meta-gk">J. Gibson <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.903</b></span><span>GAA <b>2.88</b></span><span>PP <b>19.6%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span></div>
-        <div class="absent-list"><span class="ab-tag ab-out">✕ Larkin OUT 2 sem. (leg)🚨</span><span class="ab-tag ab-out">✕ Copp OUT (leg)🚨</span><span class="ab-tag ab-out">✕ Rasmussen OUT (undisclosed)</span><span class="ab-tag ab-dtd">⚠ Brandsegg-Nygard DTD (undisclosed)</span></div>
-      </div>
-    </div>
-    <table class="picks-table">
-      <thead><tr>
-        <th>Catégorie</th>
-        <th>MTL (visiteur)</th>
-        <th></th>
-        <th>DET (domicile)</th>
-        <th style="text-align:right">Conf.</th>
-      </tr></thead>
-      <tbody><tr>
-  <td><span class="cat-badge cat-but">🎯 But</span></td>
-  <td>
-    <div class="p-name">C. Caufield <span class="p-team">MTL</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs DET : 7B/10M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">A. DeBrincat <span class="p-team">DET</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs MTL : 6B/9M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-hi">8.1</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-mid">6.8</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
-  <td>
-    <div class="p-name">N. Suzuki <span class="p-team">MTL</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 8M🔥</span><span class="dtag dtag-h2h">H2H vs DET : 1.1pt</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">A. DeBrincat <span class="p-team">DET</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 4M🔥</span><span class="dtag dtag-h2h">H2H vs MTL : 0.9pt</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-hi">9.4</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-hi">7.2</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
-  <td>
-    <div class="p-name">N. Suzuki <span class="p-team">MTL</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 8M🔥</span><span class="dtag dtag-h2h">H2H vs DET : 9A/10M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">L. Raymond <span class="p-team">DET</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs MTL : 5A/8M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-hi">8.4</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-mid">5.5</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
-  <td>
-    <div class="p-name">N. Suzuki <span class="p-team">MTL</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs DET : 4×2pts</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">A. DeBrincat <span class="p-team">DET</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs MTL : 3×2pts</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-mid">5.2</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">4.2</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
-  <td>
-    <div class="p-name">I. Demidov <span class="p-team">MTL</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs DET : 2B/4M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">P. Kane <span class="p-team">DET</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs MTL : 2B/5M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">2.9</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">2.1</span>
-  </td>
-</tr></tbody>
-    </table>
-    <div class="analyse">DET sans Larkin+Copp (2 C) — DeBrincat/Kane/Raymond portent tout. MTL: Caufield-Suzuki série 8M🔥. Dobes G recrue mais en confiance. Match serré et offensif.</div>
-  </div>
-</div>
-<div class="card" data-bucket="early" data-tight="0" data-hide="0" data-search="chi min chicago blackhawks minnesota wild c. bedard k. kaprizov c. bedard k. kaprizov c. bedard m. zuccarello k. kaprizov c. bedard a. burakovsky m. boldy">
-  <div class="ch">
-    <span class="ch-time">23h30</span>
-    <div class="ch-teams">
-      <div class="ch-matchup">Chicago Blackhawks <span style="color:#d1d5db;font-weight:400">@</span> Minnesota Wild</div>
-      <div class="ch-records">25-30-12 &nbsp;·&nbsp; 39-18-12</div>
-    </div>
-    <div class="ch-prob">
-      <div>
-        <div class="prob-bar"><div class="prob-fill" style="width:26%"></div></div>
-        <div class="prob-labels"><span>CHI 26%</span><span>74% MIN</span></div>
-      </div>
-    </div>
-    <span class="ch-ou" style="background:#e3f2fd;border:1px solid #90caf9;color:#1565c0">🏒 4-5 buts</span>
-    <span class="ch-score">MIN 4 – CHI 1</span>
-  </div>
-  <div class="cb">
-    <div class="meta-row">
-      <div class="meta-col">
-        <div class="meta-team">CHI · 25-30-12</div>
-        <div class="meta-gk">A. Soderblom <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.897</b></span><span>GAA <b>3.12</b></span><span>PP <b>17.8%</b></span></div>
         <div class="meta-stats" style="margin-top:3px"><span class="fd fd-l"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-l"></span></div>
-        <div class="absent-list"><span class="ab-tag ab-out">✕ Moore OUT (lower body)</span><span class="ab-tag ab-dtd">⚠ Boisvert DTD (non-injury)</span></div>
+        <div class="absent-list"><span class="ab-tag ab-out">✕ Niederreiter OUT (knee)</span><span class="ab-tag ab-out">✕ Pionk OUT</span><span class="ab-tag ab-out">✕ Miller OUT (knee)</span><span class="ab-tag ab-out">✕ Namestnikov OUT (lower body)</span></div>
       </div>
       <div class="meta-col">
-        <div class="meta-team">MIN · 39-18-12</div>
-        <div class="meta-gk">J. Wallstedt <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.914</b></span><span>GAA <b>2.38</b></span><span>PP <b>23.2%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span></div>
-        <div class="absent-list"><span class="ab-tag ab-dtd">⚠ Eriksson Ek DTD (lower body)</span><span class="ab-tag ab-dtd">⚠ Brink DTD (upper body)</span><span class="ab-tag ab-out">✕ M.Foligno OUT (lower body)</span></div>
-      </div>
-    </div>
-    <table class="picks-table">
-      <thead><tr>
-        <th>Catégorie</th>
-        <th>CHI (visiteur)</th>
-        <th></th>
-        <th>MIN (domicile)</th>
-        <th style="text-align:right">Conf.</th>
-      </tr></thead>
-      <tbody><tr>
-  <td><span class="cat-badge cat-but">🎯 But</span></td>
-  <td>
-    <div class="p-name">C. Bedard <span class="p-team">CHI</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs MIN : 4B/9M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">K. Kaprizov <span class="p-team">MIN</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs CHI : 8B/10M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-mid">5.1</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-hi">9.9</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
-  <td>
-    <div class="p-name">C. Bedard <span class="p-team">CHI</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs MIN : 0.9pt</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">K. Kaprizov <span class="p-team">MIN</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 6M🔥</span><span class="dtag dtag-h2h">H2H vs CHI : 1.1pt</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-mid">5.7</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-hi">9.9</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
-  <td>
-    <div class="p-name">C. Bedard <span class="p-team">CHI</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs MIN : 5A/9M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">M. Zuccarello <span class="p-team">MIN</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 4M🔥</span><span class="dtag dtag-h2h">H2H vs CHI : 7A/10M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-mid">5.1</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-hi">7.4</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
-  <td>
-    <div class="p-name">C. Bedard <span class="p-team">CHI</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs MIN : 2×2pts</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">K. Kaprizov <span class="p-team">MIN</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs CHI : 4×2pts</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">2.8</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-mid">6.5</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
-  <td>
-    <div class="p-name">A. Burakovsky <span class="p-team">CHI</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs MIN : 1B/4M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">M. Boldy <span class="p-team">MIN</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs CHI : 2B/5M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">1.9</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">2.6</span>
-  </td>
-</tr></tbody>
-    </table>
-    <div class="analyse">MIN #2 ligue Ouest · Brink de retour · Kaprizov PP1 dominant vs Soderblom .897. CHI: Bedard seul leader. Wallstedt .914 = mur. MIN très favoris à domicile.</div>
-  </div>
-</div>
-<div class="card" data-bucket="mid" data-tight="1" data-hide="0" data-search="sea nsh seattle kraken nashville predators j. mccann f. forsberg m. beniers j. marchessault c. stephenson r. o'reilly j. marchessault m. beniers j. eberle s. stamkos">
-  <div class="ch">
-    <span class="ch-time">00h00</span>
-    <div class="ch-teams">
-      <div class="ch-matchup">Seattle Kraken <span style="color:#d1d5db;font-weight:400">@</span> Nashville Predators</div>
-      <div class="ch-records">31-27-9 &nbsp;·&nbsp; 29-29-9</div>
-    </div>
-    <div class="ch-prob">
-      <div>
-        <div class="prob-bar"><div class="prob-fill" style="width:42%"></div></div>
-        <div class="prob-labels"><span>SEA 42%</span><span>58% NSH</span></div>
-      </div>
-    </div>
-    <span class="ch-ou" style="background:#e8f5e9;border:1px solid #a5d6a7;color:#2e7d32">🔒 4-5 buts</span>
-    <span class="ch-score">NSH 3 – SEA 2</span>
-  </div>
-  <div class="cb">
-    <div class="meta-row">
-      <div class="meta-col">
-        <div class="meta-team">SEA · 31-27-9</div>
-        <div class="meta-gk">P. Grubauer <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.908</b></span><span>GAA <b>2.71</b></span><span>PP <b>19.8%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span></div>
-        <div class="absent-list"><span class="ab-ok">✓ Aucun absent</span></div>
-      </div>
-      <div class="meta-col">
-        <div class="meta-team">NSH · 29-29-9</div>
-        <div class="meta-gk">J. Saros <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.913</b></span><span>GAA <b>2.44</b></span><span>PP <b>20.6%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span></div>
-        <div class="absent-list"><span class="ab-tag ab-out">✕ Wilsby OUT (lower body)</span></div>
-      </div>
-    </div>
-    <table class="picks-table">
-      <thead><tr>
-        <th>Catégorie</th>
-        <th>SEA (visiteur)</th>
-        <th></th>
-        <th>NSH (domicile)</th>
-        <th style="text-align:right">Conf.</th>
-      </tr></thead>
-      <tbody><tr>
-  <td><span class="cat-badge cat-but">🎯 But</span></td>
-  <td>
-    <div class="p-name">J. McCann <span class="p-team">SEA</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs NSH : 3B/7M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">F. Forsberg <span class="p-team">NSH</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs SEA : 5B/9M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">4.5</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-mid">6.2</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
-  <td>
-    <div class="p-name">M. Beniers <span class="p-team">SEA</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs NSH : 0.7pt</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">J. Marchessault <span class="p-team">NSH</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs SEA : 0.8pt</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">4.9</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-mid">6.6</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
-  <td>
-    <div class="p-name">C. Stephenson <span class="p-team">SEA</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs NSH : 4A/7M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">R. O'Reilly <span class="p-team">NSH</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs SEA : 4A/8M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">4.3</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-mid">5.7</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
-  <td>
-    <div class="p-name">M. Beniers <span class="p-team">SEA</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs NSH : 2×2pts</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">J. Marchessault <span class="p-team">NSH</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs SEA : 2×2pts</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">2.3</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">3.6</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
-  <td>
-    <div class="p-name">J. Eberle <span class="p-team">SEA</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs NSH : 1B/5M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">S. Stamkos <span class="p-team">NSH</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs SEA : 1B/5M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">1.9</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">1.9</span>
-  </td>
-</tr></tbody>
-    </table>
-    <div class="analyse">NSH domicile avec Saros .913 solide. Forsberg-O'Reilly-Marchessault L1 active. SEA: Beniers+McCann PP1 efficaces. Match fermé attendu — 2 bons gardiens.</div>
-  </div>
-</div>
-<div class="card" data-bucket="mid" data-tight="0" data-hide="0" data-search="fla edm florida panthers edmonton oilers c. verhaeghe c. mcdavid c. verhaeghe c. mcdavid m. tkachuk e. bouchard c. mcdavid c. verhaeghe z. hyman a. lundell">
-  <div class="ch">
-    <span class="ch-time">01h00</span>
-    <div class="ch-teams">
-      <div class="ch-matchup">Florida Panthers <span style="color:#d1d5db;font-weight:400">@</span> Edmonton Oilers</div>
-      <div class="ch-records">33-31-3 &nbsp;·&nbsp; 34-26-9</div>
-    </div>
-    <div class="ch-prob">
-      <div>
-        <div class="prob-bar"><div class="prob-fill" style="width:40%"></div></div>
-        <div class="prob-labels"><span>FLA 40%</span><span>60% EDM</span></div>
-      </div>
-    </div>
-    <span class="ch-ou" style="background:#e3f2fd;border:1px solid #90caf9;color:#1565c0">🏒 5 buts</span>
-    <span class="ch-score">EDM 3 – FLA 2</span>
-  </div>
-  <div class="cb">
-    <div class="meta-row">
-      <div class="meta-col">
-        <div class="meta-team">FLA · 33-31-3</div>
-        <div class="meta-gk">S. Bobrovsky <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.912</b></span><span>GAA <b>2.44</b></span><span>PP <b>22.8%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-w"></span></div>
-        <div class="absent-list"><span class="ab-tag ab-out">✕ Barkov OUT (knee)🚨</span><span class="ab-tag ab-out">✕ Reinhart OUT road trip🚨</span><span class="ab-tag ab-out">✕ Marchand OUT (lower body)🚨</span><span class="ab-tag ab-out">✕ Balinskis OUT (undisclosed)</span><span class="ab-tag ab-out">✕ Schwindt OUT (lower body)</span></div>
-      </div>
-      <div class="meta-col">
-        <div class="meta-team">EDM · 34-26-9</div>
-        <div class="meta-gk">S. Ingram <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.904</b></span><span>GAA <b>2.68</b></span><span>PP <b>26.4%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span></div>
-        <div class="absent-list"><span class="ab-tag ab-out">✕ Draisaitl OUT saison🚨</span><span class="ab-tag ab-out">✕ C.Dach OUT LTIR</span><span class="ab-tag ab-out">✕ Janmark OUT saison</span><span class="ab-tag ab-out">✕ Lazar OUT</span><span class="ab-tag ab-dtd">⚠ Emberson DTD</span></div>
-      </div>
-    </div>
-    <table class="picks-table">
-      <thead><tr>
-        <th>Catégorie</th>
-        <th>FLA (visiteur)</th>
-        <th></th>
-        <th>EDM (domicile)</th>
-        <th style="text-align:right">Conf.</th>
-      </tr></thead>
-      <tbody><tr>
-  <td><span class="cat-badge cat-but">🎯 But</span></td>
-  <td>
-    <div class="p-name">C. Verhaeghe <span class="p-team">FLA</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 3M🔥</span><span class="dtag dtag-h2h">H2H vs EDM : 4B/7M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">C. McDavid <span class="p-team">EDM</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 6M🔥</span><span class="dtag dtag-h2h">H2H vs FLA : 8B/10M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-mid">6.5</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-hi">8.2</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
-  <td>
-    <div class="p-name">C. Verhaeghe <span class="p-team">FLA</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 4M🔥</span><span class="dtag dtag-h2h">H2H vs EDM : 0.9pt</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">C. McDavid <span class="p-team">EDM</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 8M🔥</span><span class="dtag dtag-h2h">H2H vs FLA : 1.6pt</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-mid">6.7</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-hi">9.9</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
-  <td>
-    <div class="p-name">M. Tkachuk <span class="p-team">FLA</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs EDM : 6A/8M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">E. Bouchard <span class="p-team">EDM</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs FLA : 7A/10M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-mid">5.7</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-hi">7.3</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
-  <td>
-    <div class="p-name">C. Verhaeghe <span class="p-team">FLA</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs EDM : 2×2pts</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">C. McDavid <span class="p-team">EDM</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs FLA : 5×2pts</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">3.8</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-mid">5.8</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
-  <td>
-    <div class="p-name">A. Lundell <span class="p-team">FLA</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs EDM : 1B/4M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">Z. Hyman <span class="p-team">EDM</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs FLA : 3B/5M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">2.3</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">2.8</span>
-  </td>
-</tr></tbody>
-    </table>
-    <div class="analyse">🚨 FLA sans Barkov+Reinhart+Marchand (3 stars!) vs EDM sans Draisaitl. McDavid SEUL leader EDM — porte tout. Verhaeghe leader FLA. Ingram vs Bobrovsky.</div>
-  </div>
-</div>
-<div class="card" data-bucket="late" data-tight="0" data-hide="0" data-search="buf sjs buffalo sabres san jose sharks t. thompson m. celebrini t. thompson z. benson z. benson w. smith t. thompson z. benson j. peterka m. celebrini">
-  <div class="ch">
-    <span class="ch-time">02h00</span>
-    <div class="ch-teams">
-      <div class="ch-matchup">Buffalo Sabres <span style="color:#d1d5db;font-weight:400">@</span> San Jose Sharks</div>
-      <div class="ch-records">41-20-6 &nbsp;·&nbsp; 32-27-7</div>
-    </div>
-    <div class="ch-prob">
-      <div>
-        <div class="prob-bar"><div class="prob-fill" style="width:60%"></div></div>
-        <div class="prob-labels"><span>BUF 60%</span><span>40% SJS</span></div>
-      </div>
-    </div>
-    <span class="ch-ou" style="background:#e3f2fd;border:1px solid #90caf9;color:#1565c0">🏒 5-6 buts</span>
-    <span class="ch-score">BUF 4 – SJS 2</span>
-  </div>
-  <div class="cb">
-    <div class="meta-row">
-      <div class="meta-col">
-        <div class="meta-team">BUF · 41-20-6</div>
-        <div class="meta-gk">U. Luukkonen <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.908</b></span><span>GAA <b>2.58</b></span><span>PP <b>22.4%</b></span></div>
+        <div class="meta-team">PIT · domicile</div>
+        <div class="meta-gk">A. Silovs <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.906</b></span><span>GAA <b>2.74</b></span><span>PP <b>22.6%</b></span></div>
         <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-w"></span></div>
-        <div class="absent-list"><span class="ab-tag ab-dtd">⚠ Tuch DTD (illness)</span><span class="ab-tag ab-dtd">⚠ Pearson DTD (lower body)</span><span class="ab-tag ab-out">✕ Kulich OUT saison</span><span class="ab-tag ab-out">✕ Greenway OUT (abdomen)</span></div>
-      </div>
-      <div class="meta-col">
-        <div class="meta-team">SJS · 32-27-7</div>
-        <div class="meta-gk">M. Kahkonen <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.896</b></span><span>GAA <b>3.08</b></span><span>PP <b>18.2%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-l"></span></div>
-        <div class="absent-list"><span class="ab-tag ab-dtd">⚠ Askarov DTD (lower body — G!)</span><span class="ab-tag ab-dtd">⚠ Chernyshov DTD (concussion)</span><span class="ab-tag ab-out">✕ Dellandrea OUT (lower body)</span></div>
+        <div class="absent-list"><span class="ab-tag ab-dtd">⚠ Hayes DTD (upper body)</span><span class="ab-tag ab-ret">↩ Girard DTD (upper body)→ RETOUR PROBABLE</span><span class="ab-tag ab-out">✕ Lizotte OUT (upper body)</span><span class="ab-tag ab-out">✕ Hallander OUT (blood clot)</span><span class="ab-tag ab-out">✕ Graves OUT</span></div>
       </div>
     </div>
-    <table class="picks-table">
+    <table class="picks-table" style="table-layout:fixed;width:100%">
       <thead><tr>
-        <th>Catégorie</th>
-        <th>BUF (visiteur)</th>
-        <th></th>
-        <th>SJS (domicile)</th>
-        <th style="text-align:right">Conf.</th>
+        <th style="width:90px">Catégorie</th>
+        <th>WPG <span style="font-weight:400;color:#9ca3af">visiteur</span></th>
+        <th style="width:28px"></th>
+        <th>PIT <span style="font-weight:400;color:#9ca3af">domicile</span></th>
+        <th style="width:90px;text-align:right">Conf.</th>
       </tr></thead>
       <tbody><tr>
   <td><span class="cat-badge cat-but">🎯 But</span></td>
-  <td>
-    <div class="p-name">T. Thompson <span class="p-team">BUF</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 4M🔥</span><span class="dtag dtag-h2h">H2H vs SJS : 6B/9M</span></div>
-  </td>
+  <td><div class="p-name">K. Connor <span class="p-team">WPG</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 LW</span><span class="dtag dtag-stat">0.60G/m</span><span class="dtag dtag-h2h">H2H vs PIT : 3B/7M</span></div></td>
   <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">M. Celebrini <span class="p-team">SJS</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs BUF : 3B/6M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-hi">8.5</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">4.9</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
-  <td>
-    <div class="p-name">T. Thompson <span class="p-team">BUF</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 6M🔥</span><span class="dtag dtag-h2h">H2H vs SJS : 1.0pt</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">Z. Benson <span class="p-team">BUF</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs SJS : 0.8pt</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-hi">9.6</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-hi">7.9</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
-  <td>
-    <div class="p-name">Z. Benson <span class="p-team">BUF</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs SJS : 6A/9M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">W. Smith <span class="p-team">SJS</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs BUF : 3A/6M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-hi">8.1</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">4.5</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
-  <td>
-    <div class="p-name">T. Thompson <span class="p-team">BUF</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs SJS : 4×2pts</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">Z. Benson <span class="p-team">BUF</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs SJS : 3×2pts</span></div>
-  </td>
+  <td><div class="p-name">S. Crosby <span class="p-team">PIT</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 C</span><span class="dtag dtag-stat">0.52G/m</span><span class="dtag dtag-h2h">H2H vs WPG : 5B/9M</span></div></td>
   <td style="text-align:right;vertical-align:top;padding-top:10px">
     <span class="conf-pill conf-mid">6.0</span>
     <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">4.5</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
-  <td>
-    <div class="p-name">J. Peterka <span class="p-team">BUF</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs SJS : 2B/4M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">M. Celebrini <span class="p-team">SJS</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs BUF : 2B/6M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">2.9</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">2.1</span>
-  </td>
-</tr></tbody>
-    </table>
-    <div class="analyse">BUF #1 ligue Est (41W) · Thompson série 6M🔥 · SJS sans Askarov (2e G) = Kahkonen .896. Benson-Thompson PP1 vs PK SJS 78.2% = pick de valeur.</div>
-  </div>
-</div>
-<div class="card" data-bucket="late" data-tight="0" data-hide="0" data-search="tbl van tampa bay lightning vancouver canucks n. kucherov e. pettersson n. kucherov b. point n. kucherov j. hagel n. kucherov b. point j. guentzel e. pettersson">
-  <div class="ch">
-    <span class="ch-time">02h00</span>
-    <div class="ch-teams">
-      <div class="ch-matchup">Tampa Bay Lightning <span style="color:#d1d5db;font-weight:400">@</span> Vancouver Canucks</div>
-      <div class="ch-records">40-21-6 &nbsp;·&nbsp; 20-39-8</div>
-    </div>
-    <div class="ch-prob">
-      <div>
-        <div class="prob-bar"><div class="prob-fill" style="width:76%"></div></div>
-        <div class="prob-labels"><span>TBL 76%</span><span>24% VAN</span></div>
-      </div>
-    </div>
-    <span class="ch-ou" style="background:#fff3e0;border:1px solid #ffcc02;color:#bf360c">🔥 6 buts</span>
-    <span class="ch-score">TBL 5 – VAN 2</span>
-  </div>
-  <div class="cb">
-    <div class="meta-row">
-      <div class="meta-col">
-        <div class="meta-team">TBL · 40-21-6</div>
-        <div class="meta-gk">A. Vasilevskiy <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.918</b></span><span>GAA <b>2.22</b></span><span>PP <b>24.8%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span></div>
-        <div class="absent-list"><span class="ab-ok">✓ Aucun absent</span></div>
-      </div>
-      <div class="meta-col">
-        <div class="meta-team">VAN · 20-39-8</div>
-        <div class="meta-gk">K. Lankinen <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.902</b></span><span>GAA <b>3.12</b></span><span>PP <b>17.4%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-l"></span><span class="fd fd-l"></span><span class="fd fd-l"></span><span class="fd fd-l"></span><span class="fd fd-w"></span></div>
-        <div class="absent-list"><span class="ab-tag ab-out">✕ Lekkerimaki OUT (upper body)</span><span class="ab-tag ab-out">✕ Chytil OUT</span></div>
-      </div>
-    </div>
-    <table class="picks-table">
-      <thead><tr>
-        <th>Catégorie</th>
-        <th>TBL (visiteur)</th>
-        <th></th>
-        <th>VAN (domicile)</th>
-        <th style="text-align:right">Conf.</th>
-      </tr></thead>
-      <tbody><tr>
-  <td><span class="cat-badge cat-but">🎯 But</span></td>
-  <td>
-    <div class="p-name">N. Kucherov <span class="p-team">TBL</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 7M🔥</span><span class="dtag dtag-h2h">H2H vs VAN : 7B/9M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">E. Pettersson <span class="p-team">VAN</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs TBL : 3B/8M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-hi">9.2</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">4.2</span>
+    <span class="conf-pill conf-mid">6.3</span>
   </td>
 </tr><tr>
   <td><span class="cat-badge cat-pt">⭐ Point</span></td>
-  <td>
-    <div class="p-name">N. Kucherov <span class="p-team">TBL</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 7M🔥</span><span class="dtag dtag-h2h">H2H vs VAN : 1.5pt</span></div>
-  </td>
+  <td><div class="p-name">M. Scheifele <span class="p-team">WPG</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 C</span><span class="dtag dtag-stat">0.54pt/m</span><span class="dtag dtag-h2h">H2H vs PIT : 0.8pt</span></div></td>
   <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">B. Point <span class="p-team">TBL</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 4M🔥</span><span class="dtag dtag-h2h">H2H vs VAN : 1.0pt</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-hi">9.9</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-hi">7.8</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
-  <td>
-    <div class="p-name">N. Kucherov <span class="p-team">TBL</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 7M🔥</span><span class="dtag dtag-h2h">H2H vs VAN : 8A/9M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">J. Hagel <span class="p-team">TBL</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs VAN : 5A/8M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-hi">8.7</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-mid">5.7</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
-  <td>
-    <div class="p-name">N. Kucherov <span class="p-team">TBL</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs VAN : 4×2pts</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">B. Point <span class="p-team">TBL</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs VAN : 3×2pts</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-mid">6.5</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">4.6</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
-  <td>
-    <div class="p-name">J. Guentzel <span class="p-team">TBL</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs VAN : 3B/6M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">E. Pettersson <span class="p-team">VAN</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs TBL : 2B/7M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">2.9</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">1.9</span>
-  </td>
-</tr></tbody>
-    </table>
-    <div class="analyse">🔥 TBL top 3 ligue — Kucherov+Point+Hagel lineup complet. VAN dernier ligue Ouest (20W). Lankinen .902 vs Vasilevskiy .918 = mismatch total.</div>
-  </div>
-</div>
-<div class="card" data-bucket="late" data-tight="1" data-hide="0" data-search="uta vgk utah mammoth vegas golden knights c. keller j. eichel c. keller m. marner n. schmaltz m. marner m. marner c. keller t. hertl c. crouse">
-  <div class="ch">
-    <span class="ch-time">02h00</span>
-    <div class="ch-teams">
-      <div class="ch-matchup">Utah Mammoth <span style="color:#d1d5db;font-weight:400">@</span> Vegas Golden Knights</div>
-      <div class="ch-records">35-23-10 &nbsp;·&nbsp; 31-22-15</div>
-    </div>
-    <div class="ch-prob">
-      <div>
-        <div class="prob-bar"><div class="prob-fill" style="width:44%"></div></div>
-        <div class="prob-labels"><span>UTA 44%</span><span>56% VGK</span></div>
-      </div>
-    </div>
-    <span class="ch-ou" style="background:#e3f2fd;border:1px solid #90caf9;color:#1565c0">🏒 5 buts</span>
-    <span class="ch-score">VGK 3 – UTA 2</span>
-  </div>
-  <div class="cb">
-    <div class="meta-row">
-      <div class="meta-col">
-        <div class="meta-team">UTA · 35-23-10</div>
-        <div class="meta-gk">I. Ingram <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.906</b></span><span>GAA <b>2.64</b></span><span>PP <b>20.6%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span></div>
-        <div class="absent-list"><span class="ab-ok">✓ Aucun absent</span></div>
-      </div>
-      <div class="meta-col">
-        <div class="meta-team">VGK · 31-22-15</div>
-        <div class="meta-gk">A. Hill <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.917</b></span><span>GAA <b>2.48</b></span><span>PP <b>22.2%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-w"></span></div>
-        <div class="absent-list"><span class="ab-tag ab-out">✕ Karlsson OUT saison</span><span class="ab-tag ab-out">✕ Pietrangelo OUT saison</span></div>
-      </div>
-    </div>
-    <table class="picks-table">
-      <thead><tr>
-        <th>Catégorie</th>
-        <th>UTA (visiteur)</th>
-        <th></th>
-        <th>VGK (domicile)</th>
-        <th style="text-align:right">Conf.</th>
-      </tr></thead>
-      <tbody><tr>
-  <td><span class="cat-badge cat-but">🎯 But</span></td>
-  <td>
-    <div class="p-name">C. Keller <span class="p-team">UTA</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs VGK : 5B/9M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">J. Eichel <span class="p-team">VGK</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs UTA : 5B/8M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">4.8</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-mid">6.8</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
-  <td>
-    <div class="p-name">C. Keller <span class="p-team">UTA</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs VGK : 0.9pt</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">M. Marner <span class="p-team">VGK</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs UTA : 1.0pt</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-mid">5.2</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-hi">8.2</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
-  <td>
-    <div class="p-name">N. Schmaltz <span class="p-team">UTA</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs VGK : 5A/8M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">M. Marner <span class="p-team">VGK</span></div>
-    <div class="p-tags"><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs UTA : 7A/9M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">4.5</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-hi">7.5</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
-  <td>
-    <div class="p-name">C. Keller <span class="p-team">UTA</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs VGK : 2×2pts</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">M. Marner <span class="p-team">VGK</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs UTA : 3×2pts</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">2.7</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">4.9</span>
-  </td>
-</tr><tr>
-  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
-  <td>
-    <div class="p-name">C. Crouse <span class="p-team">UTA</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs VGK : 1B/4M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">T. Hertl <span class="p-team">VGK</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs UTA : 3B/5M</span></div>
-  </td>
-  <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">1.6</span>
-    <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">3.0</span>
-  </td>
-</tr></tbody>
-    </table>
-    <div class="analyse">VGK domicile avec Eichel-Marner-Hertl PP1 = ligne de feu. Hill .917 solide. UTA sans blessé — Keller PP1 dangereux. Match serré, VGK léger favori.</div>
-  </div>
-</div>
-<div class="card" data-bucket="late" data-tight="0" data-hide="0" data-search="phi la philadelphia flyers los angeles kings t. konecny a. kopitar t. konecny q. byfield t. konecny a. kopitar q. byfield t. konecny a. kempe j. farabee">
-  <div class="ch">
-    <span class="ch-time">02h30</span>
-    <div class="ch-teams">
-      <div class="ch-matchup">Philadelphia Flyers <span style="color:#d1d5db;font-weight:400">@</span> Los Angeles Kings</div>
-      <div class="ch-records">34-26-8 &nbsp;·&nbsp; 37-22-8</div>
-    </div>
-    <div class="ch-prob">
-      <div>
-        <div class="prob-bar"><div class="prob-fill" style="width:38%"></div></div>
-        <div class="prob-labels"><span>PHI 38%</span><span>62% LA</span></div>
-      </div>
-    </div>
-    <span class="ch-ou" style="background:#e8f5e9;border:1px solid #a5d6a7;color:#2e7d32">🔒 4-5 buts</span>
-    <span class="ch-score">LA 3 – PHI 2</span>
-  </div>
-  <div class="cb">
-    <div class="meta-row">
-      <div class="meta-col">
-        <div class="meta-team">PHI · 34-26-8</div>
-        <div class="meta-gk">S. Ersson <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.907</b></span><span>GAA <b>2.68</b></span><span>PP <b>19.4%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span></div>
-        <div class="absent-list"><span class="ab-tag ab-out">✕ Abols OUT (ankle)</span><span class="ab-tag ab-out">✕ Foerster OUT saison (arm)</span></div>
-      </div>
-      <div class="meta-col">
-        <div class="meta-team">LA · 37-22-8</div>
-        <div class="meta-gk">D. Rittich <span>G</span></div>
-        <div class="meta-stats"><span>SV% <b>.904</b></span><span>GAA <b>2.82</b></span><span>PP <b>21.8%</b></span></div>
-        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-w"></span></div>
-        <div class="absent-list"><span class="ab-tag ab-ret">↩ Kempe PROBABLE (lower body)</span><span class="ab-tag ab-out">✕ Armia OUT (upper body)</span><span class="ab-tag ab-out">✕ Kuzmenko OUT saison (meniscus)</span><span class="ab-tag ab-out">✕ Fiala OUT saison (leg)</span></div>
-      </div>
-    </div>
-    <table class="picks-table">
-      <thead><tr>
-        <th>Catégorie</th>
-        <th>PHI (visiteur)</th>
-        <th></th>
-        <th>LA (domicile)</th>
-        <th style="text-align:right">Conf.</th>
-      </tr></thead>
-      <tbody><tr>
-  <td><span class="cat-badge cat-but">🎯 But</span></td>
-  <td>
-    <div class="p-name">T. Konecny <span class="p-team">PHI</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs LA : 4B/8M</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">A. Kopitar <span class="p-team">LA</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs PHI : 5B/9M</span></div>
-  </td>
+  <td><div class="p-name">S. Crosby <span class="p-team">PIT</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.92pt/m</span><span class="dtag dtag-h2h">H2H vs WPG : 0.9pt</span></div></td>
   <td style="text-align:right;vertical-align:top;padding-top:10px">
     <span class="conf-pill conf-mid">6.3</span>
     <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-mid">5.7</span>
+    <span class="conf-pill conf-hi">7.2</span>
   </td>
-</tr><tr>
-  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
-  <td>
-    <div class="p-name">T. Konecny <span class="p-team">PHI</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs LA : 0.9pt</span></div>
-  </td>
-  <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">Q. Byfield <span class="p-team">LA</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs PHI : 0.8pt</span></div>
-  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><div class="p-name">K. Connor <span class="p-team">WPG</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span></div></td><td class="vs-dot">vs</td><td><div class="p-name">E. Malkin <span class="p-team">PIT</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 dom</span></div></td>
   <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-mid">6.5</span>
+    <span class="conf-pill conf-mid">5.7</span>
     <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-mid">6.2</span>
+    <span class="conf-pill conf-mid">5.6</span>
   </td>
 </tr><tr>
   <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
-  <td>
-    <div class="p-name">T. Konecny <span class="p-team">PHI</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs LA : 4A/8M</span></div>
-  </td>
+  <td><div class="p-name">J. Morrissey <span class="p-team">WPG</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 D</span><span class="dtag dtag-stat">0.72 ast/m</span><span class="dtag dtag-h2h">H2H vs PIT : 3A/6M</span></div></td>
   <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">A. Kopitar <span class="p-team">LA</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs PHI : 5A/9M</span></div>
-  </td>
+  <td><div class="p-name">S. Crosby <span class="p-team">PIT</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.68 ast/m</span><span class="dtag dtag-h2h">H2H vs WPG : 7A/9M</span></div></td>
   <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-mid">5.5</span>
+    <span class="conf-pill conf-mid">5.2</span>
     <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-mid">5.7</span>
+    <span class="conf-pill conf-mid">6.5</span>
   </td>
 </tr><tr>
   <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
-  <td>
-    <div class="p-name">T. Konecny <span class="p-team">PHI</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs LA : 2×2pts</span></div>
-  </td>
+  <td><div class="p-name">K. Connor <span class="p-team">WPG</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-h2h">H2H vs PIT : 2×2pts</span></div></td>
   <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">Q. Byfield <span class="p-team">LA</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs PHI : 2×2pts</span></div>
-  </td>
+  <td><div class="p-name">S. Crosby <span class="p-team">PIT</span></div><div class="p-tags"><span class="dtag dtag-pp">Dom PP1</span><span class="dtag dtag-h2h">H2H vs PIT : 3×2pts</span></div></td>
   <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">3.1</span>
+    <span class="conf-pill conf-lo">4.8</span>
     <span style="color:#d1d5db;margin:0 3px">/</span>
-    <span class="conf-pill conf-lo">3.8</span>
+    <span class="conf-pill conf-mid">5.1</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><span style="color:#d1d5db">—</span></td><td class="vs-dot">vs</td><td><div class="p-name">E. Malkin <span class="p-team">PIT</span></div><div class="p-tags"><span class="dtag dtag-serie">PP1 dom série 3M🔥</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    
+    
+    <span class="conf-pill conf-lo">3.7</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge ">🎯🎯 2 Buts+</span></td>
+  <td><div class="p-name">S. Crosby <span class="p-team">PIT</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.52G/m</span><span class="dtag dtag-h2h">H2H vs WPG : 2×2B/9M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">K. Connor <span class="p-team">WPG</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.60G/m</span><span class="dtag dtag-h2h">H2H vs PIT : 1×2B/7M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">3.0</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.7</span>
   </td>
 </tr><tr>
   <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
-  <td>
-    <div class="p-name">J. Farabee <span class="p-team">PHI</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs LA : 1B/5M</span></div>
-  </td>
+  <td><div class="p-name">J. Morrissey <span class="p-team">WPG</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 QB D</span><span class="dtag dtag-h2h">H2H vs PIT : 3A/6M</span></div></td>
   <td class="vs-dot">vs</td>
-  <td>
-    <div class="p-name">A. Kempe <span class="p-team">LA</span></div>
-    <div class="p-tags"><span class="dtag dtag-h2h">H2H vs PHI : 2B/5M</span></div>
-  </td>
+  <td><div class="p-name">R. Rakell <span class="p-team">PIT</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-h2h">H2H vs WPG : 2B/5M</span></div></td>
   <td style="text-align:right;vertical-align:top;padding-top:10px">
-    <span class="conf-pill conf-lo">1.9</span>
+    <span class="conf-pill conf-lo">2.1</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.3</span>
+  </td>
+</tr></tbody>
+    </table>
+    <div class="analyse">PIT nettement favoris à domicile. WPG sans Niederreiter/Pionk/Miller/Namestnikov. Crosby+Malkin face à un WPG en reconstruction.</div>
+  </div>
+</div>
+<div class="card" data-bucket="early" data-tight="1" data-hide="0" data-search="vgk nsh vegas golden knights nashville predators j. eichel j. marchessault m. marner j. marchessault m. marner r. josi m. marner j. marchessault t. hertl f. forsberg">
+  <div class="ch">
+    <span class="ch-time">20h00</span>
+    <div class="ch-teams">
+      <div class="ch-matchup">Vegas Golden Knights <span style="color:#d1d5db;font-weight:400">@</span> Nashville Predators</div>
+      <div class="ch-records">31-24-14 &nbsp;·&nbsp; 31-28-9</div>
+    </div>
+    <div class="ch-prob"><div>
+      <div class="prob-bar"><div class="prob-fill" style="width:58%"></div></div>
+      <div class="prob-labels"><span>VGK 58%</span><span>42% NSH</span></div>
+    </div></div>
+    <span class="ch-ou" style="background:#fffbea;border:1px solid #fde68a;color:#b45309">O/U 6.5</span>
+    <span class="ch-score">4-2 VGK</span>
+  </div>
+  <div class="cb">
+    <div class="meta-row">
+      <div class="meta-col">
+        <div class="meta-team">VGK · visiteur</div>
+        <div class="meta-gk">A. Hill <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.917</b></span><span>GAA <b>2.48</b></span><span>PP <b>22.2%</b></span></div>
+        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-w"></span></div>
+        <div class="absent-list"><span class="ab-tag ab-out">✕ Hart OUT (lower body)</span><span class="ab-tag ab-out">✕ Karlsson OUT (lower body)</span><span class="ab-tag ab-out">✕ Rondbjerg OUT</span></div>
+      </div>
+      <div class="meta-col">
+        <div class="meta-team">NSH · domicile</div>
+        <div class="meta-gk">J. Annunen <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.898</b></span><span>GAA <b>2.92</b></span><span>PP <b>20.6%</b></span></div>
+        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-l"></span><span class="fd fd-w"></span></div>
+        <div class="absent-list"><span class="ab-tag ab-dtd">⚠ Saros DTD (upper body)🚨 → Annunen titulaire</span><span class="ab-tag ab-out">✕ Wilsby OUT (lower body)</span></div>
+      </div>
+    </div>
+    <table class="picks-table" style="table-layout:fixed;width:100%">
+      <thead><tr>
+        <th style="width:90px">Catégorie</th>
+        <th>VGK <span style="font-weight:400;color:#9ca3af">visiteur</span></th>
+        <th style="width:28px"></th>
+        <th>NSH <span style="font-weight:400;color:#9ca3af">domicile</span></th>
+        <th style="width:90px;text-align:right">Conf.</th>
+      </tr></thead>
+      <tbody><tr>
+  <td><span class="cat-badge cat-but">🎯 But</span></td>
+  <td><div class="p-name">J. Eichel <span class="p-team">VGK</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 C</span><span class="dtag dtag-stat">0.62G/m</span><span class="dtag dtag-h2h">H2H vs NSH : 5B/9M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">J. Marchessault <span class="p-team">NSH</span></div><div class="p-tags"><span class="dtag dtag-stat">0.52G/m</span><span class="dtag dtag-h2h">H2H vs VGK : 4B/8M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">6.7</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">4.8</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
+  <td><div class="p-name">M. Marner <span class="p-team">VGK</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.98pt/m</span><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs NSH : 0.9pt</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">J. Marchessault <span class="p-team">NSH</span></div><div class="p-tags"><span class="dtag dtag-pp">PP</span><span class="dtag dtag-h2h">H2H vs VGK : 0.8pt</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-hi">8.3</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.6</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><div class="p-name">J. Eichel <span class="p-team">VGK</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.88pt/m</span></div></td><td class="vs-dot">vs</td><td><div class="p-name">R. Josi <span class="p-team">NSH</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 QB D</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">6.5</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">4.4</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
+  <td><div class="p-name">M. Marner <span class="p-team">VGK</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.76 ast/m</span><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs NSH : 7A/9M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">R. Josi <span class="p-team">NSH</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 QB D</span><span class="dtag dtag-stat">0.64 ast/m</span><span class="dtag dtag-h2h">H2H vs VGK : 5A/8M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-hi">7.5</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">4.8</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
+  <td><div class="p-name">M. Marner <span class="p-team">VGK</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs NSH : 3×2pts</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">J. Marchessault <span class="p-team">NSH</span></div><div class="p-tags"><span class="dtag dtag-h2h">H2H vs VGK : 2×2pts</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">5.8</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">3.9</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><div class="p-name">J. Eichel <span class="p-team">VGK</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span></div></td><td class="vs-dot">vs</td><td><div class="p-name">R. Josi <span class="p-team">NSH</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 D</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">4.1</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.8</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge ">🎯🎯 2 Buts+</span></td>
+  <td><div class="p-name">J. Eichel <span class="p-team">VGK</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.62G/m</span><span class="dtag dtag-h2h">H2H vs NSH : 2×2B/9M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">J. Marchessault <span class="p-team">NSH</span></div><div class="p-tags"><span class="dtag dtag-stat">0.52G/m</span><span class="dtag dtag-h2h">H2H vs VGK : 1×2B/8M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">3.1</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.2</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
+  <td><div class="p-name">T. Hertl <span class="p-team">VGK</span></div><div class="p-tags"><span class="dtag dtag-pp">L2 C PP1</span><span class="dtag dtag-h2h">H2H vs NSH : 3B/5M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">F. Forsberg <span class="p-team">NSH</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 LW PP1</span><span class="dtag dtag-h2h">H2H vs VGK : 2B/5M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">2.9</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.0</span>
+  </td>
+</tr></tbody>
+    </table>
+    <div class="analyse">VGK favoris nets. NSH sans Saros (DTD) → Annunen en cage. Eichel/Marner/Hertl face à une NSH affaiblie en cage.</div>
+  </div>
+</div>
+<div class="card" data-bucket="mid" data-tight="1" data-hide="0" data-search="dal min dallas stars minnesota wild j. robertson m. boldy j. robertson m. boldy j. robertson m. boldy j. robertson m. boldy m. duchene m. johansson">
+  <div class="ch">
+    <span class="ch-time">22h00</span>
+    <div class="ch-teams">
+      <div class="ch-matchup">Dallas Stars <span style="color:#d1d5db;font-weight:400">@</span> Minnesota Wild</div>
+      <div class="ch-records">43-15-10 &nbsp;·&nbsp; 39-19-12</div>
+    </div>
+    <div class="ch-prob"><div>
+      <div class="prob-bar"><div class="prob-fill" style="width:56%"></div></div>
+      <div class="prob-labels"><span>DAL 56%</span><span>44% MIN</span></div>
+    </div></div>
+    <span class="ch-ou" style="background:#f0fdf4;border:1px solid #bbf7d0;color:#166534">U 5.5</span>
+    <span class="ch-score">3-2 DAL</span>
+  </div>
+  <div class="cb">
+    <div class="meta-row">
+      <div class="meta-col">
+        <div class="meta-team">DAL · visiteur</div>
+        <div class="meta-gk">J. Oettinger <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.916</b></span><span>GAA <b>2.32</b></span><span>PP <b>23.8%</b></span></div>
+        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span></div>
+        <div class="absent-list"><span class="ab-tag ab-out">✕ Hintz OUT (lower body)🚨</span><span class="ab-tag ab-out">✕ Rantanen OUT (lower body)🚨</span><span class="ab-tag ab-out">✕ Seguin OUT saison (ACL)🚨</span><span class="ab-tag ab-out">✕ Faksa OUT (upper body)</span></div>
+      </div>
+      <div class="meta-col">
+        <div class="meta-team">MIN · domicile</div>
+        <div class="meta-gk">F. Gustavsson <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.912</b></span><span>GAA <b>2.44</b></span><span>PP <b>22.8%</b></span></div>
+        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-l"></span></div>
+        <div class="absent-list"><span class="ab-tag ab-out">✕ Kaprizov OUT🚨 (lower body — 2e match consécutif)</span><span class="ab-tag ab-out">✕ Eriksson Ek OUT (lower body — 3e match)</span><span class="ab-tag ab-out">✕ Foligno OUT (lower body)</span></div>
+      </div>
+    </div>
+    <table class="picks-table" style="table-layout:fixed;width:100%">
+      <thead><tr>
+        <th style="width:90px">Catégorie</th>
+        <th>DAL <span style="font-weight:400;color:#9ca3af">visiteur</span></th>
+        <th style="width:28px"></th>
+        <th>MIN <span style="font-weight:400;color:#9ca3af">domicile</span></th>
+        <th style="width:90px;text-align:right">Conf.</th>
+      </tr></thead>
+      <tbody><tr>
+  <td><span class="cat-badge cat-but">🎯 But</span></td>
+  <td><div class="p-name">J. Robertson <span class="p-team">DAL</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 LW</span><span class="dtag dtag-stat">0.68G/m</span><span class="dtag dtag-h2h">H2H vs MIN : 6B/9M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">M. Boldy <span class="p-team">MIN</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 RW PP1</span><span class="dtag dtag-h2h">H2H vs DAL : 3B/8M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">6.2</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.4</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
+  <td><div class="p-name">J. Robertson <span class="p-team">DAL</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.88pt/m</span><span class="dtag dtag-serie">série 4M🔥</span><span class="dtag dtag-h2h">H2H vs MIN : 0.9pt</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">M. Boldy <span class="p-team">MIN</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-h2h">H2H vs DAL : 0.7pt</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-hi">7.3</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">6.2</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><div class="p-name">W. Johnston <span class="p-team">DAL</span></div><div class="p-tags"><span class="dtag dtag-pp">PP2</span></div></td><td class="vs-dot">vs</td><td><div class="p-name">M. Johansson <span class="p-team">MIN</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 C remplace Kaprizov</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">5.5</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.2</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
+  <td><div class="p-name">J. Robertson <span class="p-team">DAL</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-serie">série 4M🔥</span><span class="dtag dtag-h2h">H2H vs MIN : 6A/8M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">M. Boldy <span class="p-team">MIN</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-h2h">H2H vs DAL : 4A/7M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">6.6</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.6</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
+  <td><div class="p-name">J. Robertson <span class="p-team">DAL</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-serie">série 4M🔥</span><span class="dtag dtag-h2h">H2H vs MIN : 3×2pts</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">M. Boldy <span class="p-team">MIN</span></div><div class="p-tags"><span class="dtag dtag-pp">dom PP1</span><span class="dtag dtag-h2h">H2H vs DAL : 2×2pts</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">5.1</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">4.3</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><div class="p-name">W. Johnston <span class="p-team">DAL</span></div><div class="p-tags"><span class="dtag dtag-pp">PP2</span></div></td><td class="vs-dot">vs</td><td><span style="color:#d1d5db">—</span></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">3.5</span>
+    
+    
+  </td>
+</tr><tr>
+  <td><span class="cat-badge ">🎯🎯 2 Buts+</span></td>
+  <td><div class="p-name">J. Robertson <span class="p-team">DAL</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.68G/m</span><span class="dtag dtag-h2h">H2H vs MIN : 2×2B/9M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">M. Boldy <span class="p-team">MIN</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-h2h">H2H vs DAL : 1×2B/8M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">2.8</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.5</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
+  <td><div class="p-name">M. Duchene <span class="p-team">DAL</span></div><div class="p-tags"><span class="dtag dtag-pp">L2 C PP2</span><span class="dtag dtag-h2h">H2H vs MIN : 2B/5M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">M. Johansson <span class="p-team">MIN</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 C</span><span class="dtag dtag-h2h">H2H vs DAL : 1B/4M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">2.2</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.3</span>
+  </td>
+</tr></tbody>
+    </table>
+    <div class="analyse">Match défensif attendu (U 5.5). MIN sans Kaprizov+Eriksson Ek+Foligno 🚨. DAL sans Hintz/Rantanen/Seguin mais Robertson+Duchene dominent.</div>
+  </div>
+</div>
+<div class="card" data-bucket="mid" data-tight="1" data-hide="0" data-search="buf la buffalo sabres los angeles kings t. thompson a. kopitar t. thompson q. byfield z. benson q. byfield t. thompson q. byfield a. tuch a. panarin">
+  <div class="ch">
+    <span class="ch-time">22h00</span>
+    <div class="ch-teams">
+      <div class="ch-matchup">Buffalo Sabres <span style="color:#d1d5db;font-weight:400">@</span> Los Angeles Kings</div>
+      <div class="ch-records">43-20-6 &nbsp;·&nbsp; 28-24-16</div>
+    </div>
+    <div class="ch-prob"><div>
+      <div class="prob-bar"><div class="prob-fill" style="width:55%"></div></div>
+      <div class="prob-labels"><span>BUF 55%</span><span>45% LA</span></div>
+    </div></div>
+    <span class="ch-ou" style="background:#fffbea;border:1px solid #fde68a;color:#b45309">O/U 6.5</span>
+    <span class="ch-score">4-3 BUF</span>
+  </div>
+  <div class="cb">
+    <div class="meta-row">
+      <div class="meta-col">
+        <div class="meta-team">BUF · visiteur</div>
+        <div class="meta-gk">U. Luukkonen <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.908</b></span><span>GAA <b>2.58</b></span><span>PP <b>22.4%</b></span></div>
+        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span></div>
+        <div class="absent-list"><span class="ab-tag ab-dtd">⚠ Pearson DTD (lower body)</span><span class="ab-tag ab-out">✕ Kulich OUT saison (blood clot)</span><span class="ab-tag ab-out">✕ Greenway OUT (abdomen)</span><span class="ab-tag ab-out">✕ Timmins OUT (broken leg)</span></div>
+      </div>
+      <div class="meta-col">
+        <div class="meta-team">LA · domicile</div>
+        <div class="meta-gk">D. Kuemper <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.906</b></span><span>GAA <b>2.68</b></span><span>PP <b>21.8%</b></span></div>
+        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span></div>
+        <div class="absent-list"><span class="ab-tag ab-ret">↩ Kempe RETOUR PROBABLE (lower body)</span><span class="ab-tag ab-ret">↩ Armia RETOUR (back — 10 matchs manqués)</span><span class="ab-tag ab-out">✕ Kuzmenko OUT saison (meniscus)</span><span class="ab-tag ab-out">✕ Fiala OUT saison (leg)</span></div>
+      </div>
+    </div>
+    <table class="picks-table" style="table-layout:fixed;width:100%">
+      <thead><tr>
+        <th style="width:90px">Catégorie</th>
+        <th>BUF <span style="font-weight:400;color:#9ca3af">visiteur</span></th>
+        <th style="width:28px"></th>
+        <th>LA <span style="font-weight:400;color:#9ca3af">domicile</span></th>
+        <th style="width:90px;text-align:right">Conf.</th>
+      </tr></thead>
+      <tbody><tr>
+  <td><span class="cat-badge cat-but">🎯 But</span></td>
+  <td><div class="p-name">T. Thompson <span class="p-team">BUF</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 C</span><span class="dtag dtag-stat">0.72G/m</span><span class="dtag dtag-serie">série 4M🔥</span><span class="dtag dtag-h2h">H2H vs LA : 5B/8M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">A. Kopitar <span class="p-team">LA</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 C PP1</span><span class="dtag dtag-stat">0.50G/m</span><span class="dtag dtag-h2h">H2H vs BUF : 4B/9M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">6.1</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.6</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
+  <td><div class="p-name">T. Thompson <span class="p-team">BUF</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.94pt/m</span><span class="dtag dtag-serie">série 6M🔥</span><span class="dtag dtag-h2h">H2H vs LA : 1.0pt</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">Q. Byfield <span class="p-team">LA</span></div><div class="p-tags"><span class="dtag dtag-pp">PP2 C</span><span class="dtag dtag-stat">0.74pt/m</span><span class="dtag dtag-h2h">H2H vs BUF : 0.8pt</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-hi">7.3</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">6.4</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><div class="p-name">Z. Benson <span class="p-team">BUF</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-serie">série 5M🔥</span></div></td><td class="vs-dot">vs</td><td><div class="p-name">A. Kopitar <span class="p-team">LA</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">5.7</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.4</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
+  <td><div class="p-name">Z. Benson <span class="p-team">BUF</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 LW</span><span class="dtag dtag-stat">0.64 ast/m</span><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs LA : 6A/8M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">Q. Byfield <span class="p-team">LA</span></div><div class="p-tags"><span class="dtag dtag-pp">PP2 C</span><span class="dtag dtag-stat">0.58 ast/m</span><span class="dtag dtag-h2h">H2H vs BUF : 5A/8M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">6.1</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.8</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
+  <td><div class="p-name">T. Thompson <span class="p-team">BUF</span></div><div class="p-tags"><span class="dtag dtag-serie">Série 6M🔥</span><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-h2h">H2H vs LA : 4×2pts</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">Q. Byfield <span class="p-team">LA</span></div><div class="p-tags"><span class="dtag dtag-pp">dom PP2</span><span class="dtag dtag-h2h">H2H vs BUF : 2×2pts</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">4.8</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">4.5</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><div class="p-name">Z. Benson <span class="p-team">BUF</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-serie">série 5M🔥</span></div></td><td class="vs-dot">vs</td><td><span style="color:#d1d5db">—</span></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">3.6</span>
+    
+    
+  </td>
+</tr><tr>
+  <td><span class="cat-badge ">🎯🎯 2 Buts+</span></td>
+  <td><div class="p-name">T. Thompson <span class="p-team">BUF</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.72G/m</span><span class="dtag dtag-serie">série 4M🔥</span><span class="dtag dtag-h2h">H2H vs LA : 3×2B/8M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">A. Kopitar <span class="p-team">LA</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.50G/m</span><span class="dtag dtag-h2h">H2H vs BUF : 1×2B/9M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">2.8</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.6</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
+  <td><div class="p-name">A. Tuch <span class="p-team">BUF</span></div><div class="p-tags"><span class="dtag dtag-h2h">H2H vs LA : 1B/4M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">A. Panarin <span class="p-team">LA</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 LW PP1</span><span class="dtag dtag-h2h">H2H vs BUF : 2B/4M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">2.0</span>
     <span style="color:#d1d5db;margin:0 3px">/</span>
     <span class="conf-pill conf-lo">2.5</span>
   </td>
 </tr></tbody>
     </table>
-    <div class="analyse">LA domicile sans Fiala/Kuzmenko (2 top scorers OUT) mais Kopitar+Byfield PP1 solides. Kempe probable. PHI: Konecny PP1 en forme. Match plus serré que les cotes suggèrent.</div>
+    <div class="analyse">BUF en grande forme (43V) face à LA qui récupère Armia et Kempe. Thompson+Benson visent encore vs Kuemper.</div>
+  </div>
+</div>
+<div class="card" data-bucket="mid" data-tight="1" data-hide="0" data-search="phi sjs philadelphia flyers san jose sharks t. konecny m. celebrini m. michkov w. smith t. konecny m. celebrini t. konecny w. smith t. zegras p. kurashev">
+  <div class="ch">
+    <span class="ch-time">22h00</span>
+    <div class="ch-teams">
+      <div class="ch-matchup">Philadelphia Flyers <span style="color:#d1d5db;font-weight:400">@</span> San Jose Sharks</div>
+      <div class="ch-records">33-23-12 &nbsp;·&nbsp; 32-29-6</div>
+    </div>
+    <div class="ch-prob"><div>
+      <div class="prob-bar"><div class="prob-fill" style="width:48%"></div></div>
+      <div class="prob-labels"><span>PHI 48%</span><span>52% SJS</span></div>
+    </div></div>
+    <span class="ch-ou" style="background:#fffbea;border:1px solid #fde68a;color:#b45309">O/U 5.5</span>
+    <span class="ch-score">3-4 SJS</span>
+  </div>
+  <div class="cb">
+    <div class="meta-row">
+      <div class="meta-col">
+        <div class="meta-team">PHI · visiteur</div>
+        <div class="meta-gk">D. Vladar <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.902</b></span><span>GAA <b>2.84</b></span><span>PP <b>19.4%</b></span></div>
+        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span></div>
+        <div class="absent-list"><span class="ab-tag ab-out">✕ Couturier OUT (upper body)🚨</span><span class="ab-tag ab-dtd">⚠ Glendening DTD (lower body)</span><span class="ab-tag ab-dtd">⚠ Barkey DTD (upper body)</span><span class="ab-tag ab-out">✕ Foerster OUT saison (arm)</span><span class="ab-tag ab-out">✕ Abols OUT (ankle)</span></div>
+      </div>
+      <div class="meta-col">
+        <div class="meta-team">SJS · domicile</div>
+        <div class="meta-gk">A. Nedeljkovic <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.899</b></span><span>GAA <b>2.96</b></span><span>PP <b>18.2%</b></span></div>
+        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-l"></span><span class="fd fd-w"></span></div>
+        <div class="absent-list"><span class="ab-tag ab-out">✕ Askarov OUT (lower body)🚨 → Nedeljkovic titulaire</span><span class="ab-tag ab-out">✕ Chernyshov OUT (concussion)</span><span class="ab-tag ab-out">✕ Dellandrea OUT (lower body)</span><span class="ab-tag ab-out">✕ Toffoli OUT (lower body — nouveau🆕)</span><span class="ab-tag ab-dtd">⚠ Desharnais GTD</span></div>
+      </div>
+    </div>
+    <table class="picks-table" style="table-layout:fixed;width:100%">
+      <thead><tr>
+        <th style="width:90px">Catégorie</th>
+        <th>PHI <span style="font-weight:400;color:#9ca3af">visiteur</span></th>
+        <th style="width:28px"></th>
+        <th>SJS <span style="font-weight:400;color:#9ca3af">domicile</span></th>
+        <th style="width:90px;text-align:right">Conf.</th>
+      </tr></thead>
+      <tbody><tr>
+  <td><span class="cat-badge cat-but">🎯 But</span></td>
+  <td><div class="p-name">T. Konecny <span class="p-team">PHI</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 RW</span><span class="dtag dtag-stat">0.58G/m</span><span class="dtag dtag-h2h">H2H vs SJS : 4B/8M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">M. Celebrini <span class="p-team">SJS</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 C PP1</span><span class="dtag dtag-stat">0.44G/m</span><span class="dtag dtag-h2h">H2H vs PHI : 3B/7M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">6.1</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.6</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
+  <td><div class="p-name">M. Michkov <span class="p-team">PHI</span></div><div class="p-tags"><span class="dtag dtag-h2h">H2H vs SJS : 0.7pt</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">W. Smith <span class="p-team">SJS</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 RW PP1</span><span class="dtag dtag-stat">0.54pt/m</span><span class="dtag dtag-h2h">H2H vs PHI : 0.6pt</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">6.5</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">6.4</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><div class="p-name">T. Konecny <span class="p-team">PHI</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.58G/m</span></div></td><td class="vs-dot">vs</td><td><div class="p-name">M. Celebrini <span class="p-team">SJS</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 C dom</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">5.9</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.3</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
+  <td><div class="p-name">T. Konecny <span class="p-team">PHI</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.58 ast/m</span><span class="dtag dtag-h2h">H2H vs SJS : 4A/8M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">M. Celebrini <span class="p-team">SJS</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 C</span><span class="dtag dtag-stat">0.48 ast/m</span><span class="dtag dtag-h2h">H2H vs PHI : 3A/7M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">6.3</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.8</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
+  <td><div class="p-name">T. Konecny <span class="p-team">PHI</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-h2h">H2H vs SJS : 2×2pts</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">W. Smith <span class="p-team">SJS</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 dom</span><span class="dtag dtag-h2h">H2H vs PHI : 2×2pts</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">4.9</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">4.5</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><div class="p-name">M. Michkov <span class="p-team">PHI</span></div><div class="p-tags"></div></td><td class="vs-dot">vs</td><td><span style="color:#d1d5db">—</span></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">3.5</span>
+    
+    
+  </td>
+</tr><tr>
+  <td><span class="cat-badge ">🎯🎯 2 Buts+</span></td>
+  <td><div class="p-name">T. Konecny <span class="p-team">PHI</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.58G/m</span><span class="dtag dtag-h2h">H2H vs SJS : 2×2B/8M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">M. Celebrini <span class="p-team">SJS</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.44G/m</span><span class="dtag dtag-h2h">H2H vs PHI : 1×2B/7M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">2.8</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.6</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
+  <td><div class="p-name">T. Zegras <span class="p-team">PHI</span></div><div class="p-tags"><span class="dtag dtag-pp">L2 C PP2</span><span class="dtag dtag-h2h">H2H vs SJS : 1B/4M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">P. Kurashev <span class="p-team">SJS</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 remplace Toffoli🆕</span><span class="dtag dtag-h2h">H2H vs PHI : 1B/5M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">2.4</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.1</span>
+  </td>
+</tr></tbody>
+    </table>
+    <div class="analyse">Match serré. PHI sans Couturier/Glendening/Barkey. SJS sans Askarov → Nedeljkovic en cage. Michkov vs Celebrini/Smith.</div>
+  </div>
+</div>
+<div class="card" data-bucket="mid" data-tight="0" data-hide="0" data-search="sea cbj seattle kraken columbus blue jackets m. beniers a. fantilli j. mccann a. fantilli c. stephenson z. werenski m. beniers a. fantilli b. mcmann s. monahan">
+  <div class="ch">
+    <span class="ch-time">23h00</span>
+    <div class="ch-teams">
+      <div class="ch-matchup">Seattle Kraken <span style="color:#d1d5db;font-weight:400">@</span> Columbus Blue Jackets</div>
+      <div class="ch-records">31-28-9 &nbsp;·&nbsp; 36-21-11</div>
+    </div>
+    <div class="ch-prob"><div>
+      <div class="prob-bar"><div class="prob-fill" style="width:38%"></div></div>
+      <div class="prob-labels"><span>SEA 38%</span><span>62% CBJ</span></div>
+    </div></div>
+    <span class="ch-ou" style="background:#fffbea;border:1px solid #fde68a;color:#b45309">O/U 6.5</span>
+    <span class="ch-score">2-4 CBJ</span>
+  </div>
+  <div class="cb">
+    <div class="meta-row">
+      <div class="meta-col">
+        <div class="meta-team">SEA · visiteur</div>
+        <div class="meta-gk">J. Daccord <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.912</b></span><span>GAA <b>2.52</b></span><span>PP <b>19.8%</b></span></div>
+        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-l"></span><span class="fd fd-l"></span></div>
+        <div class="absent-list"><span class="ab-tag ab-out">✕ Schwartz OUT (upper body)</span><span class="ab-tag ab-out">✕ Tolvanen OUT (upper body)</span></div>
+      </div>
+      <div class="meta-col">
+        <div class="meta-team">CBJ · domicile</div>
+        <div class="meta-gk">E. Merzlikins <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.908</b></span><span>GAA <b>2.64</b></span><span>PP <b>21.6%</b></span></div>
+        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-w"></span></div>
+        <div class="absent-list"><span class="ab-tag ab-out">✕ B.Smith OUT saison (knee)</span></div>
+      </div>
+    </div>
+    <table class="picks-table" style="table-layout:fixed;width:100%">
+      <thead><tr>
+        <th style="width:90px">Catégorie</th>
+        <th>SEA <span style="font-weight:400;color:#9ca3af">visiteur</span></th>
+        <th style="width:28px"></th>
+        <th>CBJ <span style="font-weight:400;color:#9ca3af">domicile</span></th>
+        <th style="width:90px;text-align:right">Conf.</th>
+      </tr></thead>
+      <tbody><tr>
+  <td><span class="cat-badge cat-but">🎯 But</span></td>
+  <td><div class="p-name">M. Beniers <span class="p-team">SEA</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 C PP1</span><span class="dtag dtag-stat">0.46G/m</span><span class="dtag dtag-h2h">H2H vs CBJ : 3B/7M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">A. Fantilli <span class="p-team">CBJ</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 C PP1</span><span class="dtag dtag-serie">série 3M🔥</span><span class="dtag dtag-h2h">H2H vs SEA : 5B/8M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">5.1</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.8</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
+  <td><div class="p-name">J. McCann <span class="p-team">SEA</span></div><div class="p-tags"><span class="dtag dtag-pp">L2 C PP2</span><span class="dtag dtag-stat">0.60pt/m</span><span class="dtag dtag-h2h">H2H vs CBJ : 0.7pt</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">A. Fantilli <span class="p-team">CBJ</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.84pt/m</span><span class="dtag dtag-h2h">H2H vs SEA : 0.9pt</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">5.9</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">6.5</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><div class="p-name">M. Beniers <span class="p-team">SEA</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span></div></td><td class="vs-dot">vs</td><td><div class="p-name">K. Marchenko <span class="p-team">CBJ</span></div><div class="p-tags"></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">4.9</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.0</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
+  <td><div class="p-name">C. Stephenson <span class="p-team">SEA</span></div><div class="p-tags"><span class="dtag dtag-pp">L2 PP2</span><span class="dtag dtag-stat">0.58 ast/m</span><span class="dtag dtag-h2h">H2H vs CBJ : 4A/7M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">Z. Werenski <span class="p-team">CBJ</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 QB D</span><span class="dtag dtag-serie">série 4M🔥</span><span class="dtag dtag-h2h">H2H vs SEA : 7A/10M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">4.8</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.1</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
+  <td><div class="p-name">M. Beniers <span class="p-team">SEA</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 ext</span><span class="dtag dtag-h2h">H2H vs SEA : 2×2pts</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">A. Fantilli <span class="p-team">CBJ</span></div><div class="p-tags"><span class="dtag dtag-pp">dom PP1</span><span class="dtag dtag-h2h">H2H vs SEA : 3×2pts</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">4.1</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">4.6</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><span style="color:#d1d5db">—</span></td><td class="vs-dot">vs</td><td><div class="p-name">K. Marchenko <span class="p-team">CBJ</span></div><div class="p-tags"></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    
+    
+    <span class="conf-pill conf-lo">3.2</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge ">🎯🎯 2 Buts+</span></td>
+  <td><div class="p-name">A. Fantilli <span class="p-team">CBJ</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-serie">série 3M🔥</span><span class="dtag dtag-h2h">H2H vs SEA : 2×2B/8M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">M. Beniers <span class="p-team">SEA</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.46G/m</span><span class="dtag dtag-h2h">H2H vs CBJ : 1×2B/7M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">2.6</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.4</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
+  <td><div class="p-name">B. McMann <span class="p-team">SEA</span></div><div class="p-tags"><span class="dtag dtag-h2h">H2H vs CBJ : 1B/5M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">S. Monahan <span class="p-team">CBJ</span></div><div class="p-tags"><span class="dtag dtag-h2h">H2H vs SEA : 2B/5M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">2.0</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.2</span>
+  </td>
+</tr></tbody>
+    </table>
+    <div class="analyse">CBJ très favoris à domicile (36V). SEA sans Schwartz+Tolvanen. CBJ 0 blessé — Fantilli/Marchment/Marchenko au complet.</div>
+  </div>
+</div>
+<div class="card" data-bucket="late" data-tight="1" data-hide="0" data-search="tor ott toronto maple leafs ottawa senators a. matthews b. tkachuk m. marner t. stutzle m. marner t. stutzle m. marner t. stutzle w. nylander d. batherson">
+  <div class="ch">
+    <span class="ch-time">01h00</span>
+    <div class="ch-teams">
+      <div class="ch-matchup">Toronto Maple Leafs <span style="color:#d1d5db;font-weight:400">@</span> Ottawa Senators</div>
+      <div class="ch-records">46-20-3 &nbsp;·&nbsp; 36-27-6</div>
+    </div>
+    <div class="ch-prob"><div>
+      <div class="prob-bar"><div class="prob-fill" style="width:52%"></div></div>
+      <div class="prob-labels"><span>TOR 52%</span><span>48% OTT</span></div>
+    </div></div>
+    <span class="ch-ou" style="background:#fffbea;border:1px solid #fde68a;color:#b45309">O/U 6.0</span>
+    <span class="ch-score">3-2 TOR</span>
+  </div>
+  <div class="cb">
+    <div class="meta-row">
+      <div class="meta-col">
+        <div class="meta-team">TOR · visiteur</div>
+        <div class="meta-gk">J. Woll <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.914</b></span><span>GAA <b>2.28</b></span><span>PP <b>24.8%</b></span></div>
+        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span></div>
+        <div class="absent-list"><span class="ab-ok">✓ Aucun absent</span></div>
+      </div>
+      <div class="meta-col">
+        <div class="meta-team">OTT · domicile</div>
+        <div class="meta-gk">J. Reimer <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.893</b></span><span>GAA <b>3.01</b></span><span>PP <b>21.8%</b></span></div>
+        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span></div>
+        <div class="absent-list"><span class="ab-tag ab-out">✕ Sanderson OUT (upper body)</span><span class="ab-tag ab-out">✕ Jensen OUT 6 sem. (meniscus)</span></div>
+      </div>
+    </div>
+    <table class="picks-table" style="table-layout:fixed;width:100%">
+      <thead><tr>
+        <th style="width:90px">Catégorie</th>
+        <th>TOR <span style="font-weight:400;color:#9ca3af">visiteur</span></th>
+        <th style="width:28px"></th>
+        <th>OTT <span style="font-weight:400;color:#9ca3af">domicile</span></th>
+        <th style="width:90px;text-align:right">Conf.</th>
+      </tr></thead>
+      <tbody><tr>
+  <td><span class="cat-badge cat-but">🎯 But</span></td>
+  <td><div class="p-name">A. Matthews <span class="p-team">TOR</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 C</span><span class="dtag dtag-stat">0.72G/m</span><span class="dtag dtag-h2h">H2H vs OTT : 6B/9M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">B. Tkachuk <span class="p-team">OTT</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 LW PP1</span><span class="dtag dtag-stat">0.52G/m</span><span class="dtag dtag-h2h">H2H vs TOR : 4B/8M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-hi">7.5</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">6.0</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
+  <td><div class="p-name">M. Marner <span class="p-team">TOR</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">1.02pt/m</span><span class="dtag dtag-serie">série 6M🔥</span><span class="dtag dtag-h2h">H2H vs OTT : 1.1pt</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">T. Stutzle <span class="p-team">OTT</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 C</span><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs TOR : 0.9pt</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-hi">8.8</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-hi">7.1</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><div class="p-name">A. Matthews <span class="p-team">TOR</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.72G/m</span></div></td><td class="vs-dot">vs</td><td><div class="p-name">B. Tkachuk <span class="p-team">OTT</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-hi">7.2</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.7</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
+  <td><div class="p-name">M. Marner <span class="p-team">TOR</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.74 ast/m</span><span class="dtag dtag-serie">série 6M🔥</span><span class="dtag dtag-h2h">H2H vs OTT : 7A/8M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">T. Stutzle <span class="p-team">OTT</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.68 ast/m</span><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs TOR : 6A/8M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-hi">7.9</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">6.4</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
+  <td><div class="p-name">M. Marner <span class="p-team">TOR</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-serie">série 6M🔥</span><span class="dtag dtag-h2h">H2H vs OTT : 4×2pts</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">T. Stutzle <span class="p-team">OTT</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs TOR : 3×2pts</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">6.1</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.0</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><div class="p-name">A. Matthews <span class="p-team">TOR</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span></div></td><td class="vs-dot">vs</td><td><div class="p-name">B. Tkachuk <span class="p-team">OTT</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 dom</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">4.6</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">3.7</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge ">🎯🎯 2 Buts+</span></td>
+  <td><div class="p-name">A. Matthews <span class="p-team">TOR</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.72G/m</span><span class="dtag dtag-h2h">H2H vs OTT : 3×2B/9M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">B. Tkachuk <span class="p-team">OTT</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.52G/m</span><span class="dtag dtag-h2h">H2H vs TOR : 1×2B/8M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">3.5</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.8</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
+  <td><div class="p-name">W. Nylander <span class="p-team">TOR</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 RW PP1</span><span class="dtag dtag-h2h">H2H vs OTT : 2B/5M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">D. Batherson <span class="p-team">OTT</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 RW PP1</span><span class="dtag dtag-h2h">H2H vs TOR : 2B/5M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">2.9</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.3</span>
+  </td>
+</tr></tbody>
+    </table>
+    <div class="analyse">Derby canadien. OTT sans Sanderson+Jensen. TOR favori léger ext. Mathews vs Stutzle.</div>
+  </div>
+</div>
+<div class="card" data-bucket="late" data-tight="1" data-hide="0" data-search="nyi mtl ny islanders montréal canadiens m. barzal c. caufield m. barzal n. suzuki b. horvat n. suzuki m. barzal n. suzuki j. lee i. demidov">
+  <div class="ch">
+    <span class="ch-time">01h00</span>
+    <div class="ch-teams">
+      <div class="ch-matchup">NY Islanders <span style="color:#d1d5db;font-weight:400">@</span> Montréal Canadiens</div>
+      <div class="ch-records">27-33-9 &nbsp;·&nbsp; 38-25-6</div>
+    </div>
+    <div class="ch-prob"><div>
+      <div class="prob-bar"><div class="prob-fill" style="width:42%"></div></div>
+      <div class="prob-labels"><span>NYI 42%</span><span>58% MTL</span></div>
+    </div></div>
+    <span class="ch-ou" style="background:#fffbea;border:1px solid #fde68a;color:#b45309">O/U 6.0</span>
+    <span class="ch-score">2-4 MTL</span>
+  </div>
+  <div class="cb">
+    <div class="meta-row">
+      <div class="meta-col">
+        <div class="meta-team">NYI · visiteur</div>
+        <div class="meta-gk">I. Sorokin <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.908</b></span><span>GAA <b>2.42</b></span><span>PP <b>22.4%</b></span></div>
+        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-l"></span><span class="fd fd-w"></span></div>
+        <div class="absent-list"><span class="ab-tag ab-out">✕ Palmieri OUT (knee)</span><span class="ab-tag ab-out">✕ Romanov OUT (shoulder)</span><span class="ab-tag ab-out">✕ Varlamov OUT saison (G)</span><span class="ab-tag ab-out">✕ Engvall OUT saison (ankle)</span><span class="ab-tag ab-dtd">⚠ Shabanov DTD (lower body)</span></div>
+      </div>
+      <div class="meta-col">
+        <div class="meta-team">MTL · domicile</div>
+        <div class="meta-gk">J. Dobes <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.906</b></span><span>GAA <b>2.62</b></span><span>PP <b>23.4%</b></span></div>
+        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-w"></span></div>
+        <div class="absent-list"><span class="ab-tag ab-out">✕ K.Dach OUT (upper body)</span><span class="ab-tag ab-out">✕ Laine OUT (lower body)</span><span class="ab-tag ab-dtd">⚠ Anderson DTD (upper body)</span></div>
+      </div>
+    </div>
+    <table class="picks-table" style="table-layout:fixed;width:100%">
+      <thead><tr>
+        <th style="width:90px">Catégorie</th>
+        <th>NYI <span style="font-weight:400;color:#9ca3af">visiteur</span></th>
+        <th style="width:28px"></th>
+        <th>MTL <span style="font-weight:400;color:#9ca3af">domicile</span></th>
+        <th style="width:90px;text-align:right">Conf.</th>
+      </tr></thead>
+      <tbody><tr>
+  <td><span class="cat-badge cat-but">🎯 But</span></td>
+  <td><div class="p-name">M. Barzal <span class="p-team">NYI</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 C</span><span class="dtag dtag-stat">0.44G/m</span><span class="dtag dtag-h2h">H2H vs MTL : 3B/7M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">C. Caufield <span class="p-team">MTL</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 LW</span><span class="dtag dtag-stat">0.72G/m</span><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs NYI : 6B/9M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">5.6</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">7.0</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
+  <td><div class="p-name">M. Barzal <span class="p-team">NYI</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.86pt/m</span><span class="dtag dtag-h2h">H2H vs MTL : 0.7pt</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">N. Suzuki <span class="p-team">MTL</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 C</span><span class="dtag dtag-serie">série 8M🔥</span><span class="dtag dtag-h2h">H2H vs NYI : 1.1pt</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">6.5</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-hi">8.4</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><div class="p-name">B. Horvat <span class="p-team">NYI</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 C PP1</span></div></td><td class="vs-dot">vs</td><td><div class="p-name">C. Caufield <span class="p-team">MTL</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-serie">série 5M🔥</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">5.4</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">6.7</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
+  <td><div class="p-name">B. Horvat <span class="p-team">NYI</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 C PP1</span><span class="dtag dtag-stat">0.54 ast/m</span><span class="dtag dtag-h2h">H2H vs MTL : 4A/7M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">N. Suzuki <span class="p-team">MTL</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.68 ast/m</span><span class="dtag dtag-serie">série 8M🔥</span><span class="dtag dtag-h2h">H2H vs NYI : 8A/9M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">5.8</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-hi">7.6</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
+  <td><div class="p-name">M. Barzal <span class="p-team">NYI</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 ext</span><span class="dtag dtag-h2h">H2H vs NYI : 2×2pts</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">N. Suzuki <span class="p-team">MTL</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-serie">série 8M🔥</span><span class="dtag dtag-h2h">H2H vs NYI : 4×2pts</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">4.5</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.9</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><span style="color:#d1d5db">—</span></td><td class="vs-dot">vs</td><td><div class="p-name">C. Caufield <span class="p-team">MTL</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-serie">série 5M🔥</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    
+    
+    <span class="conf-pill conf-lo">4.3</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge ">🎯🎯 2 Buts+</span></td>
+  <td><div class="p-name">C. Caufield <span class="p-team">MTL</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.72G/m</span><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs NYI : 3×2B/9M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">M. Barzal <span class="p-team">NYI</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.44G/m</span><span class="dtag dtag-h2h">H2H vs MTL : 1×2B/7M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">3.0</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.8</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
+  <td><div class="p-name">J. Lee <span class="p-team">NYI</span></div><div class="p-tags"><span class="dtag dtag-h2h">H2H vs MTL : 1B/5M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">I. Demidov <span class="p-team">MTL</span></div><div class="p-tags"><span class="dtag dtag-h2h">H2H vs NYI : 2B/4M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">2.0</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.4</span>
+  </td>
+</tr></tbody>
+    </table>
+    <div class="analyse">MTL favoris à domicile. NYI sans Palmieri/Romanov/Varlamov. Suzuki+Caufield+Demidov face à Reimer.</div>
+  </div>
+</div>
+<div class="card" data-bucket="late" data-tight="1" data-hide="0" data-search="stl van st. louis blues vancouver canucks j. kyrou e. pettersson r. thomas e. pettersson p. buchnevich e. pettersson r. thomas e. pettersson p. buchnevich b. boeser">
+  <div class="ch">
+    <span class="ch-time">01h00</span>
+    <div class="ch-teams">
+      <div class="ch-matchup">St. Louis Blues <span style="color:#d1d5db;font-weight:400">@</span> Vancouver Canucks</div>
+      <div class="ch-records">30-30-9 &nbsp;·&nbsp; 32-30-7</div>
+    </div>
+    <div class="ch-prob"><div>
+      <div class="prob-bar"><div class="prob-fill" style="width:46%"></div></div>
+      <div class="prob-labels"><span>STL 46%</span><span>54% VAN</span></div>
+    </div></div>
+    <span class="ch-ou" style="background:#fffbea;border:1px solid #fde68a;color:#b45309">O/U 6.0</span>
+    <span class="ch-score">3-4 VAN</span>
+  </div>
+  <div class="cb">
+    <div class="meta-row">
+      <div class="meta-col">
+        <div class="meta-team">STL · visiteur</div>
+        <div class="meta-gk">J. Binnington <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.904</b></span><span>GAA <b>2.78</b></span><span>PP <b>21.2%</b></span></div>
+        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span></div>
+        <div class="absent-list"><span class="ab-ok">✓ Aucun absent</span></div>
+      </div>
+      <div class="meta-col">
+        <div class="meta-team">VAN · domicile</div>
+        <div class="meta-gk">K. Lankinen <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.902</b></span><span>GAA <b>3.12</b></span><span>PP <b>17.4%</b></span></div>
+        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-l"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span></div>
+        <div class="absent-list"><span class="ab-tag ab-out">✕ Lekkerimaki OUT (upper body)</span><span class="ab-tag ab-out">✕ Chytil OUT (face)</span></div>
+      </div>
+    </div>
+    <table class="picks-table" style="table-layout:fixed;width:100%">
+      <thead><tr>
+        <th style="width:90px">Catégorie</th>
+        <th>STL <span style="font-weight:400;color:#9ca3af">visiteur</span></th>
+        <th style="width:28px"></th>
+        <th>VAN <span style="font-weight:400;color:#9ca3af">domicile</span></th>
+        <th style="width:90px;text-align:right">Conf.</th>
+      </tr></thead>
+      <tbody><tr>
+  <td><span class="cat-badge cat-but">🎯 But</span></td>
+  <td><div class="p-name">J. Kyrou <span class="p-team">STL</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 RW PP1</span><span class="dtag dtag-stat">0.52G/m</span><span class="dtag dtag-h2h">H2H vs VAN : 4B/8M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">E. Pettersson <span class="p-team">VAN</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 C PP1</span><span class="dtag dtag-stat">0.52G/m</span><span class="dtag dtag-h2h">H2H vs STL : 4B/8M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">5.8</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">6.2</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
+  <td><div class="p-name">R. Thomas <span class="p-team">STL</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 C PP1</span><span class="dtag dtag-stat">0.72pt/m</span><span class="dtag dtag-h2h">H2H vs VAN : 0.8pt</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">E. Pettersson <span class="p-team">VAN</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.82pt/m</span><span class="dtag dtag-h2h">H2H vs STL : 0.9pt</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">6.7</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-hi">7.2</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><div class="p-name">J. Kyrou <span class="p-team">STL</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span></div></td><td class="vs-dot">vs</td><td><div class="p-name">B. Boeser <span class="p-team">VAN</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 RW PP1</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">5.6</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.5</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
+  <td><div class="p-name">P. Buchnevich <span class="p-team">STL</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 LW PP1</span><span class="dtag dtag-stat">0.62 ast/m</span><span class="dtag dtag-h2h">H2H vs VAN : 5A/8M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">E. Pettersson <span class="p-team">VAN</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.62 ast/m</span><span class="dtag dtag-h2h">H2H vs STL : 5A/8M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">5.5</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">6.4</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
+  <td><div class="p-name">R. Thomas <span class="p-team">STL</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-h2h">H2H vs VAN : 2×2pts</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">E. Pettersson <span class="p-team">VAN</span></div><div class="p-tags"><span class="dtag dtag-pp">dom PP1</span><span class="dtag dtag-h2h">H2H vs VAN : 2×2pts</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">4.7</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.0</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><div class="p-name">J. Kyrou <span class="p-team">STL</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 RW PP1</span></div></td><td class="vs-dot">vs</td><td><div class="p-name">B. Boeser <span class="p-team">VAN</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 dom</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">3.6</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">3.5</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge ">🎯🎯 2 Buts+</span></td>
+  <td><div class="p-name">J. Kyrou <span class="p-team">STL</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.52G/m</span><span class="dtag dtag-h2h">H2H vs VAN : 2×2B/8M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">E. Pettersson <span class="p-team">VAN</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.52G/m</span><span class="dtag dtag-h2h">H2H vs STL : 2×2B/8M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">2.7</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.9</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
+  <td><div class="p-name">P. Buchnevich <span class="p-team">STL</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 LW PP1</span><span class="dtag dtag-h2h">H2H vs VAN : 3A/6M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">B. Boeser <span class="p-team">VAN</span></div><div class="p-tags"><span class="dtag dtag-pp">L1 RW PP1</span><span class="dtag dtag-h2h">H2H vs STL : 2B/5M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">2.3</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.4</span>
+  </td>
+</tr></tbody>
+    </table>
+    <div class="analyse">VAN favoris à domicile. VAN sans Chytil/Lekkerimaki. Pettersson+Boeser vs Parayko/Thomas.</div>
+  </div>
+</div>
+<div class="card" data-bucket="late" data-tight="0" data-hide="0" data-search="bos det boston bruins detroit red wings d. pastrnak a. debrincat d. pastrnak a. debrincat c. mittelstadt l. raymond d. pastrnak a. debrincat c. mcavoy l. raymond">
+  <div class="ch">
+    <span class="ch-time">02h00</span>
+    <div class="ch-teams">
+      <div class="ch-matchup">Boston Bruins <span style="color:#d1d5db;font-weight:400">@</span> Detroit Red Wings</div>
+      <div class="ch-records">? &nbsp;·&nbsp; ?</div>
+    </div>
+    <div class="ch-prob"><div>
+      <div class="prob-bar"><div class="prob-fill" style="width:64%"></div></div>
+      <div class="prob-labels"><span>BOS 64%</span><span>36% DET</span></div>
+    </div></div>
+    <span class="ch-ou" style="background:#fffbea;border:1px solid #fde68a;color:#b45309">O/U 6.0</span>
+    <span class="ch-score">4-2 BOS</span>
+  </div>
+  <div class="cb">
+    <div class="meta-row">
+      <div class="meta-col">
+        <div class="meta-team">BOS · visiteur</div>
+        <div class="meta-gk">J. Swayman <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.910</b></span><span>GAA <b>2.52</b></span><span>PP <b>22.8%</b></span></div>
+        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span></div>
+        <div class="absent-list"><span class="ab-ok">✓ Aucun absent</span></div>
+      </div>
+      <div class="meta-col">
+        <div class="meta-team">DET · domicile</div>
+        <div class="meta-gk">J. Gibson <span>G</span></div>
+        <div class="meta-stats"><span>SV% <b>.903</b></span><span>GAA <b>2.88</b></span><span>PP <b>19.6%</b></span></div>
+        <div class="meta-stats" style="margin-top:3px"><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span><span class="fd fd-w"></span><span class="fd fd-l"></span></div>
+        <div class="absent-list"><span class="ab-tag ab-out">✕ Larkin OUT (leg)🚨</span><span class="ab-tag ab-out">✕ Rasmussen OUT (undisclosed)</span><span class="ab-tag ab-dtd">⚠ Brandsegg-Nygard DTD (undisclosed)</span></div>
+      </div>
+    </div>
+    <table class="picks-table" style="table-layout:fixed;width:100%">
+      <thead><tr>
+        <th style="width:90px">Catégorie</th>
+        <th>BOS <span style="font-weight:400;color:#9ca3af">visiteur</span></th>
+        <th style="width:28px"></th>
+        <th>DET <span style="font-weight:400;color:#9ca3af">domicile</span></th>
+        <th style="width:90px;text-align:right">Conf.</th>
+      </tr></thead>
+      <tbody><tr>
+  <td><span class="cat-badge cat-but">🎯 But</span></td>
+  <td><div class="p-name">D. Pastrnak <span class="p-team">BOS</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 RW</span><span class="dtag dtag-serie">série 7M🔥</span><span class="dtag dtag-h2h">H2H vs DET : 7B/9M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">A. DeBrincat <span class="p-team">DET</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 LW</span><span class="dtag dtag-serie">série 4M🔥</span><span class="dtag dtag-h2h">H2H vs BOS : 5B/8M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-hi">7.2</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">6.0</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-pt">⭐ Point</span></td>
+  <td><div class="p-name">D. Pastrnak <span class="p-team">BOS</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-serie">série 7M🔥</span><span class="dtag dtag-h2h">H2H vs DET : 1.1pt</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">A. DeBrincat <span class="p-team">DET</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-serie">série 4M🔥</span><span class="dtag dtag-h2h">H2H vs BOS : 0.9pt</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-hi">8.3</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">6.9</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><div class="p-name">C. Mittelstadt <span class="p-team">BOS</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-serie">série 5M🔥</span></div></td><td class="vs-dot">vs</td><td><div class="p-name">L. Raymond <span class="p-team">DET</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">6.4</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.1</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-ast">🤝 Assist</span></td>
+  <td><div class="p-name">C. Mittelstadt <span class="p-team">BOS</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-stat">0.74 ast/m</span><span class="dtag dtag-serie">série 5M🔥</span><span class="dtag dtag-h2h">H2H vs DET : 6A/8M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">L. Raymond <span class="p-team">DET</span></div><div class="p-tags"><span class="dtag dtag-pp">L2 RW PP1</span><span class="dtag dtag-stat">0.62 ast/m</span><span class="dtag dtag-h2h">H2H vs BOS : 4A/7M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">6.9</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-mid">5.6</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-multi">💥 2+Pts</span></td>
+  <td><div class="p-name">D. Pastrnak <span class="p-team">BOS</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-serie">série 7M🔥</span><span class="dtag dtag-h2h">H2H vs DET : 4×2pts</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">A. DeBrincat <span class="p-team">DET</span></div><div class="p-tags"><span class="dtag dtag-h2h">H2H vs BOS : 2×2pts</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-mid">5.8</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">4.8</span>
+  </td>
+</tr><tr style="background:#fafafa;opacity:0.85">
+  <td><span style="font-size:10px;color:#9ca3af;padding:0 4px">2ème</span></td>
+  <td><div class="p-name">C. Mittelstadt <span class="p-team">BOS</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-serie">série 5M🔥</span></div></td><td class="vs-dot">vs</td><td><span style="color:#d1d5db">—</span></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">4.1</span>
+    
+    
+  </td>
+</tr><tr>
+  <td><span class="cat-badge ">🎯🎯 2 Buts+</span></td>
+  <td><div class="p-name">D. Pastrnak <span class="p-team">BOS</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-serie">série 7M🔥</span><span class="dtag dtag-h2h">H2H vs DET : 3×2B/9M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">A. DeBrincat <span class="p-team">DET</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1</span><span class="dtag dtag-serie">série 4M🔥</span><span class="dtag dtag-h2h">H2H vs BOS : 2×2B/8M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">3.3</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.8</span>
+  </td>
+</tr><tr>
+  <td><span class="cat-badge cat-out">🔥 Outsider</span></td>
+  <td><div class="p-name">C. McAvoy <span class="p-team">BOS</span></div><div class="p-tags"><span class="dtag dtag-pp">PP1 D</span><span class="dtag dtag-h2h">H2H vs DET : 2B/4M</span></div></td>
+  <td class="vs-dot">vs</td>
+  <td><div class="p-name">L. Raymond <span class="p-team">DET</span></div><div class="p-tags"><span class="dtag dtag-pp">L2 PP1</span><span class="dtag dtag-h2h">H2H vs BOS : 3A/6M</span></div></td>
+  <td style="text-align:right;vertical-align:top;padding-top:10px">
+    <span class="conf-pill conf-lo">2.2</span>
+    <span style="color:#d1d5db;margin:0 3px">/</span>
+    <span class="conf-pill conf-lo">2.3</span>
+  </td>
+</tr></tbody>
+    </table>
+    <div class="analyse">BOS sans blessé face à DET sans Larkin/Rasmussen/Brandsegg-Nygard. Pastrnak+Mittelstadt vs Gibson.</div>
   </div>
 </div></div>
 <script>
